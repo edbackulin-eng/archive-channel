@@ -64,9 +64,22 @@ def main():
     rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
     ahead = [r for r in rows if r.get("state") in ("built", "awaiting_approval")
              or (r.get("state") == "scheduled" and r.get("publish_at", "") > now().strftime("%Y-%m-%dT%H:%M:%SZ"))]
+    keys = os.environ.get("KEYS_READY") == "true"
+    failed_run = [r for r in rows[-2:] if r.get("state") == "qa-failed"]
     if len(ahead) < AHEAD and not busy:
-        gh("workflow", "run", "episode.yml", "-R", REPO, parse=False)
-        actions.append(f"only {len(ahead)} ahead; next episode started")
+        if not keys:
+            # without the text and vision keys every build would fail QA and use up a topic
+            actions.append("waiting for GROQ_API_KEY_AR and GEMINI_API_KEY_AR; no build started")
+        elif len(failed_run) >= 2:
+            if "two-qa-failed" not in mem["emailed"]:
+                subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"),
+                                "Two episodes in a row failed the QA gate; builds paused",
+                                ", ".join(f"{r['slug']}: {r.get('qa_failed')}" for r in failed_run)])
+                mem["emailed"].append("two-qa-failed")
+            actions.append("two QA failures in a row; builds paused until a passing one")
+        else:
+            gh("workflow", "run", "episode.yml", "-R", REPO, parse=False)
+            actions.append(f"only {len(ahead)} ahead; next episode started")
     if os.environ.get("YT_TOKEN_JSON") and any(r.get("state") == "built" and not r.get("youtube_id") for r in rows):
         gh("workflow", "run", "upload.yml", "-R", REPO, parse=False)
         actions.append("buffered episodes sent to upload")

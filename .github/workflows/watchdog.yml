@@ -21,6 +21,8 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+      # builds start only once both keys exist (automation/watchdog.py)
+      KEYS_READY: ${{ secrets.GROQ_API_KEY_AR != '' && secrets.GEMINI_API_KEY_AR != '' }}
       PYTHONUTF8: 1
     steps:
       - uses: actions/checkout@v5
