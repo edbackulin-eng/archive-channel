@@ -76,8 +76,13 @@ def slots(timeline, total):
             out.append({"start": round(a, 3), "end": round(b, 3), "kind": "clip", "film_break": False,
                         "line": line["text"], "chapter_ctx": chapter})
         t = e
-    if out and total - out[-1]["end"] > 0.05:
-        out[-1]["end"] = round(total, 3)
+    # the picture is continuous: every shot runs to the start of the next, so the
+    # gaps between spoken lines are covered and picture and voice never drift
+    if out:
+        out[0]["start"] = 0.0
+        for a, b in zip(out, out[1:]):
+            a["end"] = b["start"]
+        out[-1]["end"] = round(max(total, out[-1]["end"]), 3)
     # glue very short pieces onto their neighbour, so no cut is under 2.5 s
     merged = []
     for sl in out:

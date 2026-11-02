@@ -63,6 +63,11 @@ def check(plan, timeline, video, thumb_report=None, full_episode=True):
     hook = " ".join(t["text"] for t in timeline if t["start"] < CFG["episode"]["hook_seconds"] + 6)
     res["hook"] = {"question": "?" in hook, "promise": bool(re.search(r"not all|more to|wait until|we'll come back", hook, re.I))}
     res["hook"]["pass"] = res["hook"]["question"] and res["hook"]["promise"]
+    gaps = [round(b["start"] - a["end"], 3) for a, b in zip(plan["shots"], plan["shots"][1:]) if abs(b["start"] - a["end"]) > 0.01]
+    vdur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(video)],
+                                capture_output=True, text=True).stdout.strip() or 0)
+    res["continuity"] = {"gaps": gaps[:10], "video_s": round(vdur, 2), "plan_s": round(total, 2),
+                         "pass": not gaps and abs(vdur - total) <= 0.3}
     mins = total / 60
     res["length"] = {"minutes": round(mins, 1),
                      "pass": (CFG["episode"]["minutes_min"] <= mins <= CFG["episode"]["minutes_max"]) or not full_episode}

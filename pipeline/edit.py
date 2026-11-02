@@ -120,7 +120,8 @@ def render(plan, narration_wav, music_mp3, out, work):
     graph = (f"[1:a]aresample={SR},aformat=channel_layouts=stereo,volume={bed_gain:.2f}dB,atrim=0:{total:.3f},"
              f"volume={_vol_expr(0, BR['music_up_db'], win)}:eval=frame[m];"
              f"[2:a]aresample={SR},volume={_vol_expr(SND['original_sound_db'], BR['film_sound_db'] - SND['original_sound_db'], win)}:eval=frame[f];"
-             f"[0:a][m][f]amix=inputs=3:duration=first:normalize=0[pre]")
+             f"[0:a]apad=whole_dur={total:.3f}[v];"
+             f"[v][m][f]amix=inputs=3:duration=first:normalize=0[pre]")
     pre = work / "premix.wav"
     _ff(["-y", "-i", str(voice), "-stream_loop", "-1", "-i", str(music_mp3), "-i", str(film_n), "-filter_complex", graph,
          "-map", "[pre]", "-t", f"{total:.3f}", "-ar", str(SR), "-ac", "2", str(pre)])

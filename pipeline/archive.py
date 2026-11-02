@@ -32,8 +32,8 @@ UA = {"User-Agent": "archive-channel/1.0 (documentary research; public-domain fi
 SEARCH = "https://archive.org/advancedsearch.php"
 COLLECTIONS = ("prelinger", "FedFlix", "nasa")
 # whole words; the short agency names ("AP") only in capitals, or "happy" would match
-FORBIDDEN = re.compile(r"(" + "|".join(re.escape(f) for f in CFG["forbidden"] if len(f) > 3) + r")", re.I)
-FORBIDDEN_CAPS = re.compile(r"(" + "|".join(re.escape(f) for f in CFG["forbidden"] if len(f) <= 3) + r")")
+FORBIDDEN = re.compile(r"\b(" + "|".join(re.escape(f) for f in CFG["forbidden"] if len(f) > 3) + r")\b", re.I)
+FORBIDDEN_CAPS = re.compile(r"\b(" + "|".join(re.escape(f) for f in CFG["forbidden"] if len(f) <= 3) + r")\b")
 VIDEO_FORMATS = ("MPEG2", "h.264", "MPEG4", "h.264 HD", "512Kb MPEG4", "Ogg Video")
 
 
