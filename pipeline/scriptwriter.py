@@ -1,0 +1,125 @@
+"""The episode script, written from its sources and fact-checked against them.
+
+Form (config/channel.json "episode"): 15-20 minutes running, of which 20-30 %
+has no voice (film breaks, pipeline/breathing.py), so 1,800-2,250 words spoken
+at ~150 words a minute, in English, in the delivery markup
+(core/delivery.py). A documentary told through scenes and people: what a day
+looked like, what things cost, what people were told and what they did, with
+"open loops" - a question raised early and answered later - to carry the
+viewer through.
+
+The first 30 seconds are the hook: the most vivid picture of the story, a
+question, and a promise that there is more ("and that's not all").
+
+Fact check: the writer returns, beside the script, every factual claim with the
+source it came from. A second pass, by a separate call, holds each claim against
+that source's text; a claim the text does not support is cut from the script
+or softened, and the check is recorded in fact_check.json.
+"""
+import json
+import re
+
+from core import llm
+from core.logger import get_logger
+
+log = get_logger("scriptwriter")
+# 12-15 minutes of speech at 150 wpm, so that with 20-30 % film breaks the
+# episode lands at 15-20 minutes (config/channel.json "breathing")
+WORDS_MIN, WORDS_MAX = 1800, 2250
+
+SYSTEM = """You write narration for an English-language YouTube documentary channel about everyday
+life in twentieth-century America, told over public-domain archive film. The viewer is
+curious and nostalgic; the tone is warm, precise and unhurried, like a good museum guide.
+
+RULES
+- Write ONLY from the SOURCES given. Never add a fact, number, date, name or quote that the
+  sources do not state. If a number is not in the sources, do not give one.
+- Describe what the viewer would see in the period footage: rooms, streets, clothes, cars,
+  shops, work. Short concrete sentences. Avoid lists of statistics.
+- Prices and daily life: when the sources give prices or wages, use them, and say what they
+  meant for a family.
+- Open loops: raise two or three questions early that are answered later, and say so
+  ("we'll come back to that").
+- People: no living private individuals by name; public figures and well-documented
+  historical people only as the sources describe them.
+- HOOK (the first ~30 seconds, 70-80 words): open on the single most vivid image of the story,
+  ask the question the episode answers, and end the hook with a line that promises more
+  (for example "And that's not all.").
+- Length: {words_min}-{words_max} words of narration in total.
+- Chapters: 5 to 7, each opening with a line "## Chapter title | place | years"
+  (place and years as the chapter is set, e.g. "## The Potato Fields | Long Island, New York | 1947-1951").
+
+DELIVERY MARKUP (one sentence or short thought per line)
+  > line      faster: hook, transitions
+  < line      slower, with a pause before: reveals and key facts
+  [pause 0.6] an explicit pause in seconds
+  plain line  normal pace
+
+Return JSON only:
+{{"title": "<YouTube title, <= 70 characters, curiosity without clickbait lies>",
+  "thumbnail_words": "<2-4 words for the thumbnail>",
+  "script": "<the whole script with chapters and markup, lines separated by \\n>",
+  "claims": [{{"claim": "<one factual statement made in the script>", "source": <index of SOURCE>}}]}}"""
+
+CHECK = """You are a strict fact checker. For each CLAIM you get the SOURCE text it is said to come from.
+Answer for each: "supported" (the source states it), "partly" (the source states something close but
+the claim overstates or adds detail), or "unsupported" (the source does not state it). For "partly",
+give a corrected wording the source does support. Return JSON only:
+{"results": [{"i": <index>, "verdict": "supported|partly|unsupported", "fix": "<corrected claim or empty>"}]}"""
+
+REVISE = """You revise a documentary script after a fact check. For every claim marked unsupported, remove
+it from the script (rewrite the sentence around it so the narration still flows). For every claim marked
+partly, change the wording to the corrected version. Change nothing else. Keep the delivery markup and the
+chapter lines exactly. Return JSON only: {"script": "<the revised script>"}"""
+
+
+def _sources_block(sources):
+    return "\n\n".join(f"SOURCE {i}: {s['title']} ({s['url']})\n{s['text']}" for i, s in enumerate(sources))
+
+
+def words(script):
+    body = [l for l in script.splitlines() if l.strip() and not l.startswith("##") and not l.startswith("[")]
+    return sum(len(re.sub(r"^[<>]\s*", "", l).split()) for l in body)
+
+
+def write(topic, sources):
+    prompt = (f"EPISODE: {topic['name']}\nYEARS: {topic['years'][0]}-{topic['years'][1]}\n\n"
+              f"{_sources_block(sources)}")
+    out = llm.complete_json(prompt, system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX),
+                            max_tokens=16000, temperature=0.7)
+    n = words(out["script"])
+    if n < WORDS_MIN * 0.9:
+        log.info("script is %d words; asking for the missing length", n)
+        more = llm.complete_json(
+            prompt + f"\n\nYOUR DRAFT ({n} words, too short):\n{out['script']}\n\nExpand it to "
+            f"{WORDS_MIN}-{WORDS_MAX} words with more scenes from the SAME sources; keep the hook, the "
+            "chapters and the markup. Return the same JSON shape, claims included.",
+            system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.6)
+        if words(more.get("script", "")) > n:
+            out = more
+    return out
+
+
+def fact_check(draft, sources):
+    claims = [c for c in draft.get("claims", []) if isinstance(c, dict) and c.get("claim")]
+    rows = []
+    for k in range(0, len(claims), 20):
+        part = claims[k:k + 20]
+        ask = "\n\n".join(
+            f"CLAIM {k + i}: {c['claim']}\nSOURCE: {sources[int(c.get('source', 0)) % len(sources)]['text'][:9000]}"
+            for i, c in enumerate(part))
+        res = llm.complete_json(ask, system=CHECK, max_tokens=4000, temperature=0.0)
+        by = {int(r["i"]): r for r in res.get("results", [])}
+        for i, c in enumerate(part):
+            r = by.get(k + i, {"verdict": "unsupported", "fix": ""})
+            rows.append({"claim": c["claim"], "source": sources[int(c.get("source", 0)) % len(sources)]["url"],
+                         "verdict": r.get("verdict", "unsupported"), "fix": r.get("fix", "")})
+    bad = [r for r in rows if r["verdict"] != "supported"]
+    script = draft["script"]
+    if bad:
+        ask = "FACT CHECK:\n" + "\n".join(f"- [{r['verdict']}] {r['claim']}" + (f" -> {r['fix']}" if r["fix"] else "")
+                                         for r in bad) + f"\n\nSCRIPT:\n{script}"
+        script = llm.complete_json(ask, system=REVISE, max_tokens=16000, temperature=0.2)["script"]
+    log.info("fact check: %d claims, %d supported, %d corrected or cut", len(rows),
+             len(rows) - len(bad), len(bad))
+    return script, rows

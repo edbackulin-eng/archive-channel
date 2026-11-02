@@ -1,0 +1,45 @@
+"""Write one episode's script from its sources, fact-check it, and store it as text.
+
+    python automation/write_episode.py 1950s-suburb
+
+episodes/<slug>/script.txt     the narration in delivery markup, chapters included
+episodes/<slug>/meta.json      title, thumbnail words, sources, word count
+episodes/<slug>/fact_check.json  every claim, its source and the verdict
+"""
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from core.logger import get_logger  # noqa: E402
+from pipeline import scriptwriter, sources  # noqa: E402
+
+log = get_logger("write-episode")
+
+
+def main(slug):
+    q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
+    topic = next(t for t in q["topics"] if t["slug"] == slug)
+    found = sources.gather(topic["wikipedia"])
+    draft = scriptwriter.write(topic, found)
+    script, checked = scriptwriter.fact_check(draft, found)
+    out = ROOT / "episodes" / slug
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "script.txt").write_text(script.strip() + "\n", encoding="utf-8")
+    (out / "fact_check.json").write_text(json.dumps(checked, indent=1, ensure_ascii=False), encoding="utf-8")
+    meta = {"slug": slug, "name": topic["name"], "title": draft.get("title", topic["name"]),
+            "thumbnail_words": draft.get("thumbnail_words", ""), "words": scriptwriter.words(script),
+            "minutes_at_150wpm": round(scriptwriter.words(script) / 150, 1),
+            "sources": [{"title": s["title"], "url": s["url"]} for s in found],
+            "fact_check": {"claims": len(checked),
+                           "supported": sum(c["verdict"] == "supported" for c in checked)}}
+    (out / "meta.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), encoding="utf-8")
+    log.info("%s: %d words (~%.1f min), %d claims checked", slug, meta["words"], meta["minutes_at_150wpm"],
+             len(checked))
+    print(json.dumps(meta, indent=1, ensure_ascii=False))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1]))

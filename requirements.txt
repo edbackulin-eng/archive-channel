@@ -1,0 +1,7 @@
+numpy>=1.26
+pillow>=10.0
+soundfile>=0.12
+kokoro-onnx>=0.4
+opencv-python-headless>=4.10
+google-api-python-client>=2.100
+google-auth>=2.20

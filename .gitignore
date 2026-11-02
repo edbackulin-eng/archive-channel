@@ -1,0 +1,36 @@
+# Secrets never enter the repository: it is public.
+.env
+.env.*
+*.pem
+client_secret*.json
+youtube_token.json
+kaggle.json
+
+# Media and builds stay off the repository; it holds code, text and state.
+work/
+cache/
+logs/
+episodes/*/build/
+episodes/*/out/
+assets/models/
+assets/music/*
+!assets/music/library.json
+assets/footage/
+review/
+analysis/thumbs/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.m4a
+*.ogg
+*.png
+*.jpg
+*.jpeg
+*.webp
+!assets/fonts/*.ttf
+__pycache__/
+*.pyc
+.venv/

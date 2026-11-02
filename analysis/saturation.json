@@ -1,0 +1,114 @@
+{
+ "core: everyday life 1946-1969": {
+  "videos": 126,
+  "videos_last_24m": 75,
+  "videos_last_12m": 43,
+  "new_per_month_12m": 3.6,
+  "median_views": 79107,
+  "median_views_last_24m": 9589,
+  "share_100k": 0.44,
+  "channels": 90,
+  "channels_100k": 6,
+  "newcomers_100k": [
+   {
+    "channel": "1950s Dream Time",
+    "created": "2025-02-19",
+    "median": 168361,
+    "every_days": "7.0"
+   }
+  ],
+  "top": [
+   "6,281,948 | Cult Cinema Classics | Life with Father (1947) Elizabeth Taylor, William Powell | Comedy, Fam",
+   "5,791,829 | King Rose Archives | What Everyday Life Really Looked Like in the 1950s",
+   "3,730,884 | Sage Lilleyman | I Lived Like A 1950's HOUSEWIFE For 1 WEEK!",
+   "2,881,508 | DOCUMENTARY TUBE | AMERICAN NOSTALGIA: The 1950s Thanksgiving"
+  ]
+ },
+ "one city (NYC/LA/Chicago/SF)": {
+  "videos": 117,
+  "videos_last_24m": 86,
+  "videos_last_12m": 53,
+  "new_per_month_12m": 4.4,
+  "median_views": 71019,
+  "median_views_last_24m": 31455,
+  "share_100k": 0.44,
+  "channels": 62,
+  "channels_100k": 4,
+  "newcomers_100k": [],
+  "top": [
+   "21,729,628 | Denis Shiryaev | [4k, 60 fps] A Trip Through New York City in 1911",
+   "11,850,162 | NASS | San Francisco 1906 (New Version) in Color [VFX,60fps, Remastered] w/so",
+   "5,723,761 | Rick88888888 | New York in the mid 1930's in Color!",
+   "5,581,887 | Lost in Time | Around The World in 1900 Colorized (60fps) India, London, New York, Ch"
+  ]
+ },
+ "prices and daily life": {
+  "videos": 2,
+  "videos_last_24m": 2,
+  "videos_last_12m": 2,
+  "new_per_month_12m": 0.2,
+  "median_views": 55935,
+  "median_views_last_24m": 55935,
+  "share_100k": 0.5,
+  "channels": 2,
+  "channels_100k": 0,
+  "newcomers_100k": [],
+  "top": [
+   "108,662 | Back to Yesterday | What Life Cost in 1960s America — The Prices Will Shock You",
+   "3,209 | America Lookback | How Much Things Cost in 1950s America"
+  ]
+ },
+ "then and now (same place)": {
+  "videos": 10,
+  "videos_last_24m": 8,
+  "videos_last_12m": 2,
+  "new_per_month_12m": 0.2,
+  "median_views": 214641,
+  "median_views_last_24m": 88157,
+  "share_100k": 0.6,
+  "channels": 7,
+  "channels_100k": 1,
+  "newcomers_100k": [],
+  "top": [
+   "3,559,298 | Explorex | Evolution of New York City 1900-2022",
+   "1,583,677 | Daily Mail World | NYPD Cop Life in the 1970s vs '80s vs '90s vs Today | Experts By Decad",
+   "1,241,609 | Back Then with Frank | 100 Things From 1950s America That Are FORGOTTEN Today",
+   "376,823 | Daily Mail World | New York Fire Department Life 1970s vs '80s vs '90s vs Today | Experts"
+  ]
+ },
+ "a decade: the 1970s": {
+  "videos": 74,
+  "videos_last_24m": 48,
+  "videos_last_12m": 31,
+  "new_per_month_12m": 2.6,
+  "median_views": 70648,
+  "median_views_last_24m": 19554,
+  "share_100k": 0.41,
+  "channels": 52,
+  "channels_100k": 4,
+  "newcomers_100k": [],
+  "top": [
+   "13,980,517 | America | America - A Horse With No Name (America In Concert, May 24,1973)",
+   "4,062,000 | OLD FILM PRESERVATION | 1970, THE MOUNTAIN PEOPLE, SOUTHERN APPALACHIA",
+   "2,998,244 | Buyout Footage Historic Film Archive | Building The World Trade Center 1970s Stock Footage",
+   "2,826,686 | YouCanDanceToit! | American Bandstand 1970 – 1970 Dance Contest Finalists – Up Around The"
+  ]
+ },
+ "a profession / workplace": {
+  "videos": 3,
+  "videos_last_24m": 2,
+  "videos_last_12m": 2,
+  "new_per_month_12m": 0.2,
+  "median_views": 2467,
+  "median_views_last_24m": 225219,
+  "share_100k": 0.33,
+  "channels": 3,
+  "channels_100k": 0,
+  "newcomers_100k": [],
+  "top": [
+   "449,096 | Industrial Vault | Inside the 1940s Dodge WC51 Factory: How America Built the Jeep's Bigg",
+   "2,467 | C-SPAN | Tuesday in November - 1945 U.S. Office of War Information Film - Preli",
+   "1,342 | Vintage America with David | What Working in an American Factory Was Really Like in the 1940s"
+  ]
+ }
+}

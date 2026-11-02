@@ -1,0 +1,394 @@
+{
+  "_note": "Topics, in build order. Each was checked for licensed colour film on archive.org (Prelinger, FedFlix incl. National Archives, NASA) at the time it was queued.",
+  "subtopic": "Everyday life in mid-century America (1946-1965), in colour",
+  "topics": [
+    {
+      "slug": "1950s-suburb",
+      "name": "Life in a Brand-New 1950s Suburb",
+      "query": "suburb OR suburbs OR housing OR homeowner OR \"new home\"",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 69,
+      "colour_items": 33,
+      "examples": [
+        "WhyPlayL1949 (1949)",
+        "Miracleo1955 (1955)",
+        "RelaxedW1957 (1957)",
+        "American1958 (1958)"
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "Levittown, New York",
+        "Levittown, Pennsylvania",
+        "William Levitt",
+        "Suburbanization",
+        "G.I. Bill",
+        "Post–World War II baby boom",
+        "Post–World War II economic expansion"
+      ]
+    },
+    {
+      "slug": "1950s-groceries",
+      "name": "What a Week of Groceries Cost a 1950s Family",
+      "query": "supermarket OR grocery OR groceries OR \"food store\"",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 44,
+      "colour_items": 16,
+      "examples": [
+        "Corvairi1960 (1960)",
+        "1955Chev1955 (1955)",
+        "OutofThi1954 (1954)",
+        "Chickeno1948 (1948)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-kitchen",
+      "name": "Inside the 1950s Kitchen: The Machines That Promised Freedom",
+      "query": "kitchen OR appliance OR appliances OR refrigerator",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 87,
+      "colour_items": 40,
+      "examples": [
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)",
+        "Foundati1951 (1951)",
+        "American1958 (1958)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-supermarket",
+      "name": "The 1950s Supermarket Was a Wonder of the World",
+      "query": "supermarket OR \"self-service\" OR packaging",
+      "years": [
+        1946,
+        1965
+      ],
+      "items": 24,
+      "colour_items": 21,
+      "examples": [
+        "OutofThi1954 (1954)",
+        "American1958 (1958)",
+        "Chickeno1948 (1948)",
+        "American1958_2 (1958)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1955-money",
+      "name": "What Americans Earned and Spent in 1955",
+      "query": "budget OR thrift OR saving OR \"family budget\" OR money",
+      "years": [
+        1950,
+        1960
+      ],
+      "items": 90,
+      "colour_items": 44,
+      "examples": [
+        "Designfo1956 (1956)",
+        "Wonderfu1960 (1960)",
+        "ItsEvery1954 (1954)",
+        "OnGuard1956 (1956)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-cars",
+      "name": "The 1950s Car Was a Living Room on Wheels",
+      "query": "automobile OR automobiles OR car OR cars OR motorist",
+      "years": [
+        1950,
+        1962
+      ],
+      "items": 95,
+      "colour_items": 47,
+      "examples": [
+        "FromtheG1954 (1954)",
+        "Achievem1955 (1955)",
+        "GoldenYe1960 (1960)",
+        "Designfo1956 (1956)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-factory",
+      "name": "A Day at a 1950s American Factory",
+      "query": "factory OR assembly OR plant OR workers",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 95,
+      "colour_items": 44,
+      "examples": [
+        "Achievem1955 (1955)",
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)",
+        "WhyPlayL1949 (1949)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-road",
+      "name": "Diners, Drive-Ins and Motels: America on the Road",
+      "query": "highway OR motel OR \"road trip\" OR travel OR vacation",
+      "years": [
+        1948,
+        1965
+      ],
+      "items": 88,
+      "colour_items": 55,
+      "examples": [
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)",
+        "OneGotFa1963 (1963)",
+        "Century21964 (1964)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-school",
+      "name": "Going to School in 1950s America",
+      "query": "school OR classroom OR teacher OR pupils",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 92,
+      "colour_items": 28,
+      "examples": [
+        "FromtheG1954 (1954)",
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)",
+        "DatingDo1949 (1949)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-department-store",
+      "name": "How America Shopped Before Malls",
+      "query": "\"department store\" OR shopping OR store OR retail",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 87,
+      "colour_items": 37,
+      "examples": [
+        "WhyPlayL1949 (1949)",
+        "Miracleo1955 (1955)",
+        "Corvairi1960 (1960)",
+        "1955Chev1955 (1955)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1960s-color",
+      "name": "Life in 1960s America in Color",
+      "query": "city OR family OR leisure OR teenagers",
+      "years": [
+        1960,
+        1969
+      ],
+      "items": 59,
+      "colour_items": 37,
+      "examples": [
+        "GoldenYe1960 (1960)",
+        "OneGotFa1963 (1963)",
+        "Century21964 (1964)",
+        "YourName1960 (1960)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "home-of-tomorrow",
+      "name": "The American Home of Tomorrow, as Imagined in 1956",
+      "query": "future OR tomorrow OR \"home of\" OR design",
+      "years": [
+        1950,
+        1962
+      ],
+      "items": 92,
+      "colour_items": 48,
+      "examples": [
+        "Achievem1955 (1955)",
+        "GoldenYe1960 (1960)",
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-women",
+      "name": "What Women Were Told About Home and Work in the 1950s",
+      "query": "housewife OR homemaker OR \"working women\" OR women",
+      "years": [
+        1946,
+        1962
+      ],
+      "items": 95,
+      "colour_items": 34,
+      "examples": [
+        "FromtheG1954 (1954)",
+        "Designfo1956 (1956)",
+        "Foundati1951 (1951)",
+        "RelaxedW1957 (1957)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-christmas",
+      "name": "Christmas in 1950s America",
+      "query": "christmas OR holiday OR santa",
+      "years": [
+        1946,
+        1965
+      ],
+      "items": 41,
+      "colour_items": 23,
+      "examples": [
+        "Designfo1956 (1956)",
+        "OutofThi1954 (1954)",
+        "Wordtoth1955 (1955)",
+        "FreedomH1956 (1956)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "detroit-peak",
+      "name": "Detroit at Its Peak",
+      "query": "Detroit OR \"motor city\" OR automotive",
+      "years": [
+        1945,
+        1966
+      ],
+      "items": 52,
+      "colour_items": 31,
+      "examples": [
+        "Achievem1955 (1955)",
+        "Designfo1956 (1956)",
+        "Century21964 (1964)",
+        "Corvairi1960 (1960)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1939-worlds-fair",
+      "name": "The 1939 World's Fair and the Future America Was Promised",
+      "query": "\"world's fair\" OR futurama OR \"New York fair\"",
+      "years": [
+        1938,
+        1941
+      ],
+      "items": 33,
+      "colour_items": 27,
+      "examples": [
+        "ToNewHor1940 (1940)",
+        "Medicusc1939_13 (1939)",
+        "Medicusc1939_2 (1939)",
+        "GoldenGa1939_3 (1939)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-office",
+      "name": "The 1950s Office: Typewriters, Carbon Copies and the Coffee Break",
+      "query": "office OR secretary OR typewriter OR \"office worker\"",
+      "years": [
+        1946,
+        1965
+      ],
+      "items": 92,
+      "colour_items": 37,
+      "examples": [
+        "Century21964 (1964)",
+        "Corvairi1960 (1960)",
+        "OutofThi1954 (1954)",
+        "ThisisCo1961 (1961)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-highways",
+      "name": "The Birth of the American Highway",
+      "query": "highway OR highways OR interstate OR freeway OR traffic",
+      "years": [
+        1945,
+        1965
+      ],
+      "items": 86,
+      "colour_items": 48,
+      "examples": [
+        "Designfo1956 (1956)",
+        "isforAto1953 (1953)",
+        "Century21964 (1964)",
+        "YourName1960 (1960)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "1950s-teenagers",
+      "name": "How Teenagers Were Invented in the 1950s",
+      "query": "teenager OR teenagers OR teen OR dating OR \"high school\"",
+      "years": [
+        1946,
+        1965
+      ],
+      "items": 93,
+      "colour_items": 33,
+      "examples": [
+        "FromtheG1954 (1954)",
+        "Designfo1956 (1956)",
+        "DatingDo1949 (1949)",
+        "Miracleo1955 (1955)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    },
+    {
+      "slug": "atomic-home",
+      "name": "The Atomic Age at Home",
+      "query": "atomic OR \"civil defense\" OR fallout OR shelter",
+      "years": [
+        1948,
+        1965
+      ],
+      "items": 63,
+      "colour_items": 28,
+      "examples": [
+        "isforAto1953 (1953)",
+        "Wonderfu1960 (1960)",
+        "a-bomb_blast_effects (1952)",
+        "Operatio1955 (1955)"
+      ],
+      "status": "queued",
+      "wikipedia": []
+    }
+  ]
+}

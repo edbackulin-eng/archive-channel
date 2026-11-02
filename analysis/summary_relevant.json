@@ -1,0 +1,203 @@
+{
+ "relevant_videos": 529,
+ "relevant_channels": 297,
+ "top100_median_views": 1352365,
+ "top100_median_minutes": 11.8,
+ "top100_minutes_buckets": {
+  "3-10": 43,
+  "10-20": 27,
+  "20-40": 15,
+  "40+": 15
+ },
+ "top100_colour": 35,
+ "top100_bw": 3,
+ "newcomers": [
+  {
+   "channel": "1950s Dream Time",
+   "created": "2025-02-19",
+   "subs": "51900",
+   "median_views_recent": "168361",
+   "median_dur_min": "3.7",
+   "days_between_uploads": "7.0",
+   "niche_videos_found": 1,
+   "best_title": "1950s Doo-Wop - Everything's Alright In The Suburb Tonight"
+  },
+  {
+   "channel": "History by Anna",
+   "created": "2026-06-17",
+   "subs": "11800",
+   "median_views_recent": "121559",
+   "median_dur_min": "13.3",
+   "days_between_uploads": "8",
+   "niche_videos_found": 2,
+   "best_title": "Car Crashes in 1950s America: Rare Glimpse | Restored in Color & Sound"
+  }
+ ],
+ "top_channels": [
+  {
+   "channel": "NASS",
+   "created": "2020-07-30",
+   "subs": "788000",
+   "median_views_recent": "40525",
+   "median_dur_min": "8.7",
+   "days_between_uploads": "4",
+   "niche_videos_found": 43,
+   "niche_views_found": 35206697,
+   "best_title": "San Francisco 1906 (New Version) in Color [VFX,60fps, Remastered] w/sound design added"
+  },
+  {
+   "channel": "ImagineVideoclips",
+   "created": "2011-06-03",
+   "subs": "431000",
+   "median_views_recent": "214085",
+   "median_dur_min": "4.1",
+   "days_between_uploads": "97",
+   "niche_videos_found": 1,
+   "niche_views_found": 31709732,
+   "best_title": "0 - 100 years in the USA"
+  },
+  {
+   "channel": "Denis Shiryaev",
+   "created": "2007-07-04",
+   "subs": "561000",
+   "median_views_recent": "2177416",
+   "median_dur_min": "5.8",
+   "days_between_uploads": "54",
+   "niche_videos_found": 1,
+   "niche_views_found": 21729628,
+   "best_title": "[4k, 60 fps] A Trip Through New York City in 1911"
+  },
+  {
+   "channel": "America",
+   "created": "2013-07-29",
+   "subs": "364000",
+   "median_views_recent": "70176",
+   "median_dur_min": "4.1",
+   "days_between_uploads": "13",
+   "niche_videos_found": 1,
+   "niche_views_found": 13980517,
+   "best_title": "America - A Horse With No Name (America In Concert, May 24,1973)"
+  },
+  {
+   "channel": "The History Lounge",
+   "created": "2022-06-23",
+   "subs": "180000",
+   "median_views_recent": "308451",
+   "median_dur_min": "9.1",
+   "days_between_uploads": "7",
+   "niche_videos_found": 22,
+   "niche_views_found": 11826550,
+   "best_title": "A View of American Life During the 1930s"
+  },
+  {
+   "channel": "Recollection Road",
+   "created": "2020-09-13",
+   "subs": "419000",
+   "median_views_recent": "12054",
+   "median_dur_min": "9.8",
+   "days_between_uploads": "3",
+   "niche_videos_found": 7,
+   "niche_views_found": 7101761,
+   "best_title": "The 1950s in Color - Life in America"
+  },
+  {
+   "channel": "Cult Cinema Classics",
+   "created": "2018-09-05",
+   "subs": "3470000",
+   "median_views_recent": "19332",
+   "median_dur_min": "74.8",
+   "days_between_uploads": "0.0",
+   "niche_videos_found": 1,
+   "niche_views_found": 6281948,
+   "best_title": "Life with Father (1947) Elizabeth Taylor, William Powell | Comedy, Family | Subtitles"
+  },
+  {
+   "channel": "Reading Through History",
+   "created": "2012-09-24",
+   "subs": "107000",
+   "median_views_recent": "1175",
+   "median_dur_min": "4.9",
+   "days_between_uploads": "9",
+   "niche_videos_found": 3,
+   "niche_views_found": 6281386,
+   "best_title": "History Brief: Daily Life in the 1930s"
+  },
+  {
+   "channel": "King Rose Archives",
+   "created": "2007-01-29",
+   "subs": "193000",
+   "median_views_recent": "1763",
+   "median_dur_min": "4.8",
+   "days_between_uploads": "4.5",
+   "niche_videos_found": 1,
+   "niche_views_found": 5791829,
+   "best_title": "What Everyday Life Really Looked Like in the 1950s"
+  },
+  {
+   "channel": "Rick88888888",
+   "created": "2006-10-01",
+   "subs": "250000",
+   "median_views_recent": "23178",
+   "median_dur_min": "16.8",
+   "days_between_uploads": "15.5",
+   "niche_videos_found": 1,
+   "niche_views_found": 5723761,
+   "best_title": "New York in the mid 1930's in Color!"
+  },
+  {
+   "channel": "Lost in Time",
+   "created": "2023-02-16",
+   "subs": "2300000",
+   "median_views_recent": "897136",
+   "median_dur_min": "13.3",
+   "days_between_uploads": "35",
+   "niche_videos_found": 1,
+   "niche_views_found": 5581887,
+   "best_title": "Around The World in 1900 Colorized (60fps) India, London, New York, China ++"
+  },
+  {
+   "channel": "Vivid History",
+   "created": "2021-09-01",
+   "subs": "123000",
+   "median_views_recent": "69922",
+   "median_dur_min": "10.3",
+   "days_between_uploads": "10",
+   "niche_videos_found": 3,
+   "niche_views_found": 5360760,
+   "best_title": "Early 1950s Los Angeles | 4k and Remastered"
+  },
+  {
+   "channel": "DOCUMENTARY TUBE",
+   "created": "2013-12-26",
+   "subs": "1660000",
+   "median_views_recent": "528178",
+   "median_dur_min": "22.5",
+   "days_between_uploads": "11",
+   "niche_videos_found": 2,
+   "niche_views_found": 5253234,
+   "best_title": "AMERICAN NOSTALGIA: The 1950s Thanksgiving"
+  },
+  {
+   "channel": "CrashCourse",
+   "created": "2006-05-20",
+   "subs": "17300000",
+   "median_views_recent": "88855",
+   "median_dur_min": "11.0",
+   "days_between_uploads": "5.5",
+   "niche_videos_found": 1,
+   "niche_views_found": 5023926,
+   "best_title": "The 1960s in America: Crash Course US History #40"
+  },
+  {
+   "channel": "Kinolibrary",
+   "created": "2012-02-13",
+   "subs": "247000",
+   "median_views_recent": "487",
+   "median_dur_min": "4.9",
+   "days_between_uploads": "0",
+   "niche_videos_found": 8,
+   "niche_views_found": 4781665,
+   "best_title": "1960s Vietnam War, US Soldier Captured, Color Footage"
+  }
+ ]
+}

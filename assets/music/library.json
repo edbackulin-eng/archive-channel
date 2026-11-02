@@ -1,0 +1,19 @@
+{
+ "source_note": "Nostalgic, period-flavoured tracks by Kevin MacLeod (incompetech.com), CC BY 4.0: cleared for monetised YouTube with the attribution line in the description. Kevin MacLeod does not register his music with Content ID (incompetech FAQ). Fetched by automation/fetch_music.py; the mp3 files are not kept in the repository.",
+ "tracks": [
+  {"file": "lobby-time.mp3", "title": "Lobby Time", "mood": "warm", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Lobby%20Time.mp3"},
+  {"file": "hep-cats.mp3", "title": "Hep Cats", "mood": "lively", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Hep%20Cats.mp3"},
+  {"file": "bossa-antigua.mp3", "title": "Bossa Antigua", "mood": "warm", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bossa%20Antigua.mp3"},
+  {"file": "jazz-brunch.mp3", "title": "Jazz Brunch", "mood": "lively", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Jazz%20Brunch.mp3"},
+  {"file": "bass-walker.mp3", "title": "Bass Walker", "mood": "curious", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bass%20Walker.mp3"},
+  {"file": "george-street-shuffle.mp3", "title": "George Street Shuffle", "mood": "lively", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/George%20Street%20Shuffle.mp3"},
+  {"file": "sidewalk-shade.mp3", "title": "Sidewalk Shade", "mood": "warm", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sidewalk%20Shade.mp3"},
+  {"file": "sincerely.mp3", "title": "Sincerely", "mood": "reflective", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3"},
+  {"file": "bright-wish.mp3", "title": "Bright Wish", "mood": "reflective", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bright%20Wish.mp3"},
+  {"file": "fig-leaf-rag.mp3", "title": "Fig Leaf Rag", "mood": "lively", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Fig%20Leaf%20Rag.mp3"},
+  {"file": "wallpaper.mp3", "title": "Wallpaper", "mood": "curious", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Wallpaper.mp3"},
+  {"file": "easy-lemon.mp3", "title": "Easy Lemon", "mood": "warm", "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Easy%20Lemon.mp3"}
+ ],
+ "artist": "Kevin MacLeod", "license": "CC BY 4.0", "license_url": "https://creativecommons.org/licenses/by/4.0/",
+ "attribution": "{title} by Kevin MacLeod (incompetech.com) - Licensed under Creative Commons: By Attribution 4.0 - https://creativecommons.org/licenses/by/4.0/"
+}

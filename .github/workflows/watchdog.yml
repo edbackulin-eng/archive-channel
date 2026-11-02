@@ -1,0 +1,48 @@
+name: watchdog
+# Reruns failed builds, keeps two episodes ahead, uploads the buffer once a token
+# exists, emails what it cannot fix, and commits a daily heartbeat. One run checks
+# every 15 minutes for almost six hours and starts its successor; the schedule
+# only restarts the chain if it ever breaks (GitHub drops many scheduled runs).
+on:
+  schedule:
+    - cron: "13,43 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+  issues: write
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    env:
+      GH_TOKEN: ${{ github.token }}
+      YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+      PYTHONUTF8: 1
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Watch, every 15 minutes, then hand over
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          end=$(( $(date +%s) + 5*3600 + 40*60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; git reset -q --hard origin/main; }
+            python automation/watchdog.py || true
+            commit=$(grep -o "^commit=.*" "$GITHUB_OUTPUT" 2>/dev/null | tail -1 | cut -d= -f2)
+            git add state/watchdog.json
+            [ "$commit" = "true" ] && git add state/heartbeat.json
+            if ! git diff --cached --quiet; then
+              git commit -q -m "watchdog: state $(date -u +%Y-%m-%dT%H:%MZ)"
+              for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep $((i * 8)); done
+            fi
+            : > "$GITHUB_OUTPUT"
+            sleep 900
+          done
+          gh workflow run watchdog.yml --repo ${{ github.repository }}

@@ -1,0 +1,42 @@
+name: upload
+# Buffered episodes (built, QA passed) go to YouTube once a token exists: the
+# first two private without a date for the owner's approval, then on the nearest
+# Tue/Fri 12:00 America/New_York slot. Files come from each build's artifact.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: upload
+  cancel-in-progress: false
+jobs:
+  upload:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUTF8: 1
+      YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install -q google-api-python-client google-auth
+      - name: Fetch the buffered episodes' files
+        run: |
+          for slug in $(python -c "import json;print(' '.join(r['slug'] for r in json.load(open('state/episodes.json')) if r.get('state')=='built' and not r.get('youtube_id')))"); do
+            gh run download -R ${{ github.repository }} -n "release-$slug" -D "$RUNNER_TEMP/r_$slug" && tar xf "$RUNNER_TEMP/r_$slug/out.tar"
+          done
+      - run: python automation/release.py upload
+      - name: Save the state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/episodes.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "upload: state"
+          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
+          exit 1

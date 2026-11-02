@@ -1,0 +1,28 @@
+name: approve
+# "approve <slug>": one of the first two episodes, uploaded private without a
+# date, gets the nearest free slot (Tue/Fri 12:00 America/New_York).
+run-name: approve ${{ inputs.slug }}
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: the episode to schedule
+permissions:
+  contents: write
+jobs:
+  approve:
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONUTF8: 1
+      YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install -q google-api-python-client google-auth
+      - run: python automation/release.py approve "${{ inputs.slug }}"
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/episodes.json && git commit -q -m "approve ${{ inputs.slug }}" && git push -q origin HEAD:main

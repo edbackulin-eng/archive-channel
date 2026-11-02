@@ -1,0 +1,130 @@
+{
+ "name": "archive-channel",
+ "language": "en",
+ "subject": "American life 1930s-1980s told with public-domain archive film",
+ "schedule": {
+  "weekdays": [
+   1,
+   4
+  ],
+  "local_time": "12:00",
+  "timezone": "America/New_York",
+  "min_lead_minutes": 30,
+  "_note": "Tue and Fri; to be confirmed after the niche analysis"
+ },
+ "episode": {
+  "minutes_min": 15,
+  "minutes_max": 20,
+  "hook_seconds": 30,
+  "_minutes": "running time including film breaks"
+ },
+ "voice": {
+  "engine": "kokoro",
+  "voice": "am_onyx",
+  "candidates": [
+   "am_onyx",
+   "am_eric",
+   "bm_george"
+  ],
+  "taken_elsewhere": [
+   "am_michael",
+   "bm_lewis",
+   "am_fenrir"
+  ],
+  "wpm": 150,
+  "_wpm": "speaking pace while the narrator talks; film breaks come on top"
+ },
+ "edit": {
+  "shot_min_s": 4.0,
+  "shot_max_s": 6.0,
+  "no_repeat_within_s": 180,
+  "output": "1920x1080",
+  "fps": 30
+ },
+ "sound": {
+  "music_under_voice_db": -22,
+  "original_sound_db": -30,
+  "target_lufs": -14,
+  "true_peak": -1.0
+ },
+ "sources": {
+  "allowed": [
+   "archive.org/prelinger",
+   "archive.org/FedFlix (incl. National Archives gov.archives.*)",
+   "archive.org/nasa",
+   "images.nasa.gov"
+  ],
+  "licence_urls_allowed": [
+   "creativecommons.org/licenses/publicdomain",
+   "creativecommons.org/publicdomain/mark",
+   "creativecommons.org/publicdomain/zero"
+  ],
+  "forbidden": [
+   "British Pathe",
+   "Getty",
+   "Reuters",
+   "AP",
+   "Associated Press",
+   "Pathe",
+   "Critical Past",
+   "Shutterstock",
+   "Pond5",
+   "Storyblocks"
+  ],
+  "prefer_colour": true
+ },
+ "text_llm": {
+  "groq_preference": [
+   "moonshotai/kimi-k2-instruct",
+   "meta-llama/llama-4-maverick-17b-128e-instruct",
+   "openai/gpt-oss-20b",
+   "meta-llama/llama-4-scout-17b-16e-instruct"
+  ],
+  "groq_taken_elsewhere": [
+   "openai/gpt-oss-120b",
+   "qwen/qwen3.8-27b",
+   "llama-3.3-70b-versatile"
+  ],
+  "gemini_fallback": "gemini-flash-lite-latest"
+ },
+ "vision": {
+  "model": "gemini-flash-lite-latest",
+  "key": "GEMINI_API_KEY_AR"
+ },
+ "thumbnail": {
+  "size": [
+   1280,
+   720
+  ],
+  "empty_corner": [
+   0.25,
+   0.2
+  ],
+  "words": [
+   2,
+   4
+  ]
+ },
+ "qa": {
+  "match_share_min": 0.85,
+  "approve_first_episodes": 2,
+  "no_voice_share": [
+   0.2,
+   0.3
+  ]
+ },
+ "breathing": {
+  "_rule": "The narrator does not talk without a break: 20-30% of the running time has no voice, in film breaks of 3-8 s where the chronicle's own sound, music and atmosphere carry the picture - on the most vivid shots and between chapters (owner, 02.11).",
+  "min_share": 0.2,
+  "max_share": 0.3,
+  "target_share": 0.25,
+  "min_s": 3.0,
+  "max_s": 8.0,
+  "chapter_s": 7.0,
+  "after_hook_s": 4.0,
+  "reveal_s": 4.5,
+  "spread_s": 3.5,
+  "film_sound_db": -12,
+  "music_up_db": 6
+ }
+}

@@ -1,0 +1,120 @@
+name: episode
+# One episode, one job per stage so none can hit GitHub's six-hour limit; a
+# failed job is rerun on its own by the watchdog, on the artifacts of the rest.
+run-name: episode ${{ inputs.slug }}
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: topic slug (empty = the next queued one)
+        default: ""
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: episode
+  cancel-in-progress: false
+env:
+  PYTHONUTF8: 1
+jobs:
+  pick:
+    runs-on: ubuntu-24.04
+    outputs:
+      slug: ${{ steps.p.outputs.slug }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - id: p
+        run: |
+          s="${{ inputs.slug }}"
+          [ -n "$s" ] || s=$(python automation/next_topic.py)
+          echo "slug=$s" >> "$GITHUB_OUTPUT"
+  prepare:
+    needs: pick
+    if: needs.pick.outputs.slug != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      SLUG: ${{ needs.pick.outputs.slug }}
+      GROQ_API_KEY_AR: ${{ secrets.GROQ_API_KEY_AR }}
+      GEMINI_API_KEY_AR: ${{ secrets.GEMINI_API_KEY_AR }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
+      - run: pip install -q -r requirements.txt && python automation/fetch_models.py
+      - run: python automation/build.py "$SLUG" script
+      - run: python automation/build.py "$SLUG" narrate
+      - run: python automation/build.py "$SLUG" plan
+      - name: Keep the script in the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "episodes/$SLUG/script.txt" "episodes/$SLUG/meta.json" "episodes/$SLUG/fact_check.json" 2>/dev/null || true
+          git diff --cached --quiet || { git commit -q -m "Script for $SLUG"; for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep $((i*8)); done; }
+      - run: tar cf "$RUNNER_TEMP/prep.tar" "episodes/$SLUG"
+      - uses: actions/upload-artifact@v5
+        with: {name: prep, path: "${{ runner.temp }}/prep.tar", retention-days: 3}
+  cut:
+    needs: [pick, prepare]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix: {part: [0, 1, 2, 3, 4, 5, 6, 7]}
+    env:
+      SLUG: ${{ needs.pick.outputs.slug }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -q -r requirements.txt
+      - uses: actions/download-artifact@v5
+        with: {name: prep, path: "${{ runner.temp }}"}
+      - run: tar xf "$RUNNER_TEMP/prep.tar"
+      - run: python automation/build.py "$SLUG" cut ${{ matrix.part }} 8
+      - run: mkdir -p "episodes/$SLUG/build/clips" && tar cf "$RUNNER_TEMP/clips.tar" "episodes/$SLUG/build/clips"
+      - uses: actions/upload-artifact@v5
+        with: {name: "clips-${{ matrix.part }}", path: "${{ runner.temp }}/clips.tar", retention-days: 3}
+  render:
+    needs: [pick, cut]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      SLUG: ${{ needs.pick.outputs.slug }}
+      YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -q -r requirements.txt && python automation/fetch_models.py && python automation/fetch_music.py
+      - uses: actions/download-artifact@v5
+        with: {path: "${{ runner.temp }}/a"}
+      - run: |
+          tar xf "$RUNNER_TEMP/a/prep/prep.tar"
+          for t in "$RUNNER_TEMP"/a/clips-*/clips.tar; do tar xf "$t"; done
+      - run: python automation/build.py "$SLUG" render
+      - run: tar cf "$RUNNER_TEMP/out.tar" "episodes/$SLUG/out"
+      - uses: actions/upload-artifact@v5
+        with: {name: "release-${{ needs.pick.outputs.slug }}", path: "${{ runner.temp }}/out.tar", retention-days: 30}
+      - name: Record (QA gate; upload when a token exists, else buffer)
+        run: python automation/release.py record "$SLUG"
+      - name: Save the state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/episodes.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -q -m "state: $SLUG"
+          for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
+          exit 1
