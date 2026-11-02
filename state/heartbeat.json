@@ -1,0 +1,8 @@
+{
+ "date": "2026-11-02",
+ "checked_at": "2026-11-02T23:05:44Z",
+ "ahead": [],
+ "actions": [
+  "waiting for GROQ_API_KEY_AR and GEMINI_API_KEY_AR; no build started"
+ ]
+}
