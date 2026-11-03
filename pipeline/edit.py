@@ -63,10 +63,35 @@ def _shot_video(s, k, work):
     cards.caption_png(s.get("year"), s.get("place") or "United States", cap)
     # the caption fades in after half a second and out before the cut
     fade = (f"[1:v]format=rgba,fade=t=in:st=0.4:d=0.4:alpha=1,"
-            f"fade=t=out:st={max(0.5, d - 0.6):.3f}:d=0.4:alpha=1[c];[0:v][c]overlay=0:0,format=yuv420p")
-    _ff(["-y", "-stream_loop", "-1", "-i", str(s["clip"]), "-loop", "1", "-i", str(cap), "-filter_complex", fade,
+            f"fade=t=out:st={max(0.5, d - 0.6):.3f}:d=0.4:alpha=1[c];[0:v][c]overlay=0:0")
+    inputs = ["-stream_loop", "-1", "-i", str(s["clip"]), "-loop", "1", "-i", str(cap)]
+    if s.get("price"):
+        # the price tag: in with the line, out just before the cut ("prices" in the config)
+        tag = work / f"price_{k:03d}.png"
+        _, s["price_tag"] = cards.price_png(s["price"], tag, _free_side(s["clip"], work / f"pf_{k:03d}.jpg"))
+        inputs += ["-loop", "1", "-i", str(tag)]
+        fade += (f"[v1];[2:v]format=rgba,fade=t=in:st=0.25:d=0.3:alpha=1,"
+                 f"fade=t=out:st={max(0.6, d - 0.5):.3f}:d=0.35:alpha=1[p];[v1][p]overlay=0:0")
+    fade += ",format=yuv420p"
+    _ff(["-y", *inputs, "-filter_complex", fade,
          "-t", f"{d:.3f}", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", "-r", str(FPS), str(out)])
     return out
+
+
+def _free_side(clip, frame):
+    """The half of the shot with less face in it, for the price tag."""
+    from PIL import Image
+    from pipeline import thumbnail
+    try:
+        _ff(["-y", "-ss", "0.5", "-i", str(clip), "-frames:v", "1", str(frame)])
+        im = Image.open(frame)
+        fs = thumbnail.faces(im)
+    except (RuntimeError, OSError, Exception):                   # noqa: BLE001 - no frame, no faces: the default
+        return "right"
+    mid = im.width / 2
+    left = sum(w * h for x, _, w, h in fs if x + w / 2 < mid)
+    right = sum(w * h for x, _, w, h in fs if x + w / 2 >= mid)
+    return "left" if right > left else "right"
 
 
 def _shot_sound(s, k, work):

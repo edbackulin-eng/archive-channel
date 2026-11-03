@@ -85,9 +85,13 @@ def _post(url, payload, headers, timeout=240):
 
 
 def _groq(prompt, system, max_tokens, temperature, as_json):
-    payload = {"model": groq_model(), "max_tokens": max_tokens, "temperature": temperature,
+    model = groq_model()
+    payload = {"model": model, "max_tokens": max_tokens, "temperature": temperature,
                "messages": ([{"role": "system", "content": system}] if system else [])
                + [{"role": "user", "content": prompt}]}
+    if model.startswith("openai/gpt-oss"):
+        # a reasoning model: its thinking counts against max_tokens, so it gets room of its own
+        payload.update({"reasoning_effort": "medium", "max_tokens": max_tokens + 3000})
     if as_json:
         payload["response_format"] = {"type": "json_object"}
     d = _post(f"{GROQ_URL}/chat/completions", payload, {"Authorization": f"Bearer {groq_key()}"})
@@ -134,9 +138,10 @@ def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False,
         for attempt in range(retries):
             try:
                 text = fn(prompt, system, max_tokens, temperature, as_json)
-                if text.strip():
+                if text and text.strip():
                     log.info("answered by %s", name if name != "groq" else f"groq:{groq_model()}")
                     return text
+                errors.append(f"{name}: empty answer")
             except urllib.error.HTTPError as e:
                 errors.append(f"{name}: HTTP {e.code}")
                 if e.code not in (429, 500, 502, 503, 504):

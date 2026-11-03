@@ -9,6 +9,11 @@
                        (pipeline/breathing.py places these; the edit lays
                        the most vivid shot of the passage under them)
     ## Title | place | years   a chapter starts here (never spoken)
+    [price 7990 1949 | A new Levitt house]
+                       a price tag on screen over the next line's first shot:
+                       then, and now in today's dollars (pipeline/prices.py)
+    [today 7990 1949]  inside a line: spoken as "about $108,000", worked out
+                       from the BLS CPI-U, never written by the text model
 
 The channel's rule (config/channel.json "breathing"): 20-30 % of the running
 time has no voice, in film breaks of 3-8 s - on the most vivid shots and
@@ -24,6 +29,7 @@ LINE_GAP_S = 0.12
 _PAUSE = re.compile(r"^\[pause\s+([0-9.]+)\]$", re.I)
 _FILM = re.compile(r"^\[film\s+([0-9.]+)\]$", re.I)
 _CHAPTER = re.compile(r"^##\s*(.+)$")
+_PRICE = re.compile(r"^\[price\s+([\d.,]+)\s+(\d{4})\s*(?:\|\s*([^\]]*))?\]$", re.I)
 
 
 @dataclass
@@ -34,10 +40,12 @@ class Line:
     pause_before: float    # a narration pause (short silence)
     film_before: float = 0.0   # a film break: no voice, the chronicle speaks
     chapter: str = ""      # "Title | place | years" when a chapter opens on this line
+    price: dict = None     # {"amount", "year", "label"}: a price tag over this line
 
 
 def parse(script):
-    lines, pending, film, chapter = [], 0.0, 0.0, ""
+    from pipeline import prices
+    lines, pending, film, chapter, price = [], 0.0, 0.0, "", None
     for raw in script.splitlines():
         raw = raw.strip()
         if not raw:
@@ -54,6 +62,11 @@ def parse(script):
         if m:
             chapter = m.group(1).strip()
             continue
+        m = _PRICE.match(raw)
+        if m:
+            price = {"amount": m.group(1), "year": int(m.group(2)), "label": (m.group(3) or "").strip()}
+            continue
+        raw = prices.spoken_today(raw)
         if raw.startswith(">"):
             kind, speed, text = "fast", FAST, raw[1:].strip()
         elif raw.startswith("<"):
@@ -63,14 +76,19 @@ def parse(script):
         gap = pending if pending else LINE_GAP_S
         if kind == "slow":
             gap = max(gap, SLOW_LEAD_S)
-        lines.append(Line(text, kind, speed, 0.0 if not lines and not pending else gap, film, chapter))
-        pending, film, chapter = 0.0, 0.0, ""
+        lines.append(Line(text, kind, speed, 0.0 if not lines and not pending else gap, film, chapter, price))
+        pending, film, chapter, price = 0.0, 0.0, "", None
     return lines
 
 
 def plain_text(script):
     """The words alone, for subtitles and word counts."""
     return " ".join(l.text for l in parse(script))
+
+
+def price_tags(script):
+    """[(line index, price)] in order."""
+    return [(i, l.price) for i, l in enumerate(parse(script)) if l.price]
 
 
 def chapters(script):

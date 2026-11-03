@@ -2,7 +2,9 @@
 Flat, quiet, a few farm roads.
 Four years later, more than seventeen thousand houses stand on that land.
 Each one with a kitchen full of brand-new appliances, and a television in the living room.
+[price 400 1947 | Up front, with the G.I. Bill]
 < For many young veterans, the money they needed up front came to about four hundred dollars.
+That is [today 400 1947] today.
 So what was life really like in America's first mass-produced suburb?
 And who was not allowed to live there?
 [pause 0.5]
@@ -13,7 +15,6 @@ And who was not allowed to live there?
 > The war was over, and the men were coming home.
 Millions of them, with young wives, with babies on the way, and with nowhere to live.
 During the war, the home building business had almost stopped.
-Scarce materials went to the war, not to private houses.
 Now a whole generation needed somewhere to start a family, all at once.
 The land itself had a long past.
 In 1664, a settler named John Seaman bought rights to part of it from the Massapequan people, and farmed there.
@@ -21,7 +22,6 @@ A hundred years later, a deed gave the northern part a name: Island Trees.
 In 1837, the railroad reached nearby Hicksville.
 German immigrant farmers followed, and the land was opened up to potato farming.
 For more than a century, that is what it stayed.
-Fields, and the people who worked them.
 [pause 0.4]
 [film 8]
 One building firm on Long Island thought it knew what to do with them.
@@ -80,13 +80,15 @@ Now it was Levittown.
 [film 7]
 > So, the question we left open. What did a house actually cost?
 Building thousands of houses at once made each one cheap.
+[price 8000 1947 | A Levitt house, appliances in]
 The Levitts could sell a house, with the kitchen stocked with modern appliances and a television in the living room, for as little as eight thousand dollars.
-That was still a great deal of money for a young family.
+That is [today 8000 1947] in today's money, and it was still a great deal for a young family.
 But here is where Washington came in.
 In June of 1944, before the war had even ended, Congress had passed the Servicemen's Readjustment Act.
 Everyone called it the G.I. Bill.
 Among its benefits were low-interest home loans for veterans, with no down payment at all.
 And the terms were better for new houses than for old ones.
+[price 400 1947 | Up front, with the G.I. Bill]
 < With the G.I. Bill and federal housing subsidies, the money many buyers needed up front fell to around four hundred dollars.
 [film 8]
 At first, Levittown was meant for renting.
@@ -98,7 +100,9 @@ Think about what that meant for a young couple who had grown up in a city apartm
 For the price of renting, they could own a house, with a lawn, outside the city.
 The G.I. Bill had one more promise for the men coming home.
 It was called the fifty-two twenty clause.
+[price 20 1944 | A week, the 52-20 clause]
 An unemployed veteran could get twenty dollars a week, for up to fifty-two weeks, while he looked for work.
+In today's money, that is [today 20 1944] a week.
 [pause 0.4]
 [film 8]
 < Less than one fifth of the money set aside for it was ever paid out.
@@ -111,7 +115,8 @@ Most of the men found jobs quickly, or went back to school instead.
 They called it the ranch house.
 It was bigger, thirty-two feet by twenty-five, and more modern.
 And it was only for sale.
-< The planned price was seven thousand, nine hundred and ninety dollars.
+[price 7990 1949 | The 1949 ranch house]
+< The planned price was seven thousand, nine hundred and ninety dollars: [today 7990 1949] today.
 [film 8]
 Like the first houses, it stood on a concrete slab.
 It had an attic that could be expanded, but no garage.
@@ -138,6 +143,9 @@ Building began in February of 1952.
 This second Levittown offered six models of house.
 The Levittowner. The Rancher. The Jubilee. The Pennsylvanian. The Colonial. And the Country Clubber.
 Every one was a single-family home with a lawn.
+[price 4237 1950 | Average family income, a year]
+And who could pay for one? In 1950, the average American family earned four thousand, two hundred and thirty-seven dollars a year.
+That is [today 4237 1950] today.
 The method was the twenty-six steps again, perfected.
 The house stayed where it was, and the workers moved from site to site.
 One crew poured foundations. Another put up the pre-made walls. Another did the plumbing, another the wiring.
@@ -158,6 +166,9 @@ A long list of them, about how a home and its yard should be kept.
 And you could not put up a fence around your yard.
 In the end, those rules could not be enforced.
 When backyard pools became affordable, people wanted privacy, and the fences went up.
+[price 0.73 1950 | A pound of butter]
+Daily life had its own price list. In 1950, a pound of butter cost seventy-three cents, and a pound of round steak, ninety-four.
+That butter would be [today 0.73 1950] today.
 By 1958, when the building was done, seventeen thousand, three hundred and eleven homes stood there.
 And the children of those homes grew up fast.
 < In 1960, a baseball team from Levittown, Pennsylvania, won the Little League World Series.
@@ -214,14 +225,13 @@ At his height, he was completing a suburban house every eleven minutes.
 In 1954, William took control of the family firm.
 In 1960, the company went public.
 His Levittowns spread: Long Island, Pennsylvania, Willingboro in New Jersey, and later Levittown in Puerto Rico.
-The company built in Bowie, Maryland, and even in France.
 People called him the King of Suburbia, and the Inventor of the Suburb.
 [pause 0.4]
 [film 8]
 < In July of 1967, after more than one hundred and forty thousand houses around the world, he sold the company.
 [film 4.5]
-The buyer was the conglomerate ITT, and the price was ninety-two million dollars.
-It was close to the peak.
+[price 92000000 1967 | Levitt and Sons, sold to ITT]
+The buyer was the conglomerate ITT, and the price was ninety-two million dollars, [today 92000000 1967] in today's money.
 The ventures he started in the years that followed failed, one after another.
 William Levitt died in 1994, at the age of eighty-six.
 Four years later, Time magazine named him one of the hundred most important people of the twentieth century.
@@ -232,6 +242,9 @@ Four years later, Time magazine named him one of the hundred most important peop
 And the families kept coming.
 In 1946, the number of babies born each month in the United States rose from about two hundred and twenty thousand in January to nearly three hundred and forty thousand in October.
 By the end of the 1940s, around thirty-two million babies had been born, compared with twenty-four million in the 1930s.
+[price 5 1950 | The babysitter, of $7 at the movies]
+In 1950, when a California couple spent seven dollars to go to the movies, five of them went to the babysitter.
+That babysitter's five dollars is [today 5 1950] today.
 In 1954, births topped four million in a single year for the first time.
 They did not fall below that until 1965.
 By then, four in ten Americans were under the age of twenty.

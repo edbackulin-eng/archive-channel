@@ -137,3 +137,53 @@ def caption_png(year, place, out):
     d.text((x, y), text, font=f, fill=(250, 240, 220))
     im.save(out)
     return out
+
+
+def price_png(price, out, side="right"):
+    """Transparent 1920x1080 overlay: a big price tag, then and now, on the side
+    of the shot with no face (side, chosen by the edit).
+
+    price: {"amount", "year", "label"} from the script's [price ...] tag. The
+    sum of today comes from pipeline/prices.py (BLS CPI-U), never from text."""
+    from pipeline import prices
+    t = prices.tag(price["amount"], price["year"], price.get("label", ""))
+    tw, pad = 700, 40
+    ink, red, green, gold = (60, 40, 30), (150, 24, 20), (24, 60, 40), (255, 236, 150)
+    head = (t["label"].upper() + ", " if t["label"] else "") + t["year"]
+    now = f"= {t['now']} TODAY"
+    rows = []                                                    # (text, font, colour, band)
+    for text, kind, box_h, cap, colour, band in (
+            (head, "label", 58, 50, ink, None), (t["then"], "title", 210, 210, red, None),
+            (now, "title", 92, 86, gold, green), (t["note"], "label", 36, 30, ink, None)):
+        size, _ = fonts.fit(text, kind, tw - 2 * pad - (70 if text == head else 0) - (40 if band else 0), box_h, cap)
+        rows.append((text, fonts.font(kind, size), colour, band))
+    probe = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    boxes = [probe.textbbox((0, 0), r[0], font=r[1]) for r in rows]
+    gaps = (18, 22, 20, 0)
+    th = pad + sum(b[3] - b[1] + g + (28 if r[3] else 0) for b, g, r in zip(boxes, gaps, rows)) + pad - 6
+    tag = Image.new("RGBA", (tw, th), (0, 0, 0, 0))
+    d = ImageDraw.Draw(tag)
+    d.rounded_rectangle((6, 6, tw - 6, th - 6), 30, fill=(246, 236, 210, 246), outline=(120, 30, 24, 255), width=7)
+    y = pad
+    for (text, f, colour, band), b, g in zip(rows, boxes, gaps):
+        w, h = b[2] - b[0], b[3] - b[1]
+        if text == head:
+            d.ellipse((pad - 6, y + h / 2 - 16, pad + 26, y + h / 2 + 16), outline=(120, 30, 24, 255), width=6)
+            x = pad + 52
+        else:
+            x = (tw - w) / 2
+        if band:
+            d.rounded_rectangle((pad - 8, y - 4, tw - pad + 8, y + h + 24), 14, fill=band)
+            y += 10
+        d.text((x - b[0], y - b[1]), text, font=f, fill=colour)
+        y += h + g + (18 if band else 0)
+    tag = tag.rotate(-3 if side == "right" else 3, resample=Image.BICUBIC, expand=True)
+    shadow = Image.new("RGBA", tag.size, (0, 0, 0, 0))
+    shadow.putalpha(tag.getchannel("A").point(lambda a: a * 0.55))
+    im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    x = W - tag.width - 90 if side == "right" else 90
+    y = max(40, (H - tag.height) // 2 - 80)
+    im.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(14)), (x + 14, y + 18))
+    im.alpha_composite(tag, (x, y))
+    im.save(out)
+    return out, t

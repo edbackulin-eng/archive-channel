@@ -54,7 +54,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "episodes/$SLUG/script.txt" "episodes/$SLUG/meta.json" "episodes/$SLUG/fact_check.json" 2>/dev/null || true
+          git add "episodes/$SLUG/script.txt" "episodes/$SLUG/meta.json" "episodes/$SLUG/fact_check.json" data/cpi_u.json 2>/dev/null || true
           git diff --cached --quiet || { git commit -q -m "Script for $SLUG"; for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep $((i*8)); done; }
       - run: tar cf "$RUNNER_TEMP/prep.tar" "episodes/$SLUG"
       - uses: actions/upload-artifact@v5
@@ -97,6 +97,8 @@ jobs:
           python-version: "3.11"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py && python automation/fetch_music.py
+      # Real-ESRGAN for the thumbnail frame, on the CPU
+      - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu
       - uses: actions/download-artifact@v5
         with: {path: "${{ runner.temp }}/a"}
       - run: |

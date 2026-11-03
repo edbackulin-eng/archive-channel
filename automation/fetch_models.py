@@ -1,4 +1,5 @@
-"""Fetch the models the runner needs: Kokoro (voice) and YuNet (faces, for thumbnails).
+"""Fetch the models the runner needs: Kokoro (voice), YuNet (faces, for thumbnails) and
+Real-ESRGAN's general model and its denoising twin (the thumbnail frame, on the CPU).
 
     python automation/fetch_models.py
 """
@@ -13,6 +14,11 @@ FILES = {
     "voices-v1.0.bin": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin",
     "face_detection_yunet_2023mar.onnx":
         "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
+    # Real-ESRGAN (BSD-3-Clause), the official release
+    "realesr-general-x4v3.pth":
+        "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth",
+    "realesr-general-wdn-x4v3.pth":
+        "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-wdn-x4v3.pth",
 }
 
 

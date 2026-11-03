@@ -22,7 +22,7 @@ import soundfile as sf  # noqa: E402
 from core import narrate  # noqa: E402
 from core.logger import get_logger  # noqa: E402
 from core.voice import SAMPLE_RATE  # noqa: E402
-from pipeline import archive, breathing, clips, edit, footage, qa, thumbnail  # noqa: E402
+from pipeline import archive, breathing, clips, edit, footage, prices, qa, thumbnail  # noqa: E402
 
 log = get_logger("build")
 CFG = json.loads((ROOT / "config" / "channel.json").read_text(encoding="utf-8"))
@@ -37,6 +37,7 @@ def stage_script(slug):
     e, _, _ = paths(slug)
     if (e / "script.txt").exists():
         return 0
+    prices.refresh()                     # a new year's CPI-U average, at most monthly; the file stays otherwise
     return subprocess.run([sys.executable, str(ROOT / "automation" / "write_episode.py"), slug]).returncode
 
 
@@ -99,8 +100,12 @@ def _description(meta, plan, tl, music_title):
             "\n\nSOURCES\n" + "\n".join(f"- {u}" for u in meta["sources"]) +
             "\n\nARCHIVE FILM (public domain, US Government or CC0; each item's licence checked)\n" + "\n".join(films) +
             f"\n\nMUSIC\n{lib['attribution'].format(title=music_title)}\n\n"
+            "PRICES IN TODAY'S DOLLARS\nEvery \"today\" figure is the old price times the U.S. Bureau of Labor "
+            f"Statistics Consumer Price Index (CPI-U, series CUUR0000SA0), {prices.today_year()} annual average over "
+            "the year's own: https://data.bls.gov/timeseries/CUUR0000SA0\n\n"
             "HOW THIS IS MADE\nNarration is a synthetic voice. All footage is real archive film, restored "
-            "(denoised, stabilised, upscaled); captions give the year and place of the film itself.")
+            "(film frames recovered from the video transfer, denoised, stabilised, upscaled); captions give "
+            "the year and place of the film itself.")
 
 
 def stage_render(slug):
@@ -122,10 +127,10 @@ def stage_render(slug):
     reports = []
     for k, s in enumerate(cands):
         base = thumbnail.hd_frame(s["best"], s["src_start"] + 1.0, b / f"thumb_base_{k}.png")
-        reports.append(thumbnail.compose(thumbnail.Image.open(base), year, meta["thumbnail_words"],
-                                         out / f"thumb_{k}.jpg", side="left"))
-    best = next((r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]),
-                reports[0] if reports else None)
+        reports.append(thumbnail.compose_best(thumbnail.Image.open(base), year, meta["thumbnail_words"],
+                                              out / f"thumb_{k}.jpg"))
+    best = next((r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]
+                 and r["sharp_ok"]), reports[0] if reports else None)
     if best:
         (out / "thumbnail.jpg").write_bytes((out / best["file"]).read_bytes())
     result = qa.check(plan, tl, out / "video.mp4", best)

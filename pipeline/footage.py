@@ -8,7 +8,8 @@ Per slot:
   2. films: archive.search for those words in the chapter's years (licence
      checked per item), colour first;
   3. shots: each film's cuts (clips.shots on its proxy), keyframes;
-  4. ranking: words shared with the film's title, description and subjects;
+  4. ranking: words shared with the film's title, description and subjects, colour,
+     and a real HD scan (720 lines or more) over an SD transfer;
   5. vision: the best candidates go to Gemini (pipeline/vision.py) with the
      line - match, era, place, no watermark or foreign logo - and the first that
      passes takes the slot. Without the key every pick stays "unchecked" and the
@@ -74,7 +75,8 @@ def slots(timeline, total):
             a = s + (e - s) * k / n
             b = s + (e - s) * (k + 1) / n
             out.append({"start": round(a, 3), "end": round(b, 3), "kind": "clip", "film_break": False,
-                        "line": line["text"], "chapter_ctx": chapter})
+                        "line": line["text"], "chapter_ctx": chapter,
+                        **({"price": line["price"]} if k == 0 and line.get("price") else {})})
         t = e
     # the picture is continuous: every shot runs to the start of the next, so the
     # gaps between spoken lines are covered and picture and voice never drift
@@ -89,6 +91,8 @@ def slots(timeline, total):
         if merged and sl["kind"] == "clip" and merged[-1]["kind"] == "clip" and sl["end"] - sl["start"] < 2.5 \
                 and sl["film_break"] == merged[-1]["film_break"]:
             merged[-1]["end"] = sl["end"]
+            if sl.get("price") and not merged[-1].get("price"):
+                merged[-1]["price"] = sl["price"]
         else:
             merged.append(sl)
     return merged
@@ -116,7 +120,7 @@ class Pool:
                 f = archive.files(fid)
                 found = clips.shots(f["proxy"], self.work / "kf" / fid, max_shots=40)
                 self.shots[fid] = [{"film": fid, "start": a, "end": b, "kf": str(kf), "best": f["best"],
-                                    "item": item} for a, b, kf in found]
+                                    "res": f["best_size"], "item": item} for a, b, kf in found]
             except Exception as e:                                   # noqa: BLE001
                 log.info("%s: no shots (%s)", fid, e)
                 self.shots[fid] = []
@@ -160,7 +164,9 @@ def plan(timeline, total, topic_years, work, picks=None, films_per_slot=3, check
                        for f, a, b, at in used):
                     continue
                 cands.append(sh)
-        cands.sort(key=lambda c: -(_score(c["item"], ws) + colourfulness(c["kf"]) / 60 * (2 if s["film_break"] else 1)))
+        # a real HD scan (720 lines or more) is worth a little more than an SD transfer
+        cands.sort(key=lambda c: -(_score(c["item"], ws) + colourfulness(c["kf"]) / 60 * (2 if s["film_break"] else 1)
+                                   + (0.7 if (c.get("res") or (0, 0))[1] >= 720 else 0)))
         top = cands[:check_top]
         verdicts = vision.check([(s["line"], f"{y0}-{y1}", c["kf"]) for c in top]) if top else []
         chosen = next((c for c, v in zip(top, verdicts) if v["ok"]), None)
