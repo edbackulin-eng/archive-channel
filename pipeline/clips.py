@@ -85,6 +85,34 @@ def shots(proxy, work, max_shots=80):
     return keep
 
 
+_FIELDS = {}
+
+
+def field_filter(url, at=60.0):
+    """How to make a transfer progressive: "" when it already is, else an inverse telecine.
+
+    Most Prelinger MPEG2 originals are video transfers of 24 fps film, 3:2 pulled
+    down to 30i (idet, 03.11: 174-177 of 180 frames top field first). Shown as they
+    are, they comb on every movement and read as blur. fieldmatch + decimate put
+    the film frames back whole (no line is thrown away, unlike a deinterlacer);
+    yadif mops up the odd frame that matches nothing."""
+    if url in _FIELDS:
+        return _FIELDS[url]
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{at:.1f}", "-i", url, "-t", "8",
+                        "-vf", "idet", "-an", "-f", "null", "-"], capture_output=True, text=True, timeout=300)
+    m = re.findall(r"Multi frame detection: TFF:\s*(\d+)\s*BFF:\s*(\d+)\s*Progressive:\s*(\d+)", r.stderr)
+    tff, bff, prog = (int(v) for v in m[-1]) if m else (0, 0, 1)
+    if tff + bff <= prog:
+        f = ""
+    else:
+        order = "tff" if tff >= bff else "bff"
+        f = f"fieldmatch=order={order}:combmatch=full,yadif=deint=interlaced,decimate"
+    _FIELDS[url] = f
+    log.info("fields of %s: TFF %d BFF %d progressive %d -> %s", url.rsplit("/", 1)[-1], tff, bff, prog,
+             f or "progressive")
+    return f
+
+
 def cut(source_url, start, seconds, out, work, sound=True):
     """A restored 1920x1080/30 clip of `seconds` from `start` in the source."""
     work = Path(work)
@@ -92,8 +120,10 @@ def cut(source_url, start, seconds, out, work, sound=True):
     # Read over HTTP, a cut now and then came back truncated (a broken container
     # with exit code 0); it is checked and read again.
     raw = work / (Path(out).stem + "_raw.mp4")
+    fields = field_filter(source_url)
     for attempt in range(3):
         _ff(["-loglevel", "error", "-y", "-ss", f"{start:.3f}", "-i", source_url, "-t", f"{seconds + 0.5:.3f}",
+             *(["-vf", fields] if fields else []),
              "-map", "0:v:0", "-map", "0:a?", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "8",
              "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", str(raw)], timeout=900)
         if duration(raw) >= seconds * 0.9:

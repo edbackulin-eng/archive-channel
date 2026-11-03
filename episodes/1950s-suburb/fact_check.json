@@ -436,5 +436,35 @@
   "source": "https://en.wikipedia.org/wiki/Suburbanization",
   "evidence": "Industrial, warehousing, and factory land uses have also moved to suburban areas",
   "verdict": "supported"
+ },
+ {
+  "claim": "In 1950, out of every $7 a California couple spent to go to the movies, $5 went to a babysitter",
+  "source": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
+  "evidence": "In 1950, out of every $7 that a California couple spent to go to the movies, $5 went to paying a babysitter",
+  "verdict": "supported"
+ },
+ {
+  "claim": "In 1950 the average U.S. family's income was $4,237 a year",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "evidence": "The average U.S. family's income of $4,237",
+  "verdict": "supported"
+ },
+ {
+  "claim": "In 1950 a pound of butter cost 73 cents",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "evidence": "The price of a pound of butter had doubled, from 32 cents to 73 cents",
+  "verdict": "supported"
+ },
+ {
+  "claim": "In 1950 a pound of round steak cost 94 cents",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "evidence": "a pound of round steak increasing from 28 cents to 94 cents",
+  "verdict": "supported"
+ },
+ {
+  "claim": "The 52-20 clause paid unemployed veterans $20 a week for up to 52 weeks",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "evidence": "Unemployed war veterans would receive $20 once a week for 52 weeks",
+  "verdict": "supported"
  }
 ]

@@ -1,0 +1,108 @@
+{
+ "tags": [
+  {
+   "amount": "400",
+   "year": 1947,
+   "label": "Up front, with the G.I. Bill"
+  },
+  {
+   "amount": "8000",
+   "year": 1947,
+   "label": "A Levitt house, appliances in"
+  },
+  {
+   "amount": "400",
+   "year": 1947,
+   "label": "Up front, with the G.I. Bill"
+  },
+  {
+   "amount": "20",
+   "year": 1944,
+   "label": "A week, the 52-20 clause"
+  },
+  {
+   "amount": "7990",
+   "year": 1949,
+   "label": "The 1949 ranch house"
+  },
+  {
+   "amount": "4237",
+   "year": 1950,
+   "label": "Average family income, a year"
+  },
+  {
+   "amount": "0.73",
+   "year": 1950,
+   "label": "A pound of butter"
+  },
+  {
+   "amount": "92000000",
+   "year": 1967,
+   "label": "Levitt and Sons, sold to ITT"
+  },
+  {
+   "amount": "5",
+   "year": 1950,
+   "label": "The babysitter, of $7 at the movies"
+  }
+ ],
+ "conversions": [
+  {
+   "amount": "$20",
+   "year": 1944,
+   "today": "$370",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$400",
+   "year": 1947,
+   "today": "$5,800",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$8,000",
+   "year": 1947,
+   "today": "$115,000",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$7,990",
+   "year": 1949,
+   "today": "$108,000",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$4,237",
+   "year": 1950,
+   "today": "$57,000",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$5.00",
+   "year": 1950,
+   "today": "$67",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$0.73",
+   "year": 1950,
+   "today": "$9.77",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  },
+  {
+   "amount": "$92,000,000",
+   "year": 1967,
+   "today": "$890 million",
+   "today_year": 2025,
+   "method": "amount x CPI-U(today year) / CPI-U(year), BLS series CUUR0000SA0 annual averages"
+  }
+ ],
+ "source": "U.S. Bureau of Labor Statistics, CPI-U (series CUUR0000SA0), https://data.bls.gov/timeseries/CUUR0000SA0"
+}

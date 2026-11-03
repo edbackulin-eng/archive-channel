@@ -50,6 +50,7 @@ def respell(text, lexicon):
 
 def spoken(text):
     """What Kokoro should say: years and prices read the way a narrator says them."""
+    text = re.sub(r"\$([\d.,]+) (million|billion)\b", lambda m: f"{m.group(1).replace(',', '')} {m.group(2)} dollars", text)
     text = re.sub(r"\$(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d\d))?",
                   lambda m: f"{m.group(1).replace(',', '')} dollars" + (f" {int(m.group(2))} cents" if m.group(2) and int(m.group(2)) else ""),
                   text)
@@ -84,7 +85,7 @@ def _render(kokoro, lines, voice, scale, lexicon):
             t += tail
         timeline.append({"text": line.text, "kind": line.kind, "start": round(start, 3),
                          "end": round(t, 3), "speed": round(speed, 3),
-                         "film_before": line.film_before, "chapter": line.chapter})
+                         "film_before": line.film_before, "chapter": line.chapter, "price": line.price})
     audio = peak_normalize(np.concatenate(chunks)) if chunks else np.zeros(1, np.float32)
     return audio, timeline
 

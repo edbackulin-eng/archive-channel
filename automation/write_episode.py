@@ -22,6 +22,10 @@ def main(slug):
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     topic = next(t for t in q["topics"] if t["slug"] == slug)
     found = sources.gather(topic["wikipedia"])
+    try:
+        found += sources.bls_spending(tuple(topic["years"]))      # prices and daily life, from BLS
+    except Exception as e:                                       # noqa: BLE001
+        log.warning("BLS consumer spending report not read: %s", e)
     draft = scriptwriter.write(topic, found)
     script, checked = scriptwriter.fact_check(draft, found)
     out = ROOT / "episodes" / slug

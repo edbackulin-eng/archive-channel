@@ -8,6 +8,11 @@ looked like, what things cost, what people were told and what they did, with
 "open loops" - a question raised early and answered later - to carry the
 viewer through.
 
+The channel's angle (config/channel.json "niche", "prices"): prices and daily
+life. Every chapter puts at least one price of its years on screen, with what
+that is today; the writer marks them, pipeline/prices.py does the sums from
+the BLS CPI-U, so the model never computes a "today" figure itself.
+
 The first 30 seconds are the hook: the most vivid picture of the story, a
 question, and a promise that there is more ("and that's not all").
 
@@ -36,8 +41,15 @@ RULES
   sources do not state. If a number is not in the sources, do not give one.
 - Describe what the viewer would see in the period footage: rooms, streets, clothes, cars,
   shops, work. Short concrete sentences. Avoid lists of statistics.
-- Prices and daily life: when the sources give prices or wages, use them, and say what they
-  meant for a family.
+- THE CHANNEL'S ANGLE IS PRICES AND DAILY LIFE. Prices, wages, rents and costs from the SOURCES
+  run through the episode: one in the hook, at least 6 in all, never 6 minutes without one, each
+  shown on screen as a price tag with what it is in today's money. Say what it meant for a family (hours of work, share of a
+  week's pay, what it bought). Only prices the sources state, with the year they applied to.
+- For each such price put a tag line of its own just BEFORE the line that says it:
+    [price <amount> <year> | <what it is, 2-5 words>]      e.g. [price 7990 1949 | A new Levitt house]
+  and when the narration gives today's equivalent, write [today <amount> <year>] in the line instead
+  of a number, e.g. "That is [today 7990 1949] in today's money." NEVER write a today's-dollars
+  figure yourself; the production fills it in from the US Bureau of Labor Statistics price index.
 - Open loops: raise two or three questions early that are answered later, and say so
   ("we'll come back to that").
 - People: no living private individuals by name; public figures and well-documented
@@ -53,6 +65,8 @@ DELIVERY MARKUP (one sentence or short thought per line)
   > line      faster: hook, transitions
   < line      slower, with a pause before: reveals and key facts
   [pause 0.6] an explicit pause in seconds
+  [price 7990 1949 | A new Levitt house]   a price tag on screen (its own line)
+  [today 7990 1949]                        today's equivalent, inside a spoken line
   plain line  normal pace
 
 Return JSON only:
@@ -82,6 +96,30 @@ def words(script):
     return sum(len(re.sub(r"^[<>]\s*", "", l).split()) for l in body)
 
 
+def price_gaps(script, per_episode=6, max_gap_s=360, hook_s=36, wpm=150):
+    """(tags, what is missing) for the channel's angle, on the script's estimated
+    clock (words at wpm, plus pauses and film breaks): a tag in the hook, per_episode
+    tags in all, and no stretch over max_gap_s without one."""
+    from core import delivery
+    t, at, chapter, where = 0.0, [], "", []
+    for line in delivery.parse(script):
+        t += line.film_before + line.pause_before
+        chapter = line.chapter or chapter
+        if line.price:
+            at.append(t)
+            where.append(chapter.split("|")[0].strip())
+        t += len(line.text.split()) / wpm * 60
+    missing = []
+    if not any(a < hook_s for a in at):
+        missing.append("a price in the hook")
+    if len(at) < per_episode:
+        missing.append(f"{len(at)} of {per_episode} price tags in the episode")
+    for a, b in zip([0.0] + at, at + [t]):
+        if b - a > max_gap_s:
+            missing.append(f"no price from {a / 60:.1f} to {b / 60:.1f} min")
+    return len(at), missing
+
+
 def write(topic, sources):
     prompt = (f"EPISODE: {topic['name']}\nYEARS: {topic['years'][0]}-{topic['years'][1]}\n\n"
               f"{_sources_block(sources)}")
@@ -96,6 +134,18 @@ def write(topic, sources):
             "chapters and the markup. Return the same JSON shape, claims included.",
             system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.6)
         if words(more.get("script", "")) > n:
+            out = more
+    tags, gaps = price_gaps(out["script"])
+    if gaps:
+        log.info("price tags: %d, missing: %s; asking for them", tags, gaps)
+        more = llm.complete_json(
+            prompt + f"\n\nYOUR DRAFT:\n{out['script']}\n\nThe channel's angle is prices and daily life. Missing: "
+            f"{gaps}. Add, from the SAME sources only, prices, wages, rents or costs where they are missing "
+            "(one in the hook, 6 or more in the episode, never 6 minutes without one), each with its "
+            "[price <amount> <year> | <label>] line before the line that says it, and [today <amount> <year>] "
+            "where the narration gives today's money. Change nothing else. Return the same JSON shape, claims included.",
+            system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.5)
+        if more.get("script") and len(price_gaps(more["script"])[1]) < len(gaps):
             out = more
     return out
 

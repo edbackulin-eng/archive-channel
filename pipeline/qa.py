@@ -10,8 +10,13 @@
   hook            the first 30 s ask a question and promise more ("not all", "more")
   length          15-20 minutes
   thumbnail       bottom-right 25 % x 20 % empty, words readable at 336x189, no
-                  text on a face, a year in big numbers, 2-4 hook words
+                  text on a face, a year in big numbers, 2-4 hook words, and sharp:
+                  the photo half over the thresholds at 336x189 and 1280x720
+                  (pipeline/thumbnail.py SHARP_MIN, SHARP_MIN_FULL)
   licences        every shot's film has a free licence recorded
+  prices          the angle: a price tag in the hook, at least 6 in the episode,
+                  never more than 6 minutes without one, each rendered with its
+                  today's-dollars figure (config "prices")
 The report goes to episodes/<slug>/qa.json; release reads "passed".
 """
 import json
@@ -73,10 +78,22 @@ def check(plan, timeline, video, thumb_report=None, full_episode=True):
                      "pass": (CFG["episode"]["minutes_min"] <= mins <= CFG["episode"]["minutes_max"]) or not full_episode}
     res["licences"] = {"missing": [s.get("film") for s in shots if not (s.get("item") or {}).get("licence")]}
     res["licences"]["pass"] = not res["licences"]["missing"]
+    pc = CFG["prices"]
+    tagged = [s for s in plan["shots"] if s.get("price")]
+    at = [round(s["start"], 1) for s in tagged]
+    gap = max((b - a for a, b in zip([0.0] + at, at + [total])), default=total)
+    in_hook = any(a < CFG["episode"]["hook_seconds"] + 6 for a in at)
+    rendered = all(s.get("price_tag") for s in tagged)
+    res["prices"] = {"tags": len(tagged), "at_s": at, "longest_without_s": round(gap, 1), "in_hook": in_hook,
+                     "rendered": rendered,
+                     "pass": rendered and in_hook and (not full_episode or (len(tagged) >= pc["per_episode_min"]
+                                                                            and gap <= pc["max_gap_s"]))}
     if thumb_report is not None:
         t = thumb_report
         res["thumbnail"] = {"corner_empty": t.get("corner_empty"), "readable_small": t.get("readable_small"),
                             "text_over_face": t.get("text_over_face"),
-                            "pass": bool(t.get("corner_empty") and t.get("readable_small") and not t.get("text_over_face"))}
+                            "sharp_336": t.get("sharp_336"), "sharp_1280": t.get("sharp_1280"),
+                            "pass": bool(t.get("corner_empty") and t.get("readable_small") and not t.get("text_over_face")
+                                         and t.get("sharp_ok"))}
     res["passed"] = all(v["pass"] for v in res.values() if isinstance(v, dict) and "pass" in v)
     return res

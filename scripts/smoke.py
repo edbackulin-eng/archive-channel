@@ -11,7 +11,11 @@ Only a passing run moves dev to main. Checks:
   5. voice, map card, edit and sound: two narrated lines, a film break with the
      film's own sound, a chapter map - mixed and checked by the QA gate
      (loudness, breaks);
-  6. thumbnail: composed with the corner empty and the words readable small.
+  6. thumbnail: composed with the corner empty and the words readable small;
+  7. prices: BLS CPI-U sums, episode 1's tags (in the hook, 6 or more, never 6
+     minutes without), a tag rendered and seen by QA, the BLS source;
+  8. footage at its highest real resolution, interlaced transfers inverse-telecined;
+  9. thumbnail chain: Real-ESRGAN x4 on the CPU, and a blurred picture turned down.
 """
 import importlib
 import json
@@ -34,6 +38,10 @@ def check(name, ok, detail=""):
     print(f"[{'ok' if ok else 'FAIL'}] {name} {detail}")
     if not ok:
         failures.append(f"{name}: {detail}")
+
+
+def plain_line(delivery, text):
+    return delivery.plain_text(text)
 
 
 def main():
@@ -103,6 +111,38 @@ def main():
     check("map card", cards.map_frame("Test | Long Island, New York | 1958").size == (1920, 1080))
     r = thumbnail.compose(Image.open(W / "f.png"), "1958", "THE NEW KITCHEN", W / "t.jpg", side="left")
     check("thumbnail", r["corner_empty"] and r["readable_small"], json.dumps(r)[:160])
+
+    # prices and daily life: BLS CPI-U sums, the tags in the script, on screen and in QA
+    from pipeline import prices, scriptwriter, sources, upscale
+    lev = prices.in_today(7990, 1949)
+    check("prices: CPI-U, $7,990 of 1949 in today's dollars", 100_000 < lev < 115_000 and prices.today_year() >= 2025,
+          f"{prices.nice(lev)} in {prices.today_year()} dollars")
+    check("prices: [today] is spoken, never written by the model",
+          prices.spoken_today("[today 400 1947]").startswith("about $") and "[" not in plain_line(delivery, "a [today 400 1947] b"))
+    n_tags, missing = scriptwriter.price_gaps(script)
+    check("prices: episode 1 - in the hook, 6 or more, never 6 minutes without", not missing, f"{n_tags} tags {missing}")
+    check("prices: BLS consumer spending source", "butter" in sources.bls_spending((1947, 1958))[0]["text"])
+    plan["shots"][0]["price"] = {"amount": "7990", "year": 1949, "label": "A new Levitt house"}
+    out2 = W / "smoke_price.mp4"
+    edit.render(plan, W / "n.wav", ROOT / "assets" / "music" / "lobby-time.mp3", out2, W / "edit2")
+    q2 = qa.check(plan, tl, out2, full_episode=False)
+    check("prices: a tag rendered, checked by QA", q2["prices"]["rendered"] and q2["prices"]["tags"] == 1, str(q2["prices"]))
+    # the film at its highest real resolution; an upscaled derivative never beats its original
+    fake = [{"name": "a_512kb.mp4", "format": "512Kb MPEG4", "source": "derivative", "width": "320", "height": "240", "size": "9"},
+            {"name": "a.mp4", "format": "h.264", "source": "derivative", "width": "640", "height": "480", "size": "50"},
+            {"name": "a.mpg", "format": "MPEG1", "source": "original", "width": "320", "height": "240", "size": "90"}]
+    best, real = archive.pick_best(fake, "x/", probe=lambda u: (0, 0, 0))
+    check("footage: highest real resolution, original over its upscale", best["name"] == "a.mpg" and real == (320, 240),
+          f"{best['name']} {real}")
+    check("footage: interlaced transfers get an inverse telecine",
+          "fieldmatch" in clips.field_filter(archive.files("Wonderfu1960")["best"]))
+    # the thumbnail chain: Real-ESRGAN on the CPU, the sharpness gate
+    small = Image.open(W / "f.png").convert("RGB").resize((96, 54))
+    big = upscale.x4(small)
+    check("thumbnail: Real-ESRGAN x4 on the CPU", big.size == (384, 216), str(big.size))
+    blur = Image.open(W / "t.jpg").filter(__import__("PIL.ImageFilter", fromlist=["x"]).GaussianBlur(6))
+    check("thumbnail: QA turns a blurred picture down",
+          thumbnail.detail(blur, (336, 189), (0.5, 0, 1, 1)) < thumbnail.SHARP_MIN, "")
     print("\nSMOKE", "PASSED" if not failures else f"FAILED: {failures}")
     return 0 if not failures else 1
 

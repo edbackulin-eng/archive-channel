@@ -3,8 +3,8 @@
  "name": "Life in a Brand-New 1950s Suburb",
  "title": "The $7,990 Dream: Life in America's First Mass-Produced Suburb",
  "thumbnail_words": "THE $7,990 DREAM",
- "words": 2296,
- "minutes_at_150wpm": 15.3,
+ "words": 2385,
+ "minutes_at_150wpm": 15.9,
  "written_by": "review draft written in the session from the same sources and rules (no text-model key on the PC); production uses Groq, fallback Gemini",
  "sources": [
   "https://en.wikipedia.org/wiki/G.I._Bill",
@@ -13,10 +13,15 @@
   "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
   "https://en.wikipedia.org/wiki/Post%E2%80%93World_War_II_economic_expansion",
   "https://en.wikipedia.org/wiki/Suburbanization",
-  "https://en.wikipedia.org/wiki/William_Levitt"
+  "https://en.wikipedia.org/wiki/William_Levitt",
+  "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
  ],
  "fact_check": {
-  "claims": 73,
-  "supported": 73
+  "claims": 78,
+  "supported": 78
+ },
+ "prices": {
+  "tags": 9,
+  "missing": []
  }
 }

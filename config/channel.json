@@ -10,7 +10,7 @@
   "local_time": "12:00",
   "timezone": "America/New_York",
   "min_lead_minutes": 30,
-  "_note": "Tue and Fri; to be confirmed after the niche analysis"
+  "_note": "Tue and Fri 12:00 America/New_York, confirmed by the owner 2026-11-03"
  },
  "episode": {
   "minutes_min": 15,
@@ -20,7 +20,7 @@
  },
  "voice": {
   "engine": "kokoro",
-  "voice": "am_onyx",
+  "voice": "bm_george",
   "candidates": [
    "am_onyx",
    "am_eric",
@@ -32,7 +32,8 @@
    "am_fenrir"
   ],
   "wpm": 150,
-  "_wpm": "speaking pace while the narrator talks; film breaks come on top"
+  "_wpm": "speaking pace while the narrator talks; film breaks come on top",
+  "_chosen": "owner, 2026-11-03"
  },
  "edit": {
   "shot_min_s": 4.0,
@@ -75,9 +76,9 @@
  },
  "text_llm": {
   "groq_preference": [
+   "openai/gpt-oss-20b",
    "moonshotai/kimi-k2-instruct",
    "meta-llama/llama-4-maverick-17b-128e-instruct",
-   "openai/gpt-oss-20b",
    "meta-llama/llama-4-scout-17b-16e-instruct"
   ],
   "groq_taken_elsewhere": [
@@ -85,7 +86,8 @@
    "qwen/qwen3.8-27b",
    "llama-3.3-70b-versatile"
   ],
-  "gemini_fallback": "gemini-flash-lite-latest"
+  "gemini_fallback": "gemini-flash-lite-latest",
+  "_note": "the key GROQ_API_KEY_AR is the owner's Groq key shared with the other channels, so this channel takes a model none of them uses: Closed Tabs and What If use openai/gpt-oss-120b, the dinosaurs qwen/qwen3.8-27b (checked 2026-11-03; the key serves gpt-oss-120b, gpt-oss-20b, qwen3.8-27b, allam-2-7b)"
  },
  "vision": {
   "model": "gemini-flash-lite-latest",
@@ -103,7 +105,11 @@
   "words": [
    2,
    4
-  ]
+  ],
+  "sharpest_frame": "of the frames within 1.5 s of the chosen moment, the one with the highest variance of the Laplacian",
+  "source": "the film's highest real resolution (pipeline/archive.files), never a 512Kb derivative",
+  "upscale": "Real-ESRGAN realesr-general-x4v3 on the CPU (thumbnail frame only)",
+  "sharp_min": "pipeline/thumbnail.py SHARP_MIN (336x189) and SHARP_MIN_FULL (1280x720), photo half"
  },
  "qa": {
   "match_share_min": 0.85,
@@ -111,7 +117,8 @@
   "no_voice_share": [
    0.2,
    0.3
-  ]
+  ],
+  "prices": "config prices.per_chapter_min / per_episode_min"
  },
  "breathing": {
   "_rule": "The narrator does not talk without a break: 20-30% of the running time has no voice, in film breaks of 3-8 s where the chronicle's own sound, music and atmosphere carry the picture - on the most vivid shots and between chapters (owner, 02.11).",
@@ -126,5 +133,21 @@
   "spread_s": 3.5,
   "film_sound_db": -12,
   "music_up_db": 6
+ },
+ "niche": {
+  "subtopic": "everyday American life 1946-1965, in colour",
+  "angle": "prices and daily life",
+  "_decided": "owner, 2026-11-03",
+  "rule": "Every episode shows what things cost in its years next to what that is now, in today's dollars (US BLS CPI-U), with big price tags on screen."
+ },
+ "prices": {
+  "rule": "A price in the hook, at least 6 price tags in the episode, and never more than 6 minutes without one: the price then, and now in the last full year's dollars. Only prices the sources state, with their year. The conversion is pipeline/prices.py (amount x CPI-U(today) / CPI-U(year)); the text model writes [price A Y | label] and [today A Y], never the sum of today.",
+  "cpi_series": "CUUR0000SA0",
+  "cpi_source": "U.S. Bureau of Labor Statistics, CPI-U, U.S. city average, all items, not seasonally adjusted",
+  "per_episode_min": 6,
+  "on_screen": "pipeline/cards.price_png: then, = now TODAY, 'in YYYY dollars - US BLS CPI-U', on the side of the shot with no face",
+  "max_gap_s": 360,
+  "in_hook": true,
+  "_why": "per chapter was tried first (2026-11-03): episode 1's sources state prices for 5 of its 9 chapters, and a price without a source is not allowed"
  }
 }
