@@ -98,9 +98,19 @@ def field_filter(url, at=60.0):
     yadif mops up the odd frame that matches nothing."""
     if url in _FIELDS:
         return _FIELDS[url]
-    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{at:.1f}", "-i", url, "-t", "8",
-                        "-vf", "idet", "-an", "-f", "null", "-"], capture_output=True, text=True, timeout=300)
-    m = re.findall(r"Multi frame detection: TFF:\s*(\d+)\s*BFF:\s*(\d+)\s*Progressive:\s*(\d+)", r.stderr)
+    m = []
+    for attempt in range(3):                                     # archive.org stalls now and then
+        try:
+            r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{at + 20 * attempt:.1f}", "-i", url,
+                                "-t", "8", "-vf", "idet", "-an", "-f", "null", "-"],
+                               capture_output=True, text=True, timeout=150)
+        except subprocess.TimeoutExpired:
+            continue
+        m = re.findall(r"Multi frame detection: TFF:\s*(\d+)\s*BFF:\s*(\d+)\s*Progressive:\s*(\d+)", r.stderr)
+        if m:
+            break
+    if not m:
+        raise RuntimeError(f"could not read the fields of {url}")
     tff, bff, prog = (int(v) for v in m[-1]) if m else (0, 0, 1)
     if tff + bff <= prog:
         f = ""
