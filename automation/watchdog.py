@@ -62,7 +62,7 @@ def main():
                             f"https://github.com/{REPO}/actions/runs/{last['id']}"])
             mem["emailed"].append(f"run-{last['id']}")
     rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
-    ahead = [r for r in rows if r.get("state") in ("built", "awaiting_approval")
+    ahead = [r for r in rows if r.get("state") in ("built", "awaiting_approval", "awaiting_turn")
              or (r.get("state") == "scheduled" and r.get("publish_at", "") > now().strftime("%Y-%m-%dT%H:%M:%SZ"))]
     keys = os.environ.get("KEYS_READY") == "true"
     failed_run = [r for r in rows[-2:] if r.get("state") == "qa-failed"]

@@ -8,6 +8,9 @@ state/episodes.json holds every episode:
   built              rendered, QA passed, in the buffer (files in the build run's artifact)
   awaiting_approval  uploaded private without a date: the first two episodes wait for
                      the owner (config qa.approve_first_episodes) - approve.yml schedules them
+  awaiting_turn      uploaded private without a date while the first two still wait, so
+                     it never goes out before them; the second approval gives each its
+                     slot, in upload order
   scheduled          uploaded private with a publishAt
   qa-failed          the QA gate refused it; nothing was uploaded
 
@@ -50,16 +53,27 @@ def _approved_count(r):
     return sum(1 for x in r if x.get("approved"))
 
 
+def _first(r):
+    """The slugs of the first episodes uploaded: the ones the owner approves."""
+    n = CFG["qa"]["approve_first_episodes"]
+    return [x["slug"] for x in r if x.get("youtube_id") and x.get("state") != "qa-failed"][:n]
+
+
 def _upload(slug, r):
     out = ROOT / "episodes" / slug / "out"
     meta = json.loads((out / "metadata.json").read_text(encoding="utf-8"))
     row = row_of(r, slug)
     if row.get("youtube_id"):
         return row
-    need_approval = _approved_count(r) < CFG["qa"]["approve_first_episodes"]
-    when = None if need_approval else youtube.next_slot([x["publish_at"] for x in r if x.get("publish_at")])
+    n = CFG["qa"]["approve_first_episodes"]
+    if len(_first(r)) < n:
+        state, when = "awaiting_approval", None          # one of the first: the owner approves it
+    elif _approved_count(r) < n:
+        state, when = "awaiting_turn", None              # the first still wait; it does not jump them
+    else:
+        state, when = "scheduled", youtube.next_slot([x["publish_at"] for x in r if x.get("publish_at")])
     vid = youtube.upload(out / "video.mp4", meta["title"], meta["description"], meta["tags"], when)
-    row.update({"youtube_id": vid, "state": "awaiting_approval" if need_approval else "scheduled",
+    row.update({"youtube_id": vid, "state": state,
                 "title": meta["title"], **({"publish_at": when.strftime("%Y-%m-%dT%H:%M:%SZ")} if when else {})})
     save(r)                                   # the id is kept before anything else can fail
     try:
@@ -106,6 +120,14 @@ def approve(slug):
     row.update({"state": "scheduled", "approved": True, "publish_at": when.strftime("%Y-%m-%dT%H:%M:%SZ")})
     save(r)
     print(f"{slug}: {row['youtube_id']} public at {row['publish_at']}")
+    if _approved_count(r) >= CFG["qa"]["approve_first_episodes"]:
+        # the first are approved: the ones that waited their turn get slots after them, in order
+        for w in [x for x in r if x.get("state") == "awaiting_turn"]:
+            at = youtube.next_slot([x["publish_at"] for x in r if x.get("publish_at")])
+            youtube.schedule(w["youtube_id"], at)
+            w.update({"state": "scheduled", "publish_at": at.strftime("%Y-%m-%dT%H:%M:%SZ")})
+            save(r)
+            print(f"{w['slug']}: {w['youtube_id']} public at {w['publish_at']}")
     return 0
 
 

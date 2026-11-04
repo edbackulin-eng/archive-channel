@@ -143,6 +143,30 @@ def main():
     blur = Image.open(W / "t.jpg").filter(__import__("PIL.ImageFilter", fromlist=["x"]).GaussianBlur(6))
     check("thumbnail: QA turns a blurred picture down",
           thumbnail.detail(blur, (336, 189), (0.5, 0, 1, 1)) < thumbnail.SHARP_MIN, "")
+    # release: the first two wait for the owner, the rest wait their turn, then follow in order
+    import tempfile
+    from automation import release
+    from pipeline import youtube
+    tmp = Path(tempfile.mkdtemp())
+    st = tmp / "episodes.json"
+    st.write_text(json.dumps([{"slug": s, "state": "built"} for s in ("a", "b", "c")]))
+    for s in ("a", "b", "c"):
+        (tmp / "episodes" / s / "out").mkdir(parents=True)
+        (tmp / "episodes" / s / "out" / "metadata.json").write_text(json.dumps({"title": s, "description": "", "tags": []}))
+    saved = (release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule)
+    release.ROOT, release.rows, release.save = tmp, (lambda: json.loads(st.read_text())), (lambda r: st.write_text(json.dumps(r)))
+    youtube.upload, youtube.set_thumbnail, youtube.schedule = (lambda *a: "v" + a[1]), (lambda *a: None), (lambda *a: None)
+    try:
+        release.upload()
+        s1 = [r["state"] for r in json.loads(st.read_text())]
+        release.approve("a")
+        release.approve("b")
+        s2 = [(r["state"], r.get("publish_at")) for r in json.loads(st.read_text())]
+    finally:
+        release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule = saved
+    check("release: first two await approval, the third its turn, then all in order",
+          s1 == ["awaiting_approval", "awaiting_approval", "awaiting_turn"]
+          and all(x[0] == "scheduled" for x in s2) and s2[0][1] < s2[1][1] < s2[2][1], f"{s1} {s2}")
     print("\nSMOKE", "PASSED" if not failures else f"FAILED: {failures}")
     return 0 if not failures else 1
 
