@@ -59,7 +59,7 @@ def stage_plan(slug):
     topic = next(t for t in q["topics"] if t["slug"] == slug)
     tl = json.loads((b / "timeline.json").read_text(encoding="utf-8"))
     total = sf.info(str(b / "narration.wav")).duration
-    plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage")
+    plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage", query=topic.get("query"))
     for s in plan["shots"]:
         if s["kind"] == "clip" and s.get("item"):
             s["year"] = s["item"].get("year")
