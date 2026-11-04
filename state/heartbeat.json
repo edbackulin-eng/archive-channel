@@ -1,8 +1,8 @@
 {
  "date": "2026-11-04",
- "checked_at": "2026-11-04T15:20:59Z",
+ "checked_at": "2026-11-04T15:36:18Z",
  "ahead": [],
  "actions": [
-  "waiting for GROQ_API_KEY_AR and GEMINI_API_KEY_AR; no build started"
+  "only 0 ahead; next episode started"
  ]
 }
