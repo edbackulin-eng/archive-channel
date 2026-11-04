@@ -3,17 +3,21 @@
 Rhythm (config/channel.json "edit"): a cut every 4-6 s, on line boundaries where
 possible; no shot of the same film stretch twice within 3 minutes.
 
+Once per episode (owner 04.11: a search and a scan per slot took over five
+hours and the job timed out):
+  1. films: the episode's 20-25 films (FILMS), chosen once - archive.search for
+     the topic and for every chapter in its years (licence checked per item),
+     ranked by the words they share with the whole script, colour, and a real
+     HD scan; every chapter gets at least two of its own;
+  2. shots: each of those films scanned once (clips.shots on its proxy), four
+     at a time.
 Per slot:
-  1. words: the line's content words, plus the chapter's years;
-  2. films: archive.search for those words in the chapter's years (licence
-     checked per item), colour first;
-  3. shots: each film's cuts (clips.shots on its proxy), keyframes;
-  4. ranking: words shared with the film's title, description and subjects, colour,
-     and a real HD scan (720 lines or more) over an SD transfer;
-  5. vision: the best candidates go to Gemini (pipeline/vision.py) with the
-     line - match, era, place, no watermark or foreign logo - and the first that
-     passes takes the slot. Without the key every pick stays "unchecked" and the
-     QA gate will not release the episode.
+  3. ranking: the pool's shots by the words their film shares with the line and
+     its chapter, colour, a real HD scan (720 lines or more) over an SD transfer;
+  4. vision: the best candidates go to Gemini (pipeline/vision.py) with the
+     line - match, era, place, no watermark or foreign logo - four slots a
+     request, and the first that passes takes the slot. Without the key every
+     pick stays "unchecked" and the QA gate will not release the episode.
 Film breaks (narrator silent, pipeline/breathing.py) take the most vivid checked
 shot of their chapter: the highest colourfulness of its keyframe. A chapter
 opens on its map card (pipeline/cards.py) for the first 3.5 s of its break.
@@ -43,10 +47,18 @@ def words(text):
     return [w for w in re.findall(r"[a-z]+", text.lower()) if len(w) > 3 and w not in STOP]
 
 
+FILMS = (20, 25)
+SCAN_THREADS = 4
+SLOTS_A_REQUEST = 4
+_COLOUR = {}
+
+
 def colourfulness(path):
-    a = np.asarray(Image.open(path).convert("RGB").resize((160, 120)), np.float32)
-    rg, yb = a[..., 0] - a[..., 1], 0.5 * (a[..., 0] + a[..., 1]) - a[..., 2]
-    return float(np.sqrt(rg.std() ** 2 + yb.std() ** 2) + 0.3 * np.sqrt(rg.mean() ** 2 + yb.mean() ** 2))
+    if path not in _COLOUR:
+        a = np.asarray(Image.open(path).convert("RGB").resize((160, 120)), np.float32)
+        rg, yb = a[..., 0] - a[..., 1], 0.5 * (a[..., 0] + a[..., 1]) - a[..., 2]
+        _COLOUR[path] = float(np.sqrt(rg.std() ** 2 + yb.std() ** 2) + 0.3 * np.sqrt(rg.mean() ** 2 + yb.mean() ** 2))
+    return _COLOUR[path]
 
 
 def slots(timeline, total):
@@ -132,12 +144,82 @@ def _score(item, ws):
     return sum(text.count(w) > 0 for w in ws) + (0.5 if item["colour"] else 0)
 
 
-def plan(timeline, total, topic_years, work, picks=None, films_per_slot=3, check_top=3):
+def episode_films(timeline, topic_years, query=None, n=FILMS):
+    """The episode's films, chosen once: [(item, chapter titles it was found for)]."""
+    from collections import Counter
+    script = Counter(w for line in timeline for w in words(line["text"]))
+    chapters = []
+    for line in timeline:
+        if line.get("chapter"):
+            chapters.append({"chapter": line["chapter"], "words": Counter()})
+        if chapters:
+            chapters[-1]["words"].update(words(line["text"]))
+    found = {}
+
+    def add(items, tag):
+        for it in items:
+            found.setdefault(it["id"], [it, set()])[1].add(tag)
+
+    if query:
+        add(archive.search(query, *topic_years, rows=60), "topic")
+    for ch in chapters:
+        y0, y1 = _years(ch["chapter"], topic_years)
+        top = [w for w, _ in ch["words"].most_common(8)]
+        title = words(ch["chapter"].split("|")[0])
+        add(archive.search(" OR ".join(dict.fromkeys(title + top))[:400] or "america", y0, y1, rows=40), ch["chapter"])
+
+    def rank(entry):
+        it, tags = entry
+        text = " ".join(str(it.get(k, "")) for k in ("title", "description", "subject")).lower()
+        # colour first (the channel's rule); a film found for many chapters is often only generic
+        return (sum(min(c, 5) for w, c in script.items() if w in text) / 10 + 0.3 * len(tags)
+                + (4.0 if it["colour"] else 0) + (2.0 if "topic" in tags else 0))
+
+    ranked = sorted(found.values(), key=lambda e: -rank(e))
+    chosen, seen = [], set()
+    for ch in chapters:                                  # two of its own for every chapter first
+        own = [e for e in ranked if ch["chapter"] in e[1] and e[0]["id"] not in seen][:2]
+        for e in own:
+            chosen.append(e)
+            seen.add(e[0]["id"])
+    for e in ranked:
+        if len(chosen) >= n[1]:
+            break
+        if e[0]["id"] not in seen:
+            chosen.append(e)
+            seen.add(e[0]["id"])
+    log.info("episode films: %d of %d found (%s)", len(chosen), len(found), ", ".join(e[0]["id"] for e in chosen))
+    return chosen[:n[1]]
+
+
+def plan(timeline, total, topic_years, work, picks=None, check_top=3, query=None):
     """The shot plan. `picks` ({slot index: {film, start}}) overrides the search for a slot."""
+    from concurrent.futures import ThreadPoolExecutor
     work = Path(work)
     pool = Pool(work)
     sl = slots(timeline, total)
+    films = episode_films(timeline, topic_years, query)
+    with ThreadPoolExecutor(SCAN_THREADS) as ex:
+        list(ex.map(lambda e: pool.film_shots(e[0]), films))
+    shots_all = [sh for e in films for sh in pool.shots.get(e[0]["id"], [])]
+    log.info("pool: %d shots from %d films", len(shots_all), len(films))
     used = []                       # (film, start, end, at) for the 3-minute rule
+
+    def free(sh, s):
+        return not any(f == sh["film"] and not (sh["end"] < a or sh["start"] > b)
+                       and abs(s["start"] - at) < CFG["no_repeat_within_s"] for f, a, b, at in used)
+
+    def ranked(s):
+        d = s["end"] - s["start"]
+        ws = words(s["line"] + " " + s.get("chapter_ctx", ""))
+        y0, y1 = _years(s.get("chapter_ctx"), topic_years)
+        cands = [sh for sh in shots_all if sh["end"] - sh["start"] >= min(d, 3.0) and free(sh, s)
+                 and (not sh["item"].get("year") or y0 - 6 <= int(sh["item"]["year"]) <= y1 + 6)]
+        cands.sort(key=lambda c: -(_score(c["item"], ws) + colourfulness(c["kf"]) / 60 * (2 if s["film_break"] else 1)
+                                   + (0.7 if (c.get("res") or (0, 0))[1] >= 720 else 0)))
+        return cands, f"{y0}-{y1}"
+
+    todo = []
     for k, s in enumerate(sl):
         if s["kind"] != "clip":
             continue
@@ -151,31 +233,31 @@ def plan(timeline, total, topic_years, work, picks=None, films_per_slot=3, check
                       "item": it, "vision": {"status": p.get("checked_by", "picked by hand")}})
             used.append((p["film"], p["start"], p["start"] + d, s["start"]))
             continue
-        ws = words(s["line"] + " " + s.get("chapter_ctx", ""))
-        y0, y1 = _years(s.get("chapter_ctx"), topic_years)
-        items = archive.search(" OR ".join(ws[:6]) or "america", y0, y1, rows=30)
-        items = sorted(items, key=lambda it: -_score(it, ws))[:films_per_slot]
-        cands = []
-        for it in items:
-            for sh in pool.film_shots(it):
-                if sh["end"] - sh["start"] < min(d, 3.0):
-                    continue
-                if any(f == sh["film"] and not (sh["end"] < a or sh["start"] > b) and abs(s["start"] - at) < CFG["no_repeat_within_s"]
-                       for f, a, b, at in used):
-                    continue
-                cands.append(sh)
-        # a real HD scan (720 lines or more) is worth a little more than an SD transfer
-        cands.sort(key=lambda c: -(_score(c["item"], ws) + colourfulness(c["kf"]) / 60 * (2 if s["film_break"] else 1)
-                                   + (0.7 if (c.get("res") or (0, 0))[1] >= 720 else 0)))
-        top = cands[:check_top]
-        verdicts = vision.check([(s["line"], f"{y0}-{y1}", c["kf"]) for c in top]) if top else []
-        chosen = next((c for c, v in zip(top, verdicts) if v["ok"]), None)
-        v = next((v for c, v in zip(top, verdicts) if c is chosen), None) if chosen else (verdicts[0] if verdicts else None)
-        chosen = chosen or (top[0] if top else None)
-        if not chosen:
-            s["missing"] = True
-            continue
-        s.update({"film": chosen["film"], "src_start": chosen["start"], "best": chosen["best"], "item": chosen["item"],
-                  "kf": chosen["kf"], "vision": v or {"status": "unchecked"}})
-        used.append((chosen["film"], chosen["start"], chosen["start"] + d, s["start"]))
-    return {"shots": sl}
+        todo.append(s)
+
+    # a few slots a request: their best candidates checked together, then taken in order
+    for i in range(0, len(todo), SLOTS_A_REQUEST):
+        block = todo[i:i + SLOTS_A_REQUEST]
+        tops = []
+        for s in block:
+            cands, era = ranked(s)
+            tops.append((s, cands[:check_top + 2], era))
+        pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
+        verdicts = vision.check(pairs) if pairs else []
+        vi = 0
+        for s, cs, era in tops:
+            vs = verdicts[vi:vi + len(cs[:check_top])]
+            vi += len(cs[:check_top])
+            d = s["end"] - s["start"]
+            options = [(c, v) for c, v in zip(cs, vs) if free(c, s)]
+            chosen = next(((c, v) for c, v in options if v.get("ok")), None) or \
+                (options[0] if options else next(((c, {"status": "unchecked"}) for c in cs if free(c, s)), None))
+            if not chosen:
+                s["missing"] = True
+                continue
+            c, v = chosen
+            s.update({"film": c["film"], "src_start": c["start"], "best": c["best"], "item": c["item"],
+                      "kf": c["kf"], "vision": v or {"status": "unchecked"}})
+            used.append((c["film"], c["start"], c["start"] + d, s["start"]))
+        log.info("planned %d of %d slots", min(i + SLOTS_A_REQUEST, len(todo)), len(todo))
+    return {"shots": sl, "films": [e[0]["id"] for e in films]}
