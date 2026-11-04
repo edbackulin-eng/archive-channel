@@ -22,7 +22,7 @@ import soundfile as sf  # noqa: E402
 from core import narrate  # noqa: E402
 from core.logger import get_logger  # noqa: E402
 from core.voice import SAMPLE_RATE  # noqa: E402
-from pipeline import archive, breathing, clips, edit, footage, prices, qa, thumbnail  # noqa: E402
+from pipeline import archive, breathing, clips, edit, footage, prices, qa, thumbnail, vision  # noqa: E402
 
 log = get_logger("build")
 CFG = json.loads((ROOT / "config" / "channel.json").read_text(encoding="utf-8"))
@@ -120,18 +120,26 @@ def stage_render(slug):
     lib = json.loads((ROOT / "assets" / "music" / "library.json").read_text(encoding="utf-8"))
     track = lib["tracks"][sum(map(ord, slug)) % len(lib["tracks"])]
     rep = edit.render(plan, b / "narration.wav", ROOT / "assets" / "music" / track["file"], out / "video.mp4", b / "edit")
-    # thumbnails: the three most vivid checked shots with people, in the manner of the top 30
-    cands = sorted((s for s in plan["shots"] if s["kind"] == "clip" and s.get("kf") and (s.get("vision") or {}).get("ok")),
-                   key=lambda s: -thumbnail.score(thumbnail.Image.open(s["kf"]))[0])[:3]
+    # thumbnails: the picture shows what the words name (owner 04.11: a house's price over a house,
+    # a grocery price over a store); of the checked shots, the most vivid that Gemini finds showing
+    # meta["thumbnail_subject"], in the manner of the top 30
+    words, subject = meta["thumbnail_words"], meta.get("thumbnail_subject") or meta["thumbnail_words"]
+    pool = sorted((s for s in plan["shots"] if s["kind"] == "clip" and s.get("kf") and (s.get("vision") or {}).get("ok")),
+                  key=lambda s: -thumbnail.score(thumbnail.Image.open(s["kf"]))[0])[:12]
+    asked = f"A thumbnail that says '{words}'. The picture must show: {subject}"
+    verdicts = vision.check([(asked, f"{s.get('year') or ''}", s["kf"]) for s in pool]) if pool else []
+    cands = [s for s, v in zip(pool, verdicts) if v.get("ok")][:3]
     year = f"{meta.get('decade') or str(min(s.get('year') or 1950 for s in cands) // 10 * 10) + 's'}" if cands else "1950s"
     reports = []
     for k, s in enumerate(cands):
         base = thumbnail.hd_frame(s["best"], s["src_start"] + 1.0, b / f"thumb_base_{k}.png")
-        reports.append(thumbnail.compose_best(thumbnail.Image.open(base), year, meta["thumbnail_words"],
-                                              out / f"thumb_{k}.jpg"))
+        r = thumbnail.compose_best(thumbnail.Image.open(base), year, words, out / f"thumb_{k}.jpg")
+        r.update({"matches_words": True, "subject": subject, "film": s.get("film"), "t": s.get("src_start")})
+        reports.append(r)
     best = next((r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]
-                 and r["sharp_ok"]), reports[0] if reports else None)
-    if best:
+                 and r["sharp_ok"]), reports[0] if reports else {"matches_words": False, "subject": subject,
+                                                                  "note": "no shot shows the thumbnail's subject"})
+    if best.get("file"):
         (out / "thumbnail.jpg").write_bytes((out / best["file"]).read_bytes())
     result = qa.check(plan, tl, out / "video.mp4", best)
     result["render"] = rep

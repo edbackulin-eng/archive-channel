@@ -12,7 +12,8 @@
   thumbnail       bottom-right 25 % x 20 % empty, words readable at 336x189, no
                   text on a face, a year in big numbers, 2-4 hook words, and sharp:
                   the photo half over the thresholds at 336x189 and 1280x720
-                  (pipeline/thumbnail.py SHARP_MIN, SHARP_MIN_FULL)
+                  (pipeline/thumbnail.py SHARP_MIN, SHARP_MIN_FULL), and its picture shows
+                  what the words name (a house's price over a house; Gemini-checked)
   licences        every shot's film has a free licence recorded
   prices          the angle: a price tag in the hook, at least 6 in the episode,
                   never more than 6 minutes without one, each rendered with its
@@ -93,7 +94,8 @@ def check(plan, timeline, video, thumb_report=None, full_episode=True):
         res["thumbnail"] = {"corner_empty": t.get("corner_empty"), "readable_small": t.get("readable_small"),
                             "text_over_face": t.get("text_over_face"),
                             "sharp_336": t.get("sharp_336"), "sharp_1280": t.get("sharp_1280"),
+                            "matches_words": t.get("matches_words"), "subject": t.get("subject"),
                             "pass": bool(t.get("corner_empty") and t.get("readable_small") and not t.get("text_over_face")
-                                         and t.get("sharp_ok"))}
+                                         and t.get("sharp_ok") and t.get("matches_words"))}
     res["passed"] = all(v["pass"] for v in res.values() if isinstance(v, dict) and "pass" in v)
     return res
