@@ -71,7 +71,8 @@ DELIVERY MARKUP (one sentence or short thought per line)
 
 Return JSON only:
 {{"title": "<YouTube title, <= 70 characters, curiosity without clickbait lies>",
-  "thumbnail_words": "<2-4 words for the thumbnail>",
+  "thumbnail_words": "<2-4 words for the thumbnail, often a price from the script, e.g. $400 TO MOVE IN>",
+  "thumbnail_subject": "<what the thumbnail picture must show so it matches those words: a house for a house's price, a grocery store for food prices, a family at home for a household cost>",
   "script": "<the whole script with chapters and markup, lines separated by \\n>",
   "claims": [{{"claim": "<one factual statement made in the script>", "source": <index of SOURCE>}}]}}"""
 

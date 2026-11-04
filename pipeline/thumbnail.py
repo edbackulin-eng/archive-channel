@@ -121,6 +121,9 @@ def trim_borders(im, dark=24):
     return im.crop((cols[0] + m, rows[0] + m, cols[-1] + 1 - m, rows[-1] + 1 - m))
 
 
+SAME_SHOT = 0.92
+
+
 def sharpest_frame(url, t, work, window=1.5):
     """Of every frame within `window` s of t, the sharpest: (PIL image, its second, all scores)."""
     work = Path(work)
@@ -137,14 +140,43 @@ def sharpest_frame(url, t, work, window=1.5):
     frames = sorted(work.glob("s_*.png"))
     if not frames:
         raise RuntimeError(f"no frames near {t:.1f} s of {url}")
+    # the same shot only (04.11: the window crossed a cut, and once took a dissolve): a frame
+    # counts when its small grey picture correlates with the one at t
+    def small(f):
+        return np.asarray(Image.open(f).convert("L").resize((64, 48)), np.float32).ravel()
+
+    ref = small(frames[min(len(frames) - 1, round((t - a) * len(frames) / (2 * window)))])
     scored = []
     for f in frames:
+        if np.corrcoef(ref, small(f))[0, 1] < SAME_SHOT:
+            continue
         g = np.asarray(trim_borders(Image.open(f)).convert("L"))
         h, w = g.shape
         scored.append((laplacian_var(g[h // 10:h - h // 10, w // 10:w - w // 10]), f))
     _, best = max(scored, key=lambda r: r[0])
     sec = a + frames.index(best) * (2 * window) / len(frames)
     return Image.open(best).convert("RGB"), sec, [round(v) for v, _ in scored]
+
+
+# on a face Real-ESRGAN's denoise paints skin smooth ("oil", owner 04.11): there the picture is
+# its weak-denoise pass mixed with a plain Lanczos enlargement, which keeps the film's own texture
+FACE_LANCZOS = 0.45
+
+
+def soften_faces(small, big):
+    """big (Real-ESRGAN x4 of small) with every face of small redone gently, feathered in."""
+    from pipeline import upscale
+    k = big.width / small.width
+    weak = upscale.x4(small, denoise=0.0)
+    plain = small.resize(big.size, Image.LANCZOS)
+    gentle = Image.blend(weak, plain, FACE_LANCZOS)
+    mask = Image.new("L", big.size, 0)
+    d = ImageDraw.Draw(mask)
+    for x, y, w, h in faces(small):
+        cx, cy, rx, ry = (x + w / 2) * k, (y + h / 2) * k, w * k * 0.85, h * k * 1.0
+        d.ellipse((cx - rx, cy - ry, cx + rx, cy + ry), fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(max(8, big.width // 90)))
+    return Image.composite(gentle, big, mask)
 
 
 def hd_frame(url, t, out, upscale_x4=True):
@@ -154,13 +186,18 @@ def hd_frame(url, t, out, upscale_x4=True):
     im, sec, scores = sharpest_frame(url, t, out.parent / (out.stem + "_frames"))
     im = trim_borders(im)
     src = im.size
+    soft = 0
     if upscale_x4:
         from pipeline import upscale
-        im = upscale.x4(im, denoise=0.5)
+        small = im
+        im = upscale.x4(small, denoise=0.5)
+        soft = len(faces(small))
+        if soft:
+            im = soften_faces(small, im)
     im.save(out)
     rep = {"source": url, "asked_s": round(t, 2), "frame_s": round(sec, 2), "frame_size": src,
            "frames_scored": len(scores), "laplacian_best": max(scores), "laplacian_median": int(np.median(scores)),
-           "upscaled": im.size}
+           "upscaled": im.size, "faces_softened": soft}
     out.with_suffix(".json").write_text(json.dumps(rep, indent=1), encoding="utf-8")
     return out
 

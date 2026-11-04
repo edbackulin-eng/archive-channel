@@ -109,7 +109,9 @@
   "sharpest_frame": "of the frames within 1.5 s of the chosen moment, the one with the highest variance of the Laplacian",
   "source": "the film's highest real resolution (pipeline/archive.files), never a 512Kb derivative",
   "upscale": "Real-ESRGAN realesr-general-x4v3 on the CPU (thumbnail frame only)",
-  "sharp_min": "pipeline/thumbnail.py SHARP_MIN (336x189) and SHARP_MIN_FULL (1280x720), photo half"
+  "sharp_min": "pipeline/thumbnail.py SHARP_MIN (336x189) and SHARP_MIN_FULL (1280x720), photo half",
+  "matches_words": "the picture shows what the words name: a house's price over a house, food prices over a store (owner 04.11; v2b '1947 $400 TO MOVE IN' is the reference)",
+  "faces": "on faces Real-ESRGAN is mixed gently with its weak-denoise pass and a plain enlargement (no 'oil' skin)"
  },
  "qa": {
   "match_share_min": 0.85,

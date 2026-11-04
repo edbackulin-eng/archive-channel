@@ -33,7 +33,8 @@ def main(slug):
     (out / "script.txt").write_text(script.strip() + "\n", encoding="utf-8")
     (out / "fact_check.json").write_text(json.dumps(checked, indent=1, ensure_ascii=False), encoding="utf-8")
     meta = {"slug": slug, "name": topic["name"], "title": draft.get("title", topic["name"]),
-            "thumbnail_words": draft.get("thumbnail_words", ""), "words": scriptwriter.words(script),
+            "thumbnail_words": draft.get("thumbnail_words", ""), "thumbnail_subject": draft.get("thumbnail_subject", ""),
+            "words": scriptwriter.words(script),
             "minutes_at_150wpm": round(scriptwriter.words(script) / 150, 1),
             "sources": [{"title": s["title"], "url": s["url"]} for s in found],
             "fact_check": {"claims": len(checked),
