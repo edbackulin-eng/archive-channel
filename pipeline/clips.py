@@ -18,6 +18,7 @@
 import json
 import re
 import subprocess
+import time
 from pathlib import Path
 
 import numpy as np
@@ -26,6 +27,9 @@ from PIL import Image
 from core.logger import get_logger
 
 log = get_logger("clips")
+# what a source server says when the fault is its own, for a while
+TRANSIENT = re.compile(r"5XX|50[0-9] |Server Error|timed? ?out|Connection (reset|refused)|Temporary failure|"
+                       r"End of file|Input/output error", re.I)
 W, H, FPS = 1920, 1080, 30
 SCENE_TH = 0.28
 MIN_SHOT_S = 2.5
@@ -131,15 +135,24 @@ def cut(source_url, start, seconds, out, work, sound=True):
     # with exit code 0); it is checked and read again.
     raw = work / (Path(out).stem + "_raw.mp4")
     fields = field_filter(source_url)
-    for attempt in range(3):
-        _ff(["-loglevel", "error", "-y", "-ss", f"{start:.3f}", "-i", source_url, "-t", f"{seconds + 0.5:.3f}",
-             *(["-vf", fields] if fields else []),
-             "-map", "0:v:0", "-map", "0:a?", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "8",
-             "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", str(raw)], timeout=900)
+    for attempt in range(5):
+        try:
+            _ff(["-loglevel", "error", "-y", "-ss", f"{start:.3f}", "-i", source_url, "-t", f"{seconds + 0.5:.3f}",
+                 *(["-vf", fields] if fields else []),
+                 "-map", "0:v:0", "-map", "0:a?", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "8",
+                 "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", str(raw)], timeout=900)
+        except (RuntimeError, subprocess.TimeoutExpired) as e:
+            # archive.org answers 5XX now and then (05.11: four of eight cut jobs died on one);
+            # the server's fault, not the film's: wait and read again
+            if attempt == 4 or not TRANSIENT.search(str(e)):
+                raise
+            log.info("archive.org did not answer (%s); again in %d s", str(e).splitlines()[-1][:80], 30 * (attempt + 1))
+            time.sleep(30 * (attempt + 1))
+            continue
         if duration(raw) >= seconds * 0.9:
             break
-        if attempt == 2:
-            raise RuntimeError(f"cut of {source_url} at {start:.1f}s came back short three times")
+        if attempt == 4:
+            raise RuntimeError(f"cut of {source_url} at {start:.1f}s came back short five times")
     # 1. border, flicker and grain, on the transfer's own geometry
     crop = _cropdetect(raw)
     pre = work / (Path(out).stem + "_pre.mp4")
