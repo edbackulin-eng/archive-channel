@@ -151,8 +151,11 @@ def render(plan, narration_wav, music_mp3, out, work):
     _ff(["-y", "-i", str(voice), "-stream_loop", "-1", "-i", str(music_mp3), "-i", str(film_n), "-filter_complex", graph,
          "-map", "[pre]", "-t", f"{total:.3f}", "-ar", str(SR), "-ac", "2", str(pre)])
     mix = _norm(pre, work / "mix.wav", SND["target_lufs"], SND["true_peak"] - 0.3)
-    _ff(["-y", "-i", str(picture), "-i", str(mix), "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "fast",
+    # The whole film is encoded once more here. With -preset fast a 20-minute film did not
+    # finish in 30 minutes on a GitHub runner (1950s-suburb, 06.11); veryfast at the same
+    # bitrate takes about a third of that, and the wait is an hour, not the default 30 min.
+    _ff(["-y", "-i", str(picture), "-i", str(mix), "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast",
          "-b:v", "12M", "-maxrate", "16M", "-bufsize", "24M", "-c:a", "aac", "-b:a", "192k", "-shortest",
-         "-movflags", "+faststart", str(out)])
+         "-movflags", "+faststart", str(out)], timeout=3600)
     return {"seconds": round(total, 2), "shots": len(shots), "film_breaks": len(win),
             "music_bed_gain_db": round(bed_gain, 1)}
