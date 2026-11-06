@@ -70,6 +70,14 @@ def main():
     check("breathing", cfg["breathing"]["min_share"] - 0.005 <= share <= cfg["breathing"]["max_share"]
           and all(3 <= b <= 8 for b in br) and not any(l.film_before for l in lines[:first_ch]),
           f"{share:.1%} without voice, {len(br)} breaks, hook unbroken")
+    # A build may be rerun - the watchdog reruns a failed one three times a day - and
+    # stage_narrate places the breaks and writes the script back every time. Placing
+    # twice used to double every [film N]: 19.9 % went to 33.2 %, and the episode
+    # stretched until two stretches ran over six minutes with no price on screen.
+    once = breathing.place(script)
+    check("breathing: placing twice is placing once", breathing.place(once) == once
+          and breathing.share_of(once) >= cfg["breathing"]["min_share"] - 0.005,
+          f"{once.count('[film')} breaks either way, {breathing.share_of(once):.1%}")
 
     items = archive.search("kitchen", 1950, 1960, rows=30)
     check("sources: free licences only", items and all(archive.licence_ok(i["licence_url"]) for i in items),

@@ -45,8 +45,10 @@ def stage_narrate(slug):
     e, b, _ = paths(slug)
     b.mkdir(parents=True, exist_ok=True)
     script = (e / "script.txt").read_text(encoding="utf-8")
-    script = breathing.place(script)
-    (e / "script.txt").write_text(script.rstrip() + "\n", encoding="utf-8")
+    placed = breathing.place(script).rstrip() + "\n"
+    if placed != script:                 # a rerun changes nothing, so it commits nothing
+        (e / "script.txt").write_text(placed, encoding="utf-8")
+    script = placed
     audio, tl = narrate.synthesize(narrate.load_kokoro(), script)
     sf.write(b / "narration.wav", audio, SAMPLE_RATE)
     (b / "timeline.json").write_text(json.dumps(tl, indent=1, ensure_ascii=False), encoding="utf-8")

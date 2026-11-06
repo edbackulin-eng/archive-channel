@@ -40,11 +40,34 @@ def share_of(script):
     return film / total if total else 0.0
 
 
+_FILM_LINE = re.compile(r"^\s*\[film\s+[0-9.]+\s*\]\s*$", re.I)
+
+
+def strip(script):
+    """The script without the breaks a previous placement wrote.
+
+    Nobody else writes them: the scriptwriter's markup has ">", "<", "[pause]",
+    "[price]" and "[today]" in it, and no film break - placing them is this
+    module's whole job. So removing them loses nothing anyone chose.
+    """
+    return "\n".join(l for l in script.splitlines() if not _FILM_LINE.match(l))
+
+
 def place(script, target=None):
-    """The script with film breaks placed until their share reaches `target`."""
+    """The script with film breaks placed until their share reaches `target`.
+
+    Placement starts from a script with no breaks in it, so running it twice
+    gives the same script as running it once. It used to add to whatever was
+    already there and skip only when the share had reached min_share exactly.
+    Episode 1 landed at 19.9 % - a tenth of a point under the floor, because
+    breaks are whole numbers of seconds - so the next build placed a second set
+    of breaks on top of the first, every [film 8] became [film 8][film 8], the
+    share went to 33.2 % and the episode stretched until two stretches ran over
+    six minutes with no price on screen. Both of the channel's own rules broken
+    by a rerun, and the watchdog reruns a failed build three times a day.
+    """
     target = target if target is not None else RULE["target_share"]
-    if share_of(script) >= RULE["min_share"]:
-        return script
+    script = strip(script)
     raw = script.splitlines()
     speech = _speech_s(delivery.parse(script))
     # the episode must still end inside its length: the share is lowered toward
