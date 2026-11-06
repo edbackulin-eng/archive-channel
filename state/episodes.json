@@ -1,0 +1,11 @@
+[
+ {
+  "slug": "1950s-suburb",
+  "state": "qa-failed",
+  "qa_failed": [
+   "match_share",
+   "length",
+   "thumbnail"
+  ]
+ }
+]
