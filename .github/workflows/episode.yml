@@ -133,6 +133,20 @@ jobs:
       - run: tar cf "$RUNNER_TEMP/out.tar" "episodes/$SLUG/out"
       - uses: actions/upload-artifact@v5
         with: {name: "release-${{ needs.pick.outputs.slug }}", path: "${{ runner.temp }}/out.tar", retention-days: 30}
+      # what the owner reviews, small (owner 07.11): a contact sheet (a frame every 5 s), the
+      # thumbnails, the QA report - the release itself is ~2 GB
+      - name: Review files
+        if: always()
+        run: |
+          o="episodes/$SLUG/out"; r="$RUNNER_TEMP/review"; mkdir -p "$r"
+          if [ -f "$o/video.mp4" ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$o/video.mp4" -vf "fps=1/5,scale=240:-2,tile=12x20" "$r/contact_%02d.jpg" || true
+          fi
+          cp "$o"/thumb_*.jpg "$o"/thumbnail.jpg "$o"/qa.json "$r"/ 2>/dev/null || true
+          ls -la "$r"
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with: {name: "review-${{ needs.pick.outputs.slug }}", path: "${{ runner.temp }}/review/", retention-days: 30}
       - name: Record (QA gate; upload when a token exists, else buffer)
         run: python automation/release.py record "$SLUG"
       - name: Save the state
