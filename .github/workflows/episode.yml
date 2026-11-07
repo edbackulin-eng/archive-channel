@@ -33,6 +33,8 @@ jobs:
           # or the plan changes (automation/pause.py); a slug given by hand still builds
           if [ -z "$s" ] && why=$(python automation/pause.py active); then
             echo "::notice::builds paused: $why"
+          elif [ -z "$s" ] && why=$(python automation/quota_hold.py active); then
+            echo "::notice::no build: $why"
           else
             [ -n "$s" ] || s=$(python automation/next_topic.py)
           fi
@@ -92,6 +94,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "episodes/$SLUG/script.txt" "episodes/$SLUG/meta.json" "episodes/$SLUG/fact_check.json" data/cpi_u.json 2>/dev/null || true
           git diff --cached --quiet || { git commit -q -m "Script for $SLUG"; for i in 1 2 3 4 5; do git pull -q --rebase --autostash origin main && git push -q origin HEAD:main && break; sleep $((i*8)); done; }
+      - name: Keep the spent Gemini day (state/quota_hold.json)
+        if: failure()
+        run: |
+          [ -f state/quota_hold.json ] || exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/quota_hold.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Gemini's day spent: $SLUG waits"
+          for i in 1 2 3 4 5; do git pull -q --rebase --autostash origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
       - run: tar cf "$RUNNER_TEMP/prep.tar" "episodes/$SLUG"
       - uses: actions/upload-artifact@v5
         with: {name: prep, path: "${{ runner.temp }}/prep.tar", retention-days: 3}
