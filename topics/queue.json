@@ -46,7 +46,13 @@
         "Chickeno1948 (1948)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Grocery store",
+        "Supermarket",
+        "Frozen food",
+        "Frozen meal",
+        "Post–World War II economic expansion"
+      ]
     },
     {
       "slug": "1950s-kitchen",
@@ -65,7 +71,13 @@
         "American1958 (1958)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Kitchen",
+        "Home appliance",
+        "Frigidaire",
+        "Dishwasher",
+        "Tupperware"
+      ]
     },
     {
       "slug": "1950s-supermarket",
@@ -84,7 +96,13 @@
         "American1958_2 (1958)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Supermarket",
+        "King Kullen",
+        "Piggly Wiggly",
+        "Shopping cart",
+        "A&P"
+      ]
     },
     {
       "slug": "1955-money",
@@ -103,7 +121,13 @@
         "OnGuard1956 (1956)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Post–World War II economic expansion",
+        "Minimum wage in the United States",
+        "Consumer price index",
+        "Economy of the United States",
+        "Household income in the United States"
+      ]
     },
     {
       "slug": "1950s-cars",
@@ -122,7 +146,12 @@
         "Designfo1956 (1956)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Automotive industry in the United States",
+        "Chevrolet Bel Air",
+        "Ford Thunderbird",
+        "Big Three (automobile manufacturers)"
+      ]
     },
     {
       "slug": "1950s-factory",
@@ -141,7 +170,13 @@
         "WhyPlayL1949 (1949)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Assembly line",
+        "United Auto Workers",
+        "Treaty of Detroit",
+        "Manufacturing in the United States",
+        "Ford River Rouge complex"
+      ]
     },
     {
       "slug": "1950s-road",
@@ -160,7 +195,13 @@
         "Century21964 (1964)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Diner",
+        "Drive-in",
+        "Drive-in theater",
+        "Motel",
+        "U.S. Route 66"
+      ]
     },
     {
       "slug": "1950s-school",
@@ -179,7 +220,13 @@
         "DatingDo1949 (1949)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Education in the United States",
+        "Duck and cover",
+        "Brown v. Board of Education",
+        "Baby boomers",
+        "Sputnik crisis"
+      ]
     },
     {
       "slug": "1950s-department-store",
@@ -198,7 +245,13 @@
         "1955Chev1955 (1955)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Department store",
+        "Sears",
+        "Macy's",
+        "Mail order",
+        "Southdale Center"
+      ]
     },
     {
       "slug": "1960s-color",
@@ -217,7 +270,13 @@
         "YourName1960 (1960)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "1960s",
+        "History of the United States (1964–1980)",
+        "Great Society",
+        "Counterculture of the 1960s",
+        "Kodachrome"
+      ]
     },
     {
       "slug": "home-of-tomorrow",
@@ -236,7 +295,12 @@
         "isforAto1953 (1953)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Monsanto House of the Future",
+        "Googie architecture",
+        "Home automation",
+        "Atomic Age"
+      ]
     },
     {
       "slug": "1950s-women",
@@ -255,7 +319,13 @@
         "RelaxedW1957 (1957)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Housewife",
+        "The Feminine Mystique",
+        "Women in the workforce",
+        "Second-wave feminism",
+        "Women in the United States"
+      ]
     },
     {
       "slug": "1950s-christmas",
@@ -274,7 +344,13 @@
         "FreedomH1956 (1956)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Observance of Christmas by country",
+        "Aluminum Christmas tree",
+        "Christmas lights",
+        "Rudolph the Red-Nosed Reindeer",
+        "Economics of Christmas"
+      ]
     },
     {
       "slug": "detroit-peak",
@@ -293,7 +369,13 @@
         "Corvairi1960 (1960)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "History of Detroit",
+        "Detroit",
+        "Automotive industry in the United States",
+        "Arsenal of Democracy",
+        "Motown"
+      ]
     },
     {
       "slug": "1939-worlds-fair",
@@ -312,7 +394,11 @@
         "GoldenGa1939_3 (1939)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "1939 New York World's Fair",
+        "Futurama (New York World's Fair)",
+        "Trylon and Perisphere"
+      ]
     },
     {
       "slug": "1950s-office",
@@ -331,7 +417,13 @@
         "ThisisCo1961 (1961)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Typewriter",
+        "Carbon paper",
+        "Break (work)",
+        "Secretary",
+        "IBM Selectric"
+      ]
     },
     {
       "slug": "1950s-highways",
@@ -350,7 +442,12 @@
         "YourName1960 (1960)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Interstate Highway System",
+        "Federal-Aid Highway Act of 1956",
+        "Pennsylvania Turnpike",
+        "Road trip"
+      ]
     },
     {
       "slug": "1950s-teenagers",
@@ -369,7 +466,13 @@
         "Miracleo1955 (1955)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Adolescence",
+        "Rock and roll",
+        "American Bandstand",
+        "Juvenile delinquency",
+        "Youth culture"
+      ]
     },
     {
       "slug": "atomic-home",
@@ -388,7 +491,13 @@
         "Operatio1955 (1955)"
       ],
       "status": "queued",
-      "wikipedia": []
+      "wikipedia": [
+        "Atomic Age",
+        "Fallout shelter",
+        "Duck and cover",
+        "Atoms for Peace",
+        "Civil defense"
+      ]
     }
   ]
 }
