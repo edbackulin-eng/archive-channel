@@ -9,6 +9,10 @@ Each pass:
   3. once a YouTube token exists, buffered episodes are uploaded (upload.yml);
   4. state/heartbeat.json is committed once a day, so the repository never goes
      60 days without a commit and GitHub never turns its schedules off.
+
+A build that cannot pass is not started again (owner 07.11): after a QA failure, or a run
+that failed all its attempts, builds pause (automation/pause.py, state/build_pause.json)
+until the code or the plan changes - no reruns, no next episode. The owner gets one letter.
 """
 import json
 import os
@@ -16,6 +20,9 @@ import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from automation import pause  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 REPO = os.environ.get("GITHUB_REPOSITORY", "edbackulin-eng/archive-channel")
@@ -47,9 +54,15 @@ def main():
     ep = runs("episode.yml")
     busy = any(r["status"] != "completed" for r in ep)
     last = next((r for r in ep if r["status"] == "completed"), None)
+    fp = pause.fingerprint()
+    if pause.lift_if_changed(fp):
+        actions.append("the code or the plan changed: builds resume")
+    held = pause.active(fp)
     if not busy and last and last["conclusion"] in ("failure", "cancelled", "timed_out") \
             and now() - datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00")) > timedelta(minutes=12):
-        if last.get("run_attempt", 1) < MAX_ATTEMPTS:
+        if held:
+            pass                                     # a paused build is not rerun either
+        elif last.get("run_attempt", 1) < MAX_ATTEMPTS:
             try:
                 gh("run", "rerun", str(last["id"]), "-R", REPO, "--failed", parse=False)
             except RuntimeError:
@@ -57,16 +70,21 @@ def main():
             actions.append(f"reran episode run {last['id']}")
             busy = True
         elif f"run-{last['id']}" not in mem["emailed"]:
+            held = pause.set_(f"episode run {last['id']} failed {last.get('run_attempt')} times", fp=fp)
             subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"),
-                            f"Episode build {last['id']} failed {last.get('run_attempt')} times",
-                            f"https://github.com/{REPO}/actions/runs/{last['id']}"])
+                            f"Episode build {last['id']} failed {last.get('run_attempt')} times; builds paused",
+                            f"https://github.com/{REPO}/actions/runs/{last['id']}\n"
+                            "No build starts again until the code or the plan changes."])
             mem["emailed"].append(f"run-{last['id']}")
     rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
     ahead = [r for r in rows if r.get("state") in ("built", "awaiting_approval", "awaiting_turn")
              or (r.get("state") == "scheduled" and r.get("publish_at", "") > now().strftime("%Y-%m-%dT%H:%M:%SZ"))]
     keys = os.environ.get("KEYS_READY") == "true"
     failed_run = [r for r in rows[-2:] if r.get("state") == "qa-failed"]
-    if len(ahead) < AHEAD and not busy:
+    if held:
+        actions.append(f"builds paused: {held['why']} (since {held['since']}); "
+                       "they resume when the code or the plan changes")
+    elif len(ahead) < AHEAD and not busy:
         if not keys:
             # without the text and vision keys every build would fail QA and use up a topic
             actions.append("waiting for GROQ_API_KEY_AR and GEMINI_API_KEY_AR; no build started")
