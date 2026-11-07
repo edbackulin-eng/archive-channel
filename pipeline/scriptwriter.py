@@ -128,19 +128,59 @@ def shorten(script, prompt=""):
     n = words(script)
     if n <= WORDS_MAX:
         return script
-    target = WORDS_MAX - 100
-    for temp in (0.3, 0.5):
-        more = llm.complete_json(
-            prompt + f"\n\nYOUR SCRIPT ({n} words, too long):\n{script}\n\nCut it to {target}-{WORDS_MAX} "
-            "words. Only delete or condense sentences; add no fact, name, number or line that is not already "
-            "there. Keep the hook, every chapter heading, every [price ...] and [today ...] line with the line "
-            "it belongs to, and all delivery markup. Return JSON: {\"script\": \"...\"}.",
-            system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=temp)
-        cut = more.get("script") or ""
-        if WORDS_MIN * 0.9 <= words(cut) <= WORDS_MAX and len(price_gaps(cut)[1]) <= len(price_gaps(script)[1]):
-            log.info("script cut from %d to %d words", n, words(cut))
-            return cut
-    raise RuntimeError(f"LENGTH: the script is {n} words and could not be cut to {WORDS_MAX}")
+    # Whole lines are deleted, one at a time, until the script fits: a model asked to rewrite
+    # it to 2,150-2,250 words returned 1,598 (07.11), so the model only ranks the lines and the
+    # cut is counted here. Never deleted: the hook (before the first chapter), a chapter's first
+    # line, a line with a [price]/[today] tag or right after a [price] line, markup lines.
+    lines = script.splitlines()
+    wc = lambda l: len(re.sub(r"^[<>]\s*", "", l).split())          # noqa: E731
+    cands, chapter_seen, first_in_chapter, after_price = [], False, False, False
+    for i, l in enumerate(lines):
+        s = l.strip()
+        if s.startswith("##"):
+            chapter_seen, first_in_chapter = True, True
+            continue
+        if not s or s.startswith("["):
+            after_price = after_price or s.startswith("[price")
+            continue
+        if chapter_seen and not first_in_chapter and not after_price and "[" not in s:
+            cands.append(i)
+        first_in_chapter = after_price = False
+    # who said or reported it stays, and so does what they said (the line before)
+    attrib = re.compile(r"\b(said|says|wrote|writes|reported|according|our words|quoted|told|called it|recalled)\b", re.I)
+    keep = set()
+    for i in cands:
+        if attrib.search(lines[i]):
+            keep.add(i)
+            prev = next((j for j in range(i - 1, -1, -1) if lines[j].strip() and not lines[j].strip().startswith("[")), None)
+            if prev is not None:
+                keep.add(prev)
+    cands = [i for i in cands if i not in keep]
+    goal = WORDS_MAX - 60
+    order = []
+    try:
+        listing = "\n".join(f"{i}: {lines[i]}" for i in cands)
+        ans = llm.complete_json(
+            prompt + f"\n\nTHE SCRIPT:\n{script}\n\nIt is {n} words and must lose about {n - goal} words. "
+            "These lines may be deleted whole:\n" + listing + "\n\nList the line numbers to delete, the least "
+            "needed first (repetition, asides, detail the story does not need), about "
+            f"{int((n - goal) * 1.3)} words in all. Return JSON: {{\"delete\": [<line numbers>]}}.",
+            system="You edit documentary narration. Return JSON only.", max_tokens=2000, temperature=0.2)
+        order = [int(x) for x in ans.get("delete", []) if int(x) in cands]
+    except Exception as e:                                       # noqa: BLE001
+        log.warning("no ranking of the lines (%s); the longest go first", e)
+    order += sorted((i for i in cands if i not in order), key=lambda i: -wc(lines[i]))
+    gone, left = set(), n
+    for i in order:
+        if left <= goal:
+            break
+        gone.add(i)
+        left -= wc(lines[i])
+    cut = "\n".join(l for i, l in enumerate(lines) if i not in gone)
+    if not (WORDS_MIN <= words(cut) <= WORDS_MAX) or len(price_gaps(cut)[1]) > len(price_gaps(script)[1]):
+        raise RuntimeError(f"LENGTH: the script is {n} words and could not be cut to {WORDS_MAX}")
+    log.info("script cut from %d to %d words (%d lines deleted)", n, words(cut), len(gone))
+    return cut
 
 
 def write(topic, sources):

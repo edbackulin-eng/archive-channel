@@ -200,22 +200,28 @@ def main():
     from pipeline import scriptwriter, vision
     check("vision: a spent day is QuotaSpent, not unchecked", issubclass(vision.QuotaSpent, RuntimeError)
           and vision.QUOTA_MARK == "VISION_QUOTA_SPENT")
-    long_s = "\n".join(["[price 7990 1949 | A new house]"] + ["word " * 20] * 125)          # 2500 words
-    short_s = "\n".join(["[price 7990 1949 | A new house]"] + ["word " * 20] * 105)         # 2100 words
+    body = ["## One | Place | 1950", "[price 7990 1949 | A new house]"] + \
+        [f"line {i} " + "word " * 18 for i in range(124)] + ["The Times reported it."]      # ~2500 words
+    long_s = "\n".join(["Hook line about a price."] + body)
+    hook_only = "\n".join(["word " * 20] * 125)                                              # nothing deletable
     saved_llm = scriptwriter.llm.complete_json
     try:
-        scriptwriter.llm.complete_json = lambda *a, **k: {"script": short_s}
+        scriptwriter.llm.complete_json = lambda *a, **k: {"delete": [5, 6, 7]}
         cut = scriptwriter.shorten(long_s)
-        scriptwriter.llm.complete_json = lambda *a, **k: {"script": long_s}
         try:
-            scriptwriter.shorten(long_s)
+            scriptwriter.shorten(hook_only)
             refused = False
         except RuntimeError as e:
             refused = "LENGTH" in str(e)
     finally:
         scriptwriter.llm.complete_json = saved_llm
-    check("script: over WORDS_MAX is cut to fit, or stops with LENGTH",
-          scriptwriter.words(cut) <= scriptwriter.WORDS_MAX and refused, str(scriptwriter.words(cut)))
+    kept = cut.splitlines()
+    check("script: over WORDS_MAX is cut by whole lines to fit (hook, tags, attribution kept), or stops with LENGTH",
+          scriptwriter.WORDS_MIN <= scriptwriter.words(cut) <= scriptwriter.WORDS_MAX and refused
+          and kept[0] == "Hook line about a price." and "[price 7990 1949 | A new house]" in kept
+          and "line 0 " + "word " * 18 in kept and "The Times reported it." in kept
+          and ("line 122 " + "word " * 18) in kept and "line 4 " + "word " * 18 not in kept,
+          str(scriptwriter.words(cut)))
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",
