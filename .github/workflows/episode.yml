@@ -57,6 +57,13 @@ jobs:
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py
       - run: python automation/build.py "$SLUG" script
       - run: python automation/build.py "$SLUG" narrate
+      # the vision answers of earlier runs of this topic (pipeline/vision.py): a day that ran out
+      # goes on where it stopped instead of asking the same frames again
+      - uses: actions/cache/restore@v4
+        with:
+          path: .vision_cache.json
+          key: vision-${{ env.SLUG }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: vision-${{ env.SLUG }}-
       - name: Plan the shots (a topic with under 15 min of confirmed film is deferred, the next one started)
         id: plan
         env:
@@ -74,6 +81,11 @@ jobs:
             exit 0
           fi
           exit $rc
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .vision_cache.json
+          key: vision-${{ env.SLUG }}-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Keep the script in the repository
         run: |
           git config user.name "github-actions[bot]"

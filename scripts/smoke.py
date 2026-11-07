@@ -19,6 +19,7 @@ Only a passing run moves dev to main. Checks:
 """
 import importlib
 import json
+import os
 import pkgutil
 import shutil
 import sys
@@ -200,6 +201,31 @@ def main():
     from pipeline import scriptwriter, vision
     check("vision: a spent day is QuotaSpent, not unchecked", issubclass(vision.QuotaSpent, RuntimeError)
           and vision.QUOTA_MARK == "VISION_QUOTA_SPENT")
+    # 08.11: answers are kept between runs, and the ones got before a spent day too
+    import tempfile as _tf
+    _d = Path(_tf.mkdtemp())
+    for _n in range(30):
+        (_d / f"k{_n}.jpg").write_bytes(b"frame %d" % _n)
+    _pairs = [(f"line {n}", "1950-1955", str(_d / f"k{n}.jpg")) for n in range(30)]
+    saved_v = (vision.CACHE, vision._cache, vision._check, os.environ.get("GEMINI_API_KEY_AR"))
+    asked = []
+    try:
+        vision.CACHE, vision._cache = _d / "cache.json", None
+        os.environ["GEMINI_API_KEY_AR"] = "smoke"
+        vision._check = lambda ps: (asked.append(len(ps)) or
+                                    [{"ok": True, "status": "checked", "note": p[0]} for p in ps])
+        first = vision.check(_pairs[:20])
+        vision._cache = None                                   # a new run: the file only
+        second = vision.check(_pairs)
+    finally:
+        vision.CACHE, vision._cache, vision._check = saved_v[:3]
+        if saved_v[3] is None:
+            os.environ.pop("GEMINI_API_KEY_AR", None)
+        else:
+            os.environ["GEMINI_API_KEY_AR"] = saved_v[3]
+    check("vision: answered frames are kept between runs; only new ones are asked",
+          asked == [20, 10] and [v["note"] for v in second] == [p[0] for p in _pairs] and len(first) == 20,
+          str(asked))
     body = ["## One | Place | 1950", "[price 7990 1949 | A new house]"] + \
         [f"line {i} " + "word " * 18 for i in range(124)] + ["The Times reported it."]      # ~2500 words
     long_s = "\n".join(["Hook line about a price."] + body)
