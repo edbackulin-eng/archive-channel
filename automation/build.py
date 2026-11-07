@@ -38,6 +38,12 @@ def stage_script(slug):
     if (e / "script.txt").exists():
         from pipeline import scriptwriter
         s = (e / "script.txt").read_text(encoding="utf-8")
+        if scriptwriter.est_minutes(s) < scriptwriter.MIN_EST_MIN or scriptwriter.words(s) < scriptwriter.WORDS_MIN:
+            # written before the full minimum was kept: written again from its sources
+            log.info("%s: the script in the repository runs ~%.1f min; it is written again", slug,
+                     scriptwriter.est_minutes(s))
+            (e / "script.txt").unlink()
+            return subprocess.run([sys.executable, str(ROOT / "automation" / "write_episode.py"), slug]).returncode
         if scriptwriter.words(s) > scriptwriter.WORDS_MAX:      # written before the cap was kept
             cut = scriptwriter.shorten(s)
             (e / "script.txt").write_text(cut.strip() + "\n", encoding="utf-8")

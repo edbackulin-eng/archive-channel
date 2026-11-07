@@ -222,6 +222,24 @@ def main():
           and "line 0 " + "word " * 18 in kept and "The Times reported it." in kept
           and ("line 122 " + "word " * 18) in kept and "line 4 " + "word " * 18 not in kept,
           str(scriptwriter.words(cut)))
+    # owner 07.11: a script is expanded up to the full 15-minute minimum, not only under 90 % of its words
+    saved_llm = scriptwriter.llm.complete_json
+    short = "## One | Place | 1950\n" + "\n".join(f"Line {i} " + "word " * 15 for i in range(100))   # ~1700 words
+    longer = "## One | Place | 1950\n" + "\n".join(f"Line {i} " + "word " * 15 for i in range(128))  # ~2170 words
+    asked = []
+    try:
+        def fake(prompt, **k):
+            asked.append(prompt)
+            return {"script": longer if asked[1:] else short, "claims": []}
+        scriptwriter.llm.complete_json = fake
+        out = scriptwriter.write({"name": "x", "years": [1950, 1955]}, [{"title": "s", "url": "u", "text": "t"}])
+    finally:
+        scriptwriter.llm.complete_json = saved_llm
+    check("script: under the 15-minute minimum it is sent back for more",
+          scriptwriter.est_minutes(short) < scriptwriter.MIN_EST_MIN and len(asked) >= 2
+          and scriptwriter.words(out["script"]) > scriptwriter.words(short),
+          f"{scriptwriter.words(short)} words ~{scriptwriter.est_minutes(short):.1f} min -> "
+          f"{scriptwriter.words(out['script'])} words")
     # owner 07.11: films judged for the topic before the scan; never a shot that does not match;
     # under 15 min of confirmed film the topic is deferred
     from pipeline import footage, archive as _ar, clips as _cl

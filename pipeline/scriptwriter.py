@@ -92,6 +92,20 @@ def _sources_block(sources):
     return "\n\n".join(f"SOURCE {i}: {s['title']} ({s['url']})\n{s['text']}" for i, s in enumerate(sources))
 
 
+MIN_EST_MIN = 15.5           # the episode's 15-minute floor and a margin for the voice's pace
+
+
+def est_minutes(script, wpm=150):
+    """The running time the script will have once narrated: its words at the voice's pace, its
+    pauses, and the film breaks pipeline/breathing.py will place (as the narrate stage does)."""
+    from core import delivery
+    from pipeline import breathing
+    t = 0.0
+    for line in delivery.parse(breathing.place(script)):
+        t += line.film_before + line.pause_before + len(line.text.split()) / wpm * 60
+    return t / 60
+
+
 def words(script):
     body = [l for l in script.splitlines() if l.strip() and not l.startswith("##") and not l.startswith("[")]
     return sum(len(re.sub(r"^[<>]\s*", "", l).split()) for l in body)
@@ -188,16 +202,23 @@ def write(topic, sources):
               f"{_sources_block(sources)}")
     out = llm.complete_json(prompt, system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX),
                             max_tokens=16000, temperature=0.7)
-    n = words(out["script"])
-    if n < WORDS_MIN * 0.9:
-        log.info("script is %d words; asking for the missing length", n)
+    # owner 07.11: expanded up to the full minimum - 1950s-groceries ran 14.5 minutes when only a
+    # script under 90 % of WORDS_MIN was sent back for more
+    for _ in range(2):
+        n, mins = words(out["script"]), est_minutes(out["script"])
+        if n >= WORDS_MIN and mins >= MIN_EST_MIN:
+            break
+        log.info("script is %d words, ~%.1f min; asking for the missing length", n, mins)
         more = llm.complete_json(
-            prompt + f"\n\nYOUR DRAFT ({n} words, too short):\n{out['script']}\n\nExpand it to "
-            f"{WORDS_MIN}-{WORDS_MAX} words with more scenes from the SAME sources; keep the hook, the "
-            "chapters and the markup. Return the same JSON shape, claims included.",
+            prompt + f"\n\nYOUR DRAFT ({n} words, about {mins:.1f} minutes - too short, the episode must run at "
+            f"least 15 minutes):\n{out['script']}\n\nExpand it to {max(WORDS_MIN, n + 150)}-{WORDS_MAX} words "
+            "with more scenes from the SAME sources; keep the hook, the chapters and the markup. Return the same "
+            "JSON shape, claims included.",
             system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.6)
         if words(more.get("script", "")) > n:
             out = more
+        else:
+            break
     tags, gaps = price_gaps(out["script"])
     if gaps:
         log.info("price tags: %d, missing: %s; asking for them", tags, gaps)
