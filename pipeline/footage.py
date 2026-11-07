@@ -60,7 +60,33 @@ def words(text):
     return [w for w in re.findall(r"[a-z]+", text.lower()) if len(w) > 3 and w not in STOP]
 
 
-FILMS = (20, 30)
+FILMS = (25, 40)
+REUSE_MAX_SHARE = 0.15
+ROUNDS = 2                       # rounds of candidates a slot gets before its film is used again           # slots that may take another stretch of a confirmed shot (owner 07.11)
+
+
+class ShortOfFilm(RuntimeError):
+    """Too little unique confirmed film for the episode's length: it is cut to what fits."""
+
+    def __init__(self, msg, fits_min):
+        super().__init__(msg)
+        self.fits_min = fits_min
+
+
+RELATED = """List 8 short English search phrases (2-4 words each) that would find archive films (Prelinger,
+US Government films, 1930s-1960s) showing the everyday places, people and things of this episode: "{name}"
+({y0}-{y1}). Include related subjects (for example for a suburb episode: Levittown, housing development,
+family life 1950s, new homes, home ownership). Return JSON only: {{"queries": ["...", "..."]}}"""
+
+
+def related_queries(name, years):
+    from core import llm
+    try:
+        ans = llm.complete_json(RELATED.format(name=name, y0=years[0], y1=years[1]), max_tokens=600, temperature=0.3)
+        return [str(q) for q in ans.get("queries", [])][:8]
+    except Exception as e:                                       # noqa: BLE001
+        log.info("no related searches (%s)", e)
+        return []
 CHECK_TOP = 6
 RELEVANT_MIN = 2                 # of 0-3: "mostly about the topic" or better
 MIN_CONFIRMED_MIN = 15.0
@@ -217,7 +243,9 @@ def episode_films(timeline, topic_years, query=None, n=FILMS, name=None, extra_q
 
     if query:
         add(archive.search(query, *topic_years, rows=120), "topic")
-    for q in extra_queries:                              # the topic's name and its Wikipedia titles
+    if name:                                             # wider: related subjects (owner 07.11)
+        extra_queries = list(extra_queries) + related_queries(name, topic_years)
+    for q in extra_queries:                              # the topic's name, its Wikipedia titles, related ones
         ws = words(q)
         if ws:
             try:
@@ -327,36 +355,50 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
             continue
         todo.append(s)
 
-    # a few slots a request: their best candidates checked together, then taken in order
+    # a few slots a request: their best candidates checked together, then taken in order; a slot
+    # none of whose candidates matched gets a second round of other candidates (owner 07.11:
+    # more candidates a slot, before any stretch of film is used again)
+    asked = {}                       # id(slot) -> ids of the pool shots already checked for it
     for i in range(0, len(todo), SLOTS_A_REQUEST):
         block = todo[i:i + SLOTS_A_REQUEST]
-        tops = []
-        for s in block:
-            cands, era = ranked(s)
-            tops.append((s, cands[:check_top + 2], era))
-        pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
-        verdicts = vision.check(pairs) if pairs else []
-        vi = 0
-        for s, cs, era in tops:
-            vs = verdicts[vi:vi + len(cs[:check_top])]
-            vi += len(cs[:check_top])
+        open_ = list(block)
+        for rnd in range(ROUNDS):
+            if not open_:
+                break
+            tops = []
+            for s in open_:
+                cands, era = ranked(s)
+                cands = [c for c in cands if id(c) not in asked.get(id(s), set())]
+                asked.setdefault(id(s), set()).update(id(c) for c in cands[:check_top])
+                tops.append((s, cands[:check_top + 2], era))
+            pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
+            verdicts = vision.check(pairs) if pairs else []
+            vi, still = 0, []
+            for s, cs, era in tops:
+                vs = verdicts[vi:vi + len(cs[:check_top])]
+                vi += len(cs[:check_top])
+                d = s["end"] - s["start"]
+                for c, v in zip(cs, vs):
+                    if v.get("ok") and not any(x[0] is c for x in confirmed):
+                        confirmed.append((c, v, s.get("chapter_ctx")))
+                    elif v.get("status") == "checked" and not v.get("ok"):
+                        rejected[id(c)] = rejected.get(id(c), 0) + 1
+                options = [(c, v) for c, v in zip(cs, vs) if free(c, s)]
+                chosen = next(((c, v) for c, v in options if v.get("ok")), None)
+                if chosen:
+                    c, v = chosen
+                    s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
+                              "item": c["item"], "kf": c["kf"], "vision": v})
+                    used.append((c["film"], c["start"], c["start"] + d, s["start"]))
+                else:
+                    still.append(s)
+            open_ = still
+        for s in open_:
             d = s["end"] - s["start"]
-            for c, v in zip(cs, vs):
-                if v.get("ok") and not any(x[0] is c for x in confirmed):
-                    confirmed.append((c, v, s.get("chapter_ctx")))
-                elif v.get("status") == "checked" and not v.get("ok"):
-                    rejected[id(c)] = rejected.get(id(c), 0) + 1
-            options = [(c, v) for c, v in zip(cs, vs) if free(c, s)]
-            chosen = next(((c, v) for c, v in options if v.get("ok")), None)
-            if chosen:
-                c, v = chosen
-                s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
-                          "item": c["item"], "kf": c["kf"], "vision": v})
-                used.append((c["film"], c["start"], c["start"] + d, s["start"]))
-                continue
             # no candidate matches: never one that does not (owner 07.11) - another stretch of a
-            # confirmed shot, else the shot before runs on (merged afterwards)
-            got = reuse(s)
+            # confirmed shot (at most REUSE_MAX_SHARE of the slots), else the shot before runs on
+            n_reused = sum(1 for x in todo if (x.get("vision") or {}).get("reused"))
+            got = reuse(s) if n_reused < REUSE_MAX_SHARE * len(todo) else None
             if got:
                 sh, off, v = got
                 s.update({"film": sh["film"], "src_start": off, "src_end": sh["end"], "best": sh["best"],
@@ -367,7 +409,9 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
             else:
                 s["missing"] = True
         log.info("planned %d of %d slots", min(i + SLOTS_A_REQUEST, len(todo)), len(todo))
+    short = sum(1 for s in sl if s.get("missing"))
     sl = _run_on(sl)
+    _fix_repeats(sl)
     seen, conf_s = set(), 0.0
     for sh, _v, _ch in confirmed:
         k = (sh["film"], sh["start"])
@@ -376,10 +420,45 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
             conf_s += sh["end"] - sh["start"]
     log.info("confirmed film: %.1f min in %d shots; %d slots run on from the shot before", conf_s / 60, len(seen),
              sum(1 for s in sl if s.get("ran_on")))
+    # owner 07.11: rather than the same pictures again, a shorter episode. The slots left without
+    # unique film were run on by their neighbours; past 10 % of the slots the episode is cut to
+    # the film there is
+    clip_n = max(1, sum(1 for s in todo))
+    if short > 0.10 * clip_n:
+        total_min = sl[-1]["end"] / 60
+        fits = total_min * (1 - (short - 0.10 * clip_n) / clip_n)
+        raise ShortOfFilm(f"SHORT OF FILM: {short} of {clip_n} slots had no unique matching shot; "
+                          f"the unique film fits ~{fits:.1f} min", fits)
     if conf_s / 60 < MIN_CONFIRMED_MIN:
         raise Deferred(f"DEFERRED: {conf_s / 60:.1f} min of confirmed film for the topic, under "
                        f"{MIN_CONFIRMED_MIN:.0f}")
     return {"shots": sl, "films": [e[0]["id"] for e in films], "confirmed_min": round(conf_s / 60, 1)}
+
+
+def _fix_repeats(sl, gap=None):
+    """A stretch of film shown again within 3 minutes - a shot that ran on over its neighbour's
+    slot reached into a stretch taken later (07.11: QuietRev1956 at 0:00 and 0:25.7) - is moved
+    to a free stretch of its own source shot where there is one."""
+    gap = gap or CFG["no_repeat_within_s"]
+    clips_ = [s for s in sl if s.get("kind") == "clip" and s.get("film")]
+
+    def clash(a, b):
+        da, db = a["end"] - a["start"], b["end"] - b["start"]
+        return (a is not b and a["film"] == b["film"] and abs(a["start"] - b["start"]) < gap
+                and not (a["src_start"] + da < b["src_start"] or b["src_start"] + db < a["src_start"]))
+    for b in clips_:
+        if not any(clash(a, b) for a in clips_):
+            continue
+        d = b["end"] - b["start"]
+        lo, hi = b["src_start"], (b.get("src_end") or b["src_start"] + d) - d
+        start0 = b["src_start"]
+        # only inside its own confirmed shot: a stretch outside it was never checked
+        for off in [lo + 0.5 * k for k in range(int(max(0, hi - lo) / 0.5) + 1)]:
+            b["src_start"] = round(off, 3)
+            if not any(clash(a, b) for a in clips_):
+                break
+        else:
+            b["src_start"] = start0
 
 
 def _run_on(sl):

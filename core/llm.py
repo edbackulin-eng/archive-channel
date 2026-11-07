@@ -73,7 +73,12 @@ def extract_json(text):
     a = min([i for i in (text.find("{"), text.find("[")) if i >= 0], default=-1)
     if a < 0:
         raise LLMError(f"no JSON in answer: {text[:200]}")
-    obj, _ = json.JSONDecoder().raw_decode(text[a:])
+    try:
+        obj, _ = json.JSONDecoder().raw_decode(text[a:])
+    except json.JSONDecodeError:
+        # a backslash that starts no JSON escape (07.11: 1950s-groceries' script, "Invalid \escape")
+        fixed = re.sub(r'\\(?!["\\/bfnrtu])', r"\\\\", text[a:])
+        obj, _ = json.JSONDecoder().raw_decode(fixed)
     return obj
 
 

@@ -44,8 +44,10 @@ def stage_script(slug):
                      scriptwriter.est_minutes(s))
             (e / "script.txt").unlink()
             return subprocess.run([sys.executable, str(ROOT / "automation" / "write_episode.py"), slug]).returncode
-        if scriptwriter.words(s) > scriptwriter.WORDS_MAX:      # written before the cap was kept
-            cut = scriptwriter.shorten(s)
+        if scriptwriter.words(s) > scriptwriter.WORDS_MAX or scriptwriter.est_minutes(s) > scriptwriter.MAX_EST_MIN:
+            cut = scriptwriter.shorten(s) if scriptwriter.words(s) > scriptwriter.WORDS_MAX else s
+            if scriptwriter.est_minutes(cut) > scriptwriter.MAX_EST_MIN:
+                cut = scriptwriter.shorten_to(cut, scriptwriter.MAX_EST_MIN)
             (e / "script.txt").write_text(cut.strip() + "\n", encoding="utf-8")
             m = json.loads((e / "meta.json").read_text(encoding="utf-8"))
             m.update({"words": scriptwriter.words(cut), "minutes_at_150wpm": round(scriptwriter.words(cut) / 150, 1)})
@@ -83,7 +85,37 @@ def stage_plan(slug):
     total = sf.info(str(b / "narration.wav")).duration
     try:
         plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage", query=topic.get("query"),
-                            name=topic["name"], extra_queries=[topic["name"]] + list(topic.get("wikipedia") or []))
+                            name=topic["name"], extra_queries=[topic["name"]] + list(topic.get("wikipedia") or [])
+                            + list(topic.get("related") or []))
+    except footage.ShortOfFilm as e:
+        # owner 07.11: never the same pictures again - the episode is cut to the unique film there
+        # is (not under 15 minutes), narrated and planned again; under 15 it is deferred
+        from pipeline import scriptwriter
+        if e.fits_min < 15.2:
+            topic.update({"status": "deferred", "deferred_why": str(e)})
+            (ROOT / "topics" / "queue.json").write_text(json.dumps(q, indent=2, ensure_ascii=False) + "\n",
+                                                       encoding="utf-8")
+            log.warning("%s: %s; under 15 minutes of unique film, the topic is deferred", slug, e)
+            return 3
+        s = (e_dir := paths(slug)[0] / "script.txt").read_text(encoding="utf-8")
+        cut = scriptwriter.shorten_to(s, e.fits_min)
+        e_dir.write_text(cut.strip() + "\n", encoding="utf-8")
+        log.warning("%s: %s; the script is cut to ~%.1f min and narrated again", slug, e,
+                    scriptwriter.est_minutes(cut))
+        if stage_narrate(slug):
+            return 1
+        tl = json.loads((b / "timeline.json").read_text(encoding="utf-8"))
+        total = sf.info(str(b / "narration.wav")).duration
+        try:
+            plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage", query=topic.get("query"),
+                                name=topic["name"], extra_queries=[topic["name"]] + list(topic.get("wikipedia") or [])
+                                + list(topic.get("related") or []))
+        except (footage.ShortOfFilm, footage.Deferred) as e2:
+            topic.update({"status": "deferred", "deferred_why": str(e2)})
+            (ROOT / "topics" / "queue.json").write_text(json.dumps(q, indent=2, ensure_ascii=False) + "\n",
+                                                       encoding="utf-8")
+            log.warning("%s: %s after the cut; the topic is deferred", slug, e2)
+            return 3
     except footage.Deferred as e:
         # too little confirmed film (owner 07.11): the topic waits, the next one is built
         topic.update({"status": "deferred", "deferred_why": str(e)})
@@ -155,11 +187,24 @@ def stage_render(slug):
     # a grocery price over a store); of the checked shots, the most vivid that Gemini finds showing
     # meta["thumbnail_subject"], in the manner of the top 30
     words, subject = meta["thumbnail_words"], meta.get("thumbnail_subject") or meta["thumbnail_words"]
-    pool = sorted((s for s in plan["shots"] if s["kind"] == "clip" and s.get("kf") and (s.get("vision") or {}).get("ok")),
-                  key=lambda s: -thumbnail.score(thumbnail.Image.open(s["kf"]))[0])[:12]
+    # one candidate per keyframe (07.11: the 12 best were 3 kitchens of one film, repeated by the
+    # reused stretches, and none showed the house the words name), up to 36, 12 a request,
+    # until three show the subject
+    seen_kf, uniq = set(), []
+    for s in sorted((s for s in plan["shots"] if s["kind"] == "clip" and s.get("kf") and (s.get("vision") or {}).get("ok")),
+                    key=lambda s: -thumbnail.score(thumbnail.Image.open(s["kf"]))[0]):
+        if s["kf"] not in seen_kf and (s.get("film"), round(s.get("src_start") or 0)) not in seen_kf:
+            seen_kf.update({s["kf"], (s.get("film"), round(s.get("src_start") or 0))})
+            uniq.append(s)
     asked = f"A thumbnail that says '{words}'. The picture must show: {subject}"
-    verdicts = vision.check([(asked, f"{s.get('year') or ''}", s["kf"]) for s in pool]) if pool else []
-    cands = [s for s, v in zip(pool, verdicts) if v.get("ok")][:3]
+    cands = []
+    for k in range(0, min(36, len(uniq)), 12):
+        pool = uniq[k:k + 12]
+        verdicts = vision.check([(asked, f"{s.get('year') or ''}", s["kf"]) for s in pool])
+        cands += [s for s, v in zip(pool, verdicts) if v.get("ok")]
+        if len(cands) >= 3:
+            break
+    cands = cands[:3]
     year = f"{meta.get('decade') or str(min(s.get('year') or 1950 for s in cands) // 10 * 10) + 's'}" if cands else "1950s"
     reports = []
     for k, s in enumerate(cands):
