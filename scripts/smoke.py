@@ -198,6 +198,22 @@ def main():
     check("watchdog: a quota stop waits for 08:05 UTC, then reruns",
           not watchdog.after_reset(at, _dt(2026, 11, 7, 7, 0, tzinfo=_tz.utc))
           and watchdog.after_reset(at, _dt(2026, 11, 7, 8, 10, tzinfo=_tz.utc)))
+    # 08.11: a spent Gemini day holds every build until 08:05 UTC, then the stopped topics go first
+    from automation import quota_hold
+    import tempfile as _tf0
+    saved_h = quota_hold.HOLD
+    try:
+        quota_hold.HOLD = Path(_tf0.mkdtemp()) / "quota_hold.json"
+        h1 = quota_hold.set_("a", _dt(2026, 11, 7, 23, 14, tzinfo=_tz.utc))
+        h2 = quota_hold.set_("b", _dt(2026, 11, 7, 23, 20, tzinfo=_tz.utc))
+        held_h = quota_hold.active(_dt(2026, 11, 8, 7, 0, tzinfo=_tz.utc))
+        free_h = quota_hold.active(_dt(2026, 11, 8, 8, 10, tzinfo=_tz.utc))
+    finally:
+        quota_hold.HOLD = saved_h
+    check("quota hold: until 08:05 UTC, the stopped topics in order; a spent text day counts too",
+          h1["until"] == "2026-11-08T08:05:00Z" and h2["slugs"] == ["a", "b"] and bool(held_h) and free_h is None
+          and quota_hold.spent("no provider answered: groq: HTTP 413; gemini: HTTP 429; gemini: HTTP 429")
+          and quota_hold.spent("VISION_QUOTA_SPENT: x") and not quota_hold.spent("groq: HTTP 500"), str(h2))
     from pipeline import scriptwriter, vision
     check("vision: a spent day is QuotaSpent, not unchecked", issubclass(vision.QuotaSpent, RuntimeError)
           and vision.QUOTA_MARK == "VISION_QUOTA_SPENT")

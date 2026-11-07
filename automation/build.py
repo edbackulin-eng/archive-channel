@@ -232,7 +232,15 @@ def main():
     slug, stage = sys.argv[1], sys.argv[2]
     if stage == "cut":
         return stage_cut(slug, int(sys.argv[3]), int(sys.argv[4]))
-    return {"script": stage_script, "narrate": stage_narrate, "plan": stage_plan, "render": stage_render}[stage](slug)
+    try:
+        return {"script": stage_script, "narrate": stage_narrate, "plan": stage_plan, "render": stage_render}[stage](slug)
+    except Exception as e:                                           # noqa: BLE001
+        # the Gemini day is spent: no build starts until it turns (automation/quota_hold.py)
+        from automation import quota_hold
+        if quota_hold.spent(e):
+            h = quota_hold.set_(slug)
+            log.warning("GEMINI_DAY_SPENT: %s stopped in its %s stage; builds wait until %s", slug, stage, h["until"])
+        raise
 
 
 if __name__ == "__main__":

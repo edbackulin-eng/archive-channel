@@ -22,7 +22,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from automation import pause  # noqa: E402
+from automation import pause, quota_hold  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 REPO = os.environ.get("GITHUB_REPOSITORY", "edbackulin-eng/archive-channel")
@@ -72,8 +72,29 @@ def main():
     if pause.lift_if_changed(fp):
         actions.append("the code or the plan changed: builds resume")
     held = pause.active(fp)
-    if not busy and last and last["conclusion"] in ("failure", "cancelled", "timed_out") \
-            and now() - datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00")) > timedelta(minutes=12):
+    hold = quota_hold.load()
+    recent = bool(last and last["conclusion"] in ("failure", "cancelled", "timed_out")
+                  and now() - datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00")) <= timedelta(minutes=12))
+    if recent:
+        busy = True                      # 08.11: a run that failed minutes ago is looked at first, not passed by
+    if hold and quota_hold.active(now()):
+        # the Gemini day is spent: nothing reruns or starts until it turns (automation/quota_hold.py)
+        actions.append(f"Gemini's day is spent until {hold['until']}; {', '.join(hold['slugs'])} wait")
+        busy = True
+    elif hold and not busy:
+        # the day turned: the topics that stopped start again, the first now, the rest after it
+        slug = next(iter(hold.get("slugs") or []), "")
+        if slug:
+            gh("workflow", "run", "episode.yml", "-R", REPO, "-f", f"slug={slug}", parse=False)
+            actions.append(f"Gemini's day turned: episode {slug} started again on today's code")
+        rest = [s for s in hold.get("slugs") or [] if s != slug]
+        if rest:
+            hold["slugs"] = rest
+            quota_hold.HOLD.write_text(json.dumps(hold, indent=1) + "\n", encoding="utf-8")
+        else:
+            quota_hold.clear()
+        busy = True
+    elif not busy and last and last["conclusion"] in ("failure", "cancelled", "timed_out"):
         ended = datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00"))
         if not held and last["conclusion"] == "failure" and quota_stop(last["id"]):
             # Gemini's day was spent: not a fault - rerun after it turns, and no pause
