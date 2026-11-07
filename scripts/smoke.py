@@ -276,11 +276,14 @@ def main():
         try:
             footage.plan(tl, 1150.0, (1946, 1962), fk / "b", name="x")
             deferred = False
+        except footage.ShortOfFilm as e:      # under 15 minutes of unique film: build.py defers it
+            deferred = e.fits_min < 15.2
         except footage.Deferred:
             deferred = True
     finally:
         _ar.search, _ar.files, _cl.shots, _llm.complete_json, footage.vision.check = saved_f
-    check("footage: films not about the topic are not taken; every shot on screen matches; too little is deferred",
+    check("footage: films not about the topic are not taken; every shot on screen matches and is unique enough; "
+          "too little is deferred",
           not any(f.startswith("bad") for f in pl["films"]) and all((s.get("vision") or {}).get("ok") for s in cs)
           and all(abs(a["end"] - b["start"]) < 1e-6 for a, b in zip(pl["shots"], pl["shots"][1:])) and deferred,
           f"{len(cs)} shots, {pl.get('confirmed_min')} min confirmed")

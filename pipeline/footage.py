@@ -61,7 +61,8 @@ def words(text):
 
 
 FILMS = (25, 40)
-REUSE_MAX_SHARE = 0.15           # slots that may take another stretch of a confirmed shot (owner 07.11)
+REUSE_MAX_SHARE = 0.15
+ROUNDS = 2                       # rounds of candidates a slot gets before its film is used again           # slots that may take another stretch of a confirmed shot (owner 07.11)
 
 
 class ShortOfFilm(RuntimeError):
@@ -354,33 +355,46 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
             continue
         todo.append(s)
 
-    # a few slots a request: their best candidates checked together, then taken in order
+    # a few slots a request: their best candidates checked together, then taken in order; a slot
+    # none of whose candidates matched gets a second round of other candidates (owner 07.11:
+    # more candidates a slot, before any stretch of film is used again)
+    asked = {}                       # id(slot) -> ids of the pool shots already checked for it
     for i in range(0, len(todo), SLOTS_A_REQUEST):
         block = todo[i:i + SLOTS_A_REQUEST]
-        tops = []
-        for s in block:
-            cands, era = ranked(s)
-            tops.append((s, cands[:check_top + 2], era))
-        pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
-        verdicts = vision.check(pairs) if pairs else []
-        vi = 0
-        for s, cs, era in tops:
-            vs = verdicts[vi:vi + len(cs[:check_top])]
-            vi += len(cs[:check_top])
+        open_ = list(block)
+        for rnd in range(ROUNDS):
+            if not open_:
+                break
+            tops = []
+            for s in open_:
+                cands, era = ranked(s)
+                cands = [c for c in cands if id(c) not in asked.get(id(s), set())]
+                asked.setdefault(id(s), set()).update(id(c) for c in cands[:check_top])
+                tops.append((s, cands[:check_top + 2], era))
+            pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
+            verdicts = vision.check(pairs) if pairs else []
+            vi, still = 0, []
+            for s, cs, era in tops:
+                vs = verdicts[vi:vi + len(cs[:check_top])]
+                vi += len(cs[:check_top])
+                d = s["end"] - s["start"]
+                for c, v in zip(cs, vs):
+                    if v.get("ok") and not any(x[0] is c for x in confirmed):
+                        confirmed.append((c, v, s.get("chapter_ctx")))
+                    elif v.get("status") == "checked" and not v.get("ok"):
+                        rejected[id(c)] = rejected.get(id(c), 0) + 1
+                options = [(c, v) for c, v in zip(cs, vs) if free(c, s)]
+                chosen = next(((c, v) for c, v in options if v.get("ok")), None)
+                if chosen:
+                    c, v = chosen
+                    s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
+                              "item": c["item"], "kf": c["kf"], "vision": v})
+                    used.append((c["film"], c["start"], c["start"] + d, s["start"]))
+                else:
+                    still.append(s)
+            open_ = still
+        for s in open_:
             d = s["end"] - s["start"]
-            for c, v in zip(cs, vs):
-                if v.get("ok") and not any(x[0] is c for x in confirmed):
-                    confirmed.append((c, v, s.get("chapter_ctx")))
-                elif v.get("status") == "checked" and not v.get("ok"):
-                    rejected[id(c)] = rejected.get(id(c), 0) + 1
-            options = [(c, v) for c, v in zip(cs, vs) if free(c, s)]
-            chosen = next(((c, v) for c, v in options if v.get("ok")), None)
-            if chosen:
-                c, v = chosen
-                s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
-                          "item": c["item"], "kf": c["kf"], "vision": v})
-                used.append((c["film"], c["start"], c["start"] + d, s["start"]))
-                continue
             # no candidate matches: never one that does not (owner 07.11) - another stretch of a
             # confirmed shot (at most REUSE_MAX_SHARE of the slots), else the shot before runs on
             n_reused = sum(1 for x in todo if (x.get("vision") or {}).get("reused"))
