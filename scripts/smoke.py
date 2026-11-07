@@ -190,6 +190,32 @@ def main():
         pause.PAUSE, pause.STATE = saved_p
     check("pause: a QA failure pauses builds; the same code keeps the pause, a change lifts it",
           bool(held) and "length" in held["why"] and bool(kept) and lifted and len(fp) == 16, str(held))
+    # owner 07.11: Gemini's spent day stops the stage (rerun after 08:05 UTC); a long script is cut
+    from datetime import datetime as _dt, timezone as _tz
+    from automation import watchdog
+    at = _dt(2026, 11, 6, 18, 50, tzinfo=_tz.utc)
+    check("watchdog: a quota stop waits for 08:05 UTC, then reruns",
+          not watchdog.after_reset(at, _dt(2026, 11, 7, 7, 0, tzinfo=_tz.utc))
+          and watchdog.after_reset(at, _dt(2026, 11, 7, 8, 10, tzinfo=_tz.utc)))
+    from pipeline import scriptwriter, vision
+    check("vision: a spent day is QuotaSpent, not unchecked", issubclass(vision.QuotaSpent, RuntimeError)
+          and vision.QUOTA_MARK == "VISION_QUOTA_SPENT")
+    long_s = "\n".join(["[price 7990 1949 | A new house]"] + ["word " * 20] * 125)          # 2500 words
+    short_s = "\n".join(["[price 7990 1949 | A new house]"] + ["word " * 20] * 105)         # 2100 words
+    saved_llm = scriptwriter.llm.complete_json
+    try:
+        scriptwriter.llm.complete_json = lambda *a, **k: {"script": short_s}
+        cut = scriptwriter.shorten(long_s)
+        scriptwriter.llm.complete_json = lambda *a, **k: {"script": long_s}
+        try:
+            scriptwriter.shorten(long_s)
+            refused = False
+        except RuntimeError as e:
+            refused = "LENGTH" in str(e)
+    finally:
+        scriptwriter.llm.complete_json = saved_llm
+    check("script: over WORDS_MAX is cut to fit, or stops with LENGTH",
+          scriptwriter.words(cut) <= scriptwriter.WORDS_MAX and refused, str(scriptwriter.words(cut)))
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",

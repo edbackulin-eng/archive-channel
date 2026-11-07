@@ -13,6 +13,12 @@ and four questions:
 A shot is usable when all four hold. Frames are sent in batches of 12 lines and
 paced; a frame that could not be checked is "unchecked", never "ok" - the QA
 gate counts unchecked frames as unmatched.
+
+When the key's day is spent the check does not go on unchecked: it raises QuotaSpent
+(owner 07.11). 1950s-suburb (06.11) went on with 227 of 243 shots unchecked, rendered for
+an hour and a half and failed QA on match_share (0.016 of 0.85) and on the thumbnail (no
+checked shot to put under its words). Now the stage stops, and the watchdog reruns it
+after the free tier's day turns (08:00 UTC), on the artifacts of the jobs that passed.
 """
 import base64
 import io
@@ -46,6 +52,13 @@ Return JSON only: {"results": [{"i": <n>, "match": true|false, "era": true|false
 - era: the frame looks like the period named in the line, within about ten years.
 - clean: no watermark, no TV/channel/stock logo, no burned-in modern text or timecode.
   A title card of the film itself is NOT clean for our use."""
+
+
+QUOTA_MARK = "VISION_QUOTA_SPENT"           # the watchdog looks for this in a failed job's log
+
+
+class QuotaSpent(RuntimeError):
+    pass
 
 
 def key():
@@ -92,8 +105,9 @@ def check(pairs):
                 break
             except urllib.error.HTTPError as e:
                 if e.code == 429 and "PerDay" in e.read().decode("utf-8", "replace"):
-                    log.warning("Gemini daily quota spent; the rest stays unchecked")
-                    break
+                    log.warning("%s: Gemini's day for %s is spent; the stage stops and is rerun after "
+                                "08:00 UTC", QUOTA_MARK, MODEL)
+                    raise QuotaSpent(f"{QUOTA_MARK}: the day's Gemini vision requests are spent")
                 time.sleep(6 * (attempt + 1))
             except Exception as e:                                   # noqa: BLE001
                 log.info("vision retry (%s)", e)

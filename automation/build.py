@@ -36,6 +36,14 @@ def paths(slug):
 def stage_script(slug):
     e, _, _ = paths(slug)
     if (e / "script.txt").exists():
+        from pipeline import scriptwriter
+        s = (e / "script.txt").read_text(encoding="utf-8")
+        if scriptwriter.words(s) > scriptwriter.WORDS_MAX:      # written before the cap was kept
+            cut = scriptwriter.shorten(s)
+            (e / "script.txt").write_text(cut.strip() + "\n", encoding="utf-8")
+            m = json.loads((e / "meta.json").read_text(encoding="utf-8"))
+            m.update({"words": scriptwriter.words(cut), "minutes_at_150wpm": round(scriptwriter.words(cut) / 150, 1)})
+            (e / "meta.json").write_text(json.dumps(m, indent=1, ensure_ascii=False), encoding="utf-8")
         return 0
     prices.refresh()                     # a new year's CPI-U average, at most monthly; the file stays otherwise
     return subprocess.run([sys.executable, str(ROOT / "automation" / "write_episode.py"), slug]).returncode
@@ -50,6 +58,12 @@ def stage_narrate(slug):
         (e / "script.txt").write_text(placed, encoding="utf-8")
     script = placed
     audio, tl = narrate.synthesize(narrate.load_kokoro(), script)
+    secs = len(audio) / SAMPLE_RATE
+    ep = json.loads((ROOT / "config" / "channel.json").read_text(encoding="utf-8"))["episode"]
+    if not ep["minutes_min"] * 60 <= secs <= ep["minutes_max"] * 60:
+        # QA would fail on length after hours of cutting and rendering: stop here
+        raise RuntimeError(f"LENGTH: the narration runs {secs / 60:.1f} min, the episode must be "
+                           f"{ep['minutes_min']}-{ep['minutes_max']}")
     sf.write(b / "narration.wav", audio, SAMPLE_RATE)
     (b / "timeline.json").write_text(json.dumps(tl, indent=1, ensure_ascii=False), encoding="utf-8")
     return 0

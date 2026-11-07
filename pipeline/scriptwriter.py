@@ -121,6 +121,28 @@ def price_gaps(script, per_episode=6, max_gap_s=360, hook_s=36, wpm=150):
     return len(at), missing
 
 
+def shorten(script, prompt=""):
+    """The script cut to WORDS_MAX or fewer: lines dropped or condensed, nothing added, so
+    every claim left is one the fact check already holds; the price tags, chapters and
+    markup kept. 1950s-suburb (06.11) was 2,378 words and ran 20.2 minutes (QA: 15-20)."""
+    n = words(script)
+    if n <= WORDS_MAX:
+        return script
+    target = WORDS_MAX - 100
+    for temp in (0.3, 0.5):
+        more = llm.complete_json(
+            prompt + f"\n\nYOUR SCRIPT ({n} words, too long):\n{script}\n\nCut it to {target}-{WORDS_MAX} "
+            "words. Only delete or condense sentences; add no fact, name, number or line that is not already "
+            "there. Keep the hook, every chapter heading, every [price ...] and [today ...] line with the line "
+            "it belongs to, and all delivery markup. Return JSON: {\"script\": \"...\"}.",
+            system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=temp)
+        cut = more.get("script") or ""
+        if WORDS_MIN * 0.9 <= words(cut) <= WORDS_MAX and len(price_gaps(cut)[1]) <= len(price_gaps(script)[1]):
+            log.info("script cut from %d to %d words", n, words(cut))
+            return cut
+    raise RuntimeError(f"LENGTH: the script is {n} words and could not be cut to {WORDS_MAX}")
+
+
 def write(topic, sources):
     prompt = (f"EPISODE: {topic['name']}\nYEARS: {topic['years'][0]}-{topic['years'][1]}\n\n"
               f"{_sources_block(sources)}")
@@ -148,6 +170,8 @@ def write(topic, sources):
             system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.5)
         if more.get("script") and len(price_gaps(more["script"])[1]) < len(gaps):
             out = more
+    if words(out["script"]) > WORDS_MAX:
+        out["script"] = shorten(out["script"], prompt)
     return out
 
 

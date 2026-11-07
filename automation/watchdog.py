@@ -44,6 +44,20 @@ def gh(*args, parse=True):
     return json.loads(r.stdout) if parse and r.stdout.strip() else r.stdout
 
 
+def quota_stop(run_id):
+    """True when the run stopped because Gemini's day was spent (pipeline/vision.py QuotaSpent)."""
+    r = subprocess.run(["gh", "run", "view", str(run_id), "-R", REPO, "--log-failed"], capture_output=True, text=True)
+    return "VISION_QUOTA_SPENT" in (r.stdout or "")
+
+
+def after_reset(at, now_):
+    """The free tier's day turns at midnight Pacific (08:00 UTC); 5 minutes' margin."""
+    reset = at.replace(hour=8, minute=5, second=0, microsecond=0)
+    if reset <= at:
+        reset += timedelta(days=1)
+    return now_ >= reset
+
+
 def runs(wf):
     return gh("api", f"repos/{REPO}/actions/workflows/{wf}/runs?per_page=10")["workflow_runs"]
 
@@ -60,7 +74,17 @@ def main():
     held = pause.active(fp)
     if not busy and last and last["conclusion"] in ("failure", "cancelled", "timed_out") \
             and now() - datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00")) > timedelta(minutes=12):
-        if held:
+        ended = datetime.fromisoformat(last["updated_at"].replace("Z", "+00:00"))
+        if not held and last["conclusion"] == "failure" and quota_stop(last["id"]):
+            # Gemini's day was spent: not a fault - rerun after it turns, and no pause
+            if not after_reset(ended, now()):
+                actions.append(f"episode run {last['id']} stopped on Gemini's spent day; rerun after 08:05 UTC")
+                busy = True
+            elif last.get("run_attempt", 1) < MAX_ATTEMPTS + 3:
+                gh("run", "rerun", str(last["id"]), "-R", REPO, "--failed", parse=False)
+                actions.append(f"reran episode run {last['id']} after Gemini's day turned")
+                busy = True
+        elif held:
             pass                                     # a paused build is not rerun either
         elif last.get("run_attempt", 1) < MAX_ATTEMPTS:
             try:
