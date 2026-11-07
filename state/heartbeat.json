@@ -1,8 +1,8 @@
 {
  "date": "2026-11-07",
- "checked_at": "2026-11-07T09:30:18Z",
+ "checked_at": "2026-11-07T09:45:24Z",
  "ahead": [],
  "actions": [
-  "reran episode run 42357824734"
+  "only 0 ahead; next episode started"
  ]
 }
