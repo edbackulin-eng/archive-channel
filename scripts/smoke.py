@@ -175,6 +175,26 @@ def main():
     check("release: first two await approval, the third its turn, then all in order",
           s1 == ["awaiting_approval", "awaiting_approval", "awaiting_turn"]
           and all(x[0] == "scheduled" for x in s2) and s2[0][1] < s2[1][1] < s2[2][1], f"{s1} {s2}")
+    # owner 07.11: after a QA failure no build starts again until the code or the plan changes
+    from automation import pause
+    saved_p = pause.PAUSE, pause.STATE
+    try:
+        pause.PAUSE, pause.STATE = W / "pause.json", W / "episodes.json"
+        pause.STATE.write_text(json.dumps([{"slug": "a", "state": "qa-failed", "qa_failed": ["length"]}]))
+        fp = pause.fingerprint()
+        pause.from_state("a")
+        held = pause.active(fp)
+        kept = pause.lift_if_changed(fp) is False and pause.active(fp)
+        lifted = pause.lift_if_changed(fp + "x") and pause.active(fp) is None and not pause.PAUSE.exists()
+    finally:
+        pause.PAUSE, pause.STATE = saved_p
+    check("pause: a QA failure pauses builds; the same code keeps the pause, a change lifts it",
+          bool(held) and "length" in held["why"] and bool(kept) and lifted and len(fp) == 16, str(held))
+    nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
+    q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
+    check("next topic: never one without its Wikipedia articles",
+          nt.stdout.strip() == "" or next(t for t in q["topics"] if t["slug"] == nt.stdout.strip()).get("wikipedia"),
+          nt.stdout.strip())
     print("\nSMOKE", "PASSED" if not failures else f"FAILED: {failures}")
     return 0 if not failures else 1
 

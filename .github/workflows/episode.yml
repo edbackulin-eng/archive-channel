@@ -29,7 +29,13 @@ jobs:
       - id: p
         run: |
           s="${{ inputs.slug }}"
-          [ -n "$s" ] || s=$(python automation/next_topic.py)
+          # paused after a QA failure or a build that failed all its attempts, until the code
+          # or the plan changes (automation/pause.py); a slug given by hand still builds
+          if [ -z "$s" ] && why=$(python automation/pause.py active); then
+            echo "::notice::builds paused: $why"
+          else
+            [ -n "$s" ] || s=$(python automation/next_topic.py)
+          fi
           echo "slug=$s" >> "$GITHUB_OUTPUT"
   prepare:
     needs: pick
@@ -115,7 +121,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add state/episodes.json 2>/dev/null || true
+          python automation/pause.py from-state "$SLUG" || true
+          git add state/episodes.json state/build_pause.json 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -q -m "state: $SLUG"
           for i in 1 2 3 4 5; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
