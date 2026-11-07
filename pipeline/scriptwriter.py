@@ -135,12 +135,34 @@ def price_gaps(script, per_episode=6, max_gap_s=360, hook_s=36, wpm=150):
     return len(at), missing
 
 
-def shorten(script, prompt=""):
+MAX_EST_MIN = 19.4           # the episode's 20-minute ceiling and a margin
+
+
+def shorten_to(script, minutes, prompt=""):
+    """The script cut by whole lines (as shorten does) until it runs `minutes` or less
+    (est_minutes), never under 15. 07.11: 1950s-groceries narrated to 20.4 and 21.9 minutes
+    with its words under WORDS_MAX; and an episode with too little unique film is cut to it."""
+    minutes = max(15.2, minutes)
+    if est_minutes(script) <= minutes:
+        return script
+    per_word = est_minutes(script) / max(1, words(script))
+    goal_words = int(words(script) - (est_minutes(script) - minutes) / per_word) - 20
+    cut = shorten(script, prompt, goal=goal_words, floor=0)
+    for _ in range(3):                                   # the film breaks shift a little with the text
+        if est_minutes(cut) <= minutes:
+            break
+        cut = shorten(cut, prompt, goal=words(cut) - 40, floor=0)
+    if est_minutes(cut) < 15.0:
+        raise RuntimeError(f"LENGTH: cut to {minutes:.1f} min the script would run {est_minutes(cut):.1f}")
+    return cut
+
+
+def shorten(script, prompt="", goal=None, floor=None):
     """The script cut to WORDS_MAX or fewer: lines dropped or condensed, nothing added, so
     every claim left is one the fact check already holds; the price tags, chapters and
     markup kept. 1950s-suburb (06.11) was 2,378 words and ran 20.2 minutes (QA: 15-20)."""
     n = words(script)
-    if n <= WORDS_MAX:
+    if goal is None and n <= WORDS_MAX:
         return script
     # Whole lines are deleted, one at a time, until the script fits: a model asked to rewrite
     # it to 2,150-2,250 words returned 1,598 (07.11), so the model only ranks the lines and the
@@ -170,7 +192,8 @@ def shorten(script, prompt=""):
             if prev is not None:
                 keep.add(prev)
     cands = [i for i in cands if i not in keep]
-    goal = WORDS_MAX - 60
+    goal = WORDS_MAX - 60 if goal is None else goal
+    floor = WORDS_MIN if floor is None else floor
     order = []
     try:
         listing = "\n".join(f"{i}: {lines[i]}" for i in cands)
@@ -191,7 +214,7 @@ def shorten(script, prompt=""):
         gone.add(i)
         left -= wc(lines[i])
     cut = "\n".join(l for i, l in enumerate(lines) if i not in gone)
-    if not (WORDS_MIN <= words(cut) <= WORDS_MAX) or len(price_gaps(cut)[1]) > len(price_gaps(script)[1]):
+    if not (floor <= words(cut) <= WORDS_MAX) or len(price_gaps(cut)[1]) > len(price_gaps(script)[1]):
         raise RuntimeError(f"LENGTH: the script is {n} words and could not be cut to {WORDS_MAX}")
     log.info("script cut from %d to %d words (%d lines deleted)", n, words(cut), len(gone))
     return cut
