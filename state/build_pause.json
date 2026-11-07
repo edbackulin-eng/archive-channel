@@ -1,7 +1,0 @@
-{
- "why": "1950s-suburb failed QA: repeats, thumbnail",
- "slug": "1950s-suburb",
- "fingerprint": "c590eccbaa71f793",
- "since": "2026-11-07T19:35:57Z",
- "lifted_by": "a change to pipeline, automation, config, topics, .github/workflows/episode.yml"
-}
