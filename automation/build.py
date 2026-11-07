@@ -75,7 +75,16 @@ def stage_plan(slug):
     topic = next(t for t in q["topics"] if t["slug"] == slug)
     tl = json.loads((b / "timeline.json").read_text(encoding="utf-8"))
     total = sf.info(str(b / "narration.wav")).duration
-    plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage", query=topic.get("query"))
+    try:
+        plan = footage.plan(tl, total, tuple(topic["years"]), b / "footage", query=topic.get("query"),
+                            name=topic["name"], extra_queries=[topic["name"]] + list(topic.get("wikipedia") or []))
+    except footage.Deferred as e:
+        # too little confirmed film (owner 07.11): the topic waits, the next one is built
+        topic.update({"status": "deferred", "deferred_why": str(e)})
+        (ROOT / "topics" / "queue.json").write_text(json.dumps(q, indent=2, ensure_ascii=False) + "\n",
+                                                   encoding="utf-8")
+        log.warning("%s: %s; the topic is deferred", slug, e)
+        return 3
     for s in plan["shots"]:
         if s["kind"] == "clip" and s.get("item"):
             s["year"] = s["item"].get("year")

@@ -222,6 +222,50 @@ def main():
           and "line 0 " + "word " * 18 in kept and "The Times reported it." in kept
           and ("line 122 " + "word " * 18) in kept and "line 4 " + "word " * 18 not in kept,
           str(scriptwriter.words(cut)))
+    # owner 07.11: films judged for the topic before the scan; never a shot that does not match;
+    # under 15 min of confirmed film the topic is deferred
+    from pipeline import footage, archive as _ar, clips as _cl
+    from core import llm as _llm
+    saved_f = (_ar.search, _ar.files, _cl.shots, _llm.complete_json, footage.vision.check)
+    fk = W / "fk"
+    films = {f"good{i}": "Suburban homes and families" for i in range(16)}
+    films.update({f"bad{i}": "Cartoon castle fairy tale" for i in range(3)})
+
+    def _shots(proxy, d, max_shots=40):
+        out = []
+        for i in range(30):
+            f = Path(d) / f"k{i}.jpg"
+            f.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGB", (64, 48), (120, 80, 40)).save(f)
+            out.append((i * 8.0, i * 8.0 + 8.0, f))
+        return out
+    try:
+        _ar.search = lambda *a, **k: [{"id": i, "title": v, "year": 1952, "colour": True, "description": v,
+                                       "subject": "", "licence": "PD", "page": ""} for i, v in films.items()]
+        _ar.files = lambda fid: {"proxy": "x", "best": "b", "best_size": (640, 480)}
+        _cl.shots = _shots
+        _llm.complete_json = lambda prompt, **k: {"results": [
+            {"i": i, "score": 0 if "Cartoon" in l else 3}
+            for i, l in enumerate(l for l in prompt.split("FILMS:\n")[1].splitlines() if l.strip())]}
+        footage.vision.check = lambda pairs: [{"ok": sum(map(ord, str(kf))) % 3 == 0, "status": "checked", "note": "x"}
+                                              for _l, _e, kf in pairs]
+        tl = [{"start": i * 5.0, "end": i * 5.0 + 5.0, "text": f"suburb family house line {i}",
+               **({"chapter": "## Homes | Long Island | 1950"} if i == 0 else {})} for i in range(230)]
+        pl = footage.plan(tl, 1150.0, (1946, 1962), fk, name="Life in a Brand-New 1950s Suburb")
+        cs = [s for s in pl["shots"] if s["kind"] == "clip"]
+        films.clear()
+        films["good0"] = "Suburban homes"
+        try:
+            footage.plan(tl, 1150.0, (1946, 1962), fk / "b", name="x")
+            deferred = False
+        except footage.Deferred:
+            deferred = True
+    finally:
+        _ar.search, _ar.files, _cl.shots, _llm.complete_json, footage.vision.check = saved_f
+    check("footage: films not about the topic are not taken; every shot on screen matches; too little is deferred",
+          not any(f.startswith("bad") for f in pl["films"]) and all((s.get("vision") or {}).get("ok") for s in cs)
+          and all(abs(a["end"] - b["start"]) < 1e-6 for a, b in zip(pl["shots"], pl["shots"][1:])) and deferred,
+          f"{len(cs)} shots, {pl.get('confirmed_min')} min confirmed")
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",

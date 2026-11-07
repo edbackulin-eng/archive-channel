@@ -41,6 +41,8 @@ jobs:
     needs: pick
     if: needs.pick.outputs.slug != ''
     runs-on: ubuntu-24.04
+    outputs:
+      deferred: ${{ steps.plan.outputs.deferred }}
     timeout-minutes: 300
     env:
       SLUG: ${{ needs.pick.outputs.slug }}
@@ -55,7 +57,23 @@ jobs:
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py
       - run: python automation/build.py "$SLUG" script
       - run: python automation/build.py "$SLUG" narrate
-      - run: python automation/build.py "$SLUG" plan
+      - name: Plan the shots (a topic with under 15 min of confirmed film is deferred, the next one started)
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rc=0; python automation/build.py "$SLUG" plan || rc=$?
+          if [ $rc = 3 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add topics/queue.json
+            git commit -q -m "Topic $SLUG deferred: too little confirmed film"
+            for i in 1 2 3 4 5; do git pull -q --rebase --autostash origin main && git push -q origin HEAD:main && break; sleep $((i*8)); done
+            echo "deferred=true" >> "$GITHUB_OUTPUT"
+            gh workflow run episode.yml -R "${{ github.repository }}"
+            exit 0
+          fi
+          exit $rc
       - name: Keep the script in the repository
         run: |
           git config user.name "github-actions[bot]"
@@ -67,6 +85,7 @@ jobs:
         with: {name: prep, path: "${{ runner.temp }}/prep.tar", retention-days: 3}
   cut:
     needs: [pick, prepare]
+    if: needs.prepare.outputs.deferred != 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 300
     strategy:
