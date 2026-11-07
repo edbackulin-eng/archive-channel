@@ -21,6 +21,7 @@ checked shot to put under its words). Now the stage stops, and the watchdog reru
 after the free tier's day turns (08:00 UTC), on the artifacts of the jobs that passed.
 """
 import base64
+import hashlib
 import io
 import json
 import os
@@ -38,9 +39,38 @@ log = get_logger("vision")
 ROOT = Path(__file__).resolve().parent.parent
 MODEL = json.loads((ROOT / "config" / "channel.json").read_text(encoding="utf-8"))["vision"]["model"]
 URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-BATCH = 12
+BATCH = 24                  # 08.11: 24 frames a request (was 12) - the free day counts requests
 MIN_GAP_S = 4.0
 _last = [0.0]
+# 08.11: 1950s-suburb spent the day at slot 96 of 223 and the rerun would have asked the same
+# frames again. Every checked answer is kept (key: the line, the era, the frame's bytes) and the
+# workflow carries the file from run to run (actions/cache), so each day goes on where the last stopped.
+CACHE = Path(os.environ.get("VISION_CACHE") or ROOT / ".vision_cache.json")
+_cache = None
+
+
+def _store():
+    global _cache
+    if _cache is None:
+        try:
+            _cache = json.loads(CACHE.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            _cache = {}
+    return _cache
+
+
+def _flush():
+    try:
+        CACHE.parent.mkdir(parents=True, exist_ok=True)
+        CACHE.write_text(json.dumps(_cache or {}, ensure_ascii=False), encoding="utf-8")
+    except OSError as e:
+        log.info("vision cache not written (%s)", e)
+
+
+def _key(line, era, kf):
+    h = hashlib.sha1(f"{MODEL}|{era}|{line}|".encode("utf-8"))
+    h.update(Path(kf).read_bytes())
+    return h.hexdigest()
 
 SYSTEM = """You check archive film frames for a documentary about everyday American life
 in the 20th century. For each numbered pair you get the narration LINE and a FRAME that
@@ -78,6 +108,22 @@ def check(pairs):
     """pairs: [(line_text, era_hint, keyframe_path)] -> [verdict dict] in the same order."""
     if not key():
         return [{"ok": False, "status": "unchecked", "note": "GEMINI_API_KEY_AR not set"} for _ in pairs]
+    store = _store()
+    keys = [_key(*p) for p in pairs]
+    todo = [i for i, k in enumerate(keys) if k not in store]
+    if len(todo) < len(pairs):
+        log.info("vision: %d of %d frames answered before (cache)", len(pairs) - len(todo), len(pairs))
+    fresh = _check([pairs[i] for i in todo])
+    for i, v in zip(todo, fresh):
+        if v.get("status") == "checked":
+            store[keys[i]] = v
+    if todo:
+        _flush()
+    got = dict(zip(todo, fresh))
+    return [got[i] if i in got else store[keys[i]] for i in range(len(pairs))]
+
+
+def _check(pairs):
     out = []
     for k in range(0, len(pairs), BATCH):
         part = pairs[k:k + BATCH]
@@ -88,7 +134,7 @@ def check(pairs):
         payload = {"contents": [{"role": "user", "parts": parts}],
                    "systemInstruction": {"parts": [{"text": SYSTEM}]},
                    "generationConfig": {"temperature": 0.0, "responseMimeType": "application/json",
-                                        "maxOutputTokens": 2048}}
+                                        "maxOutputTokens": 4096}}
         res = None
         for attempt in range(5):
             wait = MIN_GAP_S - (time.monotonic() - _last[0])
@@ -107,6 +153,7 @@ def check(pairs):
                 if e.code == 429 and "PerDay" in e.read().decode("utf-8", "replace"):
                     log.warning("%s: Gemini's day for %s is spent; the stage stops and is rerun after "
                                 "08:00 UTC", QUOTA_MARK, MODEL)
+                    _keep(pairs[:k], out)
                     raise QuotaSpent(f"{QUOTA_MARK}: the day's Gemini vision requests are spent")
                 time.sleep(6 * (attempt + 1))
             except Exception as e:                                   # noqa: BLE001
@@ -121,3 +168,12 @@ def check(pairs):
                 out.append({"ok": ok, "status": "checked", **{f: r.get(f) for f in ("match", "era", "place_us", "clean")},
                             "note": r.get("note", "")})
     return out
+
+
+def _keep(pairs, verdicts):
+    """The answers got before the day ran out, kept for the next run."""
+    store = _store()
+    for p, v in zip(pairs, verdicts):
+        if v.get("status") == "checked":
+            store[_key(*p)] = v
+    _flush()

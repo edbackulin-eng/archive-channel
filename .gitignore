@@ -34,3 +34,6 @@ analysis/thumbs/
 __pycache__/
 *.pyc
 .venv/
+
+# the vision answers carried between runs by actions/cache (pipeline/vision.py)
+.vision_cache.json
