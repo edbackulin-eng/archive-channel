@@ -137,7 +137,7 @@ def providers():
     return out
 
 
-def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False, retries=3):
+def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False, retries=4):
     errors = []
     for name, fn in providers():
         for attempt in range(retries):
@@ -151,6 +151,11 @@ def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False,
                 errors.append(f"{name}: HTTP {e.code}")
                 if e.code not in (429, 500, 502, 503, 504):
                     break
+                if e.code != 429 and attempt < retries - 1:
+                    # 08.11: Gemini answered 503 three times in 24 s and 1950s-groceries stopped in its
+                    # script; an overloaded model gets minutes, not seconds
+                    time.sleep(30 * (attempt + 1))
+                    continue
             except Exception as e:                                   # noqa: BLE001
                 errors.append(f"{name}: {e}")
             time.sleep(4 * (attempt + 1))
