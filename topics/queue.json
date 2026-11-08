@@ -18,7 +18,7 @@
         "RelaxedW1957 (1957)",
         "American1958 (1958)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Levittown, New York",
         "Levittown, Pennsylvania",
@@ -37,7 +37,8 @@
         "suburban living",
         "veterans housing",
         "postwar housing"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 32 of 193 slots had no unique matching shot; the unique film fits ~15.6 min"
     },
     {
       "slug": "1950s-groceries",
