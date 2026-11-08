@@ -36,6 +36,10 @@ jobs:
       - run: pip install -q -r requirements.txt
       # Real-ESRGAN for the thumbnail frame, on the CPU
       - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+      - uses: actions/cache@v4
+        with:
+          path: assets/models
+          key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: python automation/fetch_models.py && python automation/fetch_music.py
       - run: python scripts/smoke.py
       - name: Promote dev to main

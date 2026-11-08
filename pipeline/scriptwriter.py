@@ -220,28 +220,48 @@ def shorten(script, prompt="", goal=None, floor=None):
     return cut
 
 
-def write(topic, sources):
-    prompt = (f"EPISODE: {topic['name']}\nYEARS: {topic['years'][0]}-{topic['years'][1]}\n\n"
-              f"{_sources_block(sources)}")
-    out = llm.complete_json(prompt, system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX),
-                            max_tokens=16000, temperature=0.7)
-    # owner 07.11: expanded up to the full minimum - 1950s-groceries ran 14.5 minutes when only a
-    # script under 90 % of WORDS_MIN was sent back for more
-    for _ in range(2):
+def prompt_of(topic, sources):
+    return (f"EPISODE: {topic['name']}\nYEARS: {topic['years'][0]}-{topic['years'][1]}\n\n"
+            f"{_sources_block(sources)}")
+
+
+EXPAND_ROUNDS = 5
+
+
+def expand(out, prompt, rounds=EXPAND_ROUNDS):
+    """The draft sent back for more until it reaches the full minimum (owner 07.11). 08.11:
+    1950s-groceries got 714 -> 1276 words in the two rounds there were, lost more in the fact
+    check and narrated 13.6 minutes; now up to five rounds, each told how many words are missing
+    and where to put them, and the fact-checked script is expanded again (write_episode.py)."""
+    for _ in range(rounds):
         n, mins = words(out["script"]), est_minutes(out["script"])
         if n >= WORDS_MIN and mins >= MIN_EST_MIN:
             break
-        log.info("script is %d words, ~%.1f min; asking for the missing length", n, mins)
+        missing = max(WORDS_MIN - n, round((MIN_EST_MIN - mins) * 150), 0) + 150
+        log.info("script is %d words, ~%.1f min; asking for the missing length (~%d words)", n, mins, missing)
         more = llm.complete_json(
             prompt + f"\n\nYOUR DRAFT ({n} words, about {mins:.1f} minutes - too short, the episode must run at "
-            f"least 15 minutes):\n{out['script']}\n\nExpand it to {max(WORDS_MIN, n + 150)}-{WORDS_MAX} words "
-            "with more scenes from the SAME sources; keep the hook, the chapters and the markup. Return the same "
-            "JSON shape, claims included.",
+            f"least 15 minutes):\n{out['script']}\n\nAdd at least {missing} words, so it has "
+            f"{max(WORDS_MIN, n + missing)}-{WORDS_MAX}: in every chapter one or two new scenes from the SAME sources "
+            "(a person, a place, a price, what a day looked like), each several sentences long. Keep every line "
+            "that is there, the hook, the chapter lines and the markup. Return the same JSON shape, the claims of "
+            "the new lines included.",
             system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX), max_tokens=16000, temperature=0.6)
         if words(more.get("script", "")) > n:
-            out = more
+            claims = {c.get("claim") for c in out.get("claims", []) if isinstance(c, dict)}
+            more["claims"] = list(out.get("claims", [])) + [c for c in more.get("claims", [])
+                                                            if isinstance(c, dict) and c.get("claim") not in claims]
+            out = {**out, **more}
         else:
             break
+    return out
+
+
+def write(topic, sources):
+    prompt = prompt_of(topic, sources)
+    out = llm.complete_json(prompt, system=SYSTEM.format(words_min=WORDS_MIN, words_max=WORDS_MAX),
+                            max_tokens=16000, temperature=0.7)
+    out = expand(out, prompt)
     tags, gaps = price_gaps(out["script"])
     if gaps:
         log.info("price tags: %d, missing: %s; asking for them", tags, gaps)

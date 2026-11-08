@@ -1,6 +1,7 @@
 """No build starts while the channel's Gemini day is spent (08.11).
 
     python automation/quota_hold.py active        # exit 0 and the reason while the day is spent
+    python automation/quota_hold.py waiting       # exit 0 while topics stopped on it wait their turn
     python automation/quota_hold.py set SLUG      # after a stage stopped on the spent day
 
 The key GEMINI_API_KEY_AR serves the vision check and the text fallback, on one free day
@@ -78,6 +79,15 @@ if __name__ == "__main__":
         h = active()
         if h:
             print(f"Gemini's day is spent until {h['until']} (stopped: {', '.join(h['slugs'])})")
+            sys.exit(0)
+        sys.exit(1)
+    if cmd == "waiting":
+        # 08.11: the day turned at 08:05 and the monitor started 1950s-groceries (no slug) before the
+        # watchdog could start 1950s-suburb: while topics wait their turn, a run with no slug starts none
+        h = load()
+        if h:
+            state = "spent until" if active() else "turned at"
+            print(f"Gemini's day {state} {h['until']}; waiting their turn: {', '.join(h.get('slugs') or [])}")
             sys.exit(0)
         sys.exit(1)
     if cmd == "set":

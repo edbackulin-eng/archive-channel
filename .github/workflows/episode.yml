@@ -33,7 +33,7 @@ jobs:
           # or the plan changes (automation/pause.py); a slug given by hand still builds
           if [ -z "$s" ] && why=$(python automation/pause.py active); then
             echo "::notice::builds paused: $why"
-          elif [ -z "$s" ] && why=$(python automation/quota_hold.py active); then
+          elif [ -z "$s" ] && why=$(python automation/quota_hold.py waiting); then
             echo "::notice::no build: $why"
           else
             [ -n "$s" ] || s=$(python automation/next_topic.py)
@@ -56,6 +56,10 @@ jobs:
         with:
           python-version: "3.11"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
+      - uses: actions/cache@v4
+        with:
+          path: assets/models
+          key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py
       - run: python automation/build.py "$SLUG" script
       - run: python automation/build.py "$SLUG" narrate
@@ -145,6 +149,10 @@ jobs:
         with:
           python-version: "3.11"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - uses: actions/cache@v4
+        with:
+          path: assets/models
+          key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py && python automation/fetch_music.py
       # Real-ESRGAN for the thumbnail frame, on the CPU
       - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu
