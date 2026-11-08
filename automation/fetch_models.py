@@ -4,6 +4,8 @@ Real-ESRGAN's general model and its denoising twin (the thumbnail frame, on the 
     python automation/fetch_models.py
 """
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -28,9 +30,18 @@ def main():
         p = M / name
         if p.exists() and p.stat().st_size > 100_000:
             continue
-        req = urllib.request.Request(url, headers={"User-Agent": "archive-channel/1.0"})
-        with urllib.request.urlopen(req, timeout=600) as r:
-            p.write_bytes(r.read())
+        # 08.11: a 504 from GitHub's release storage stopped 1950s-suburb's build; five tries, paced
+        for attempt in range(5):
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "archive-channel/1.0"})
+                with urllib.request.urlopen(req, timeout=600) as r:
+                    p.write_bytes(r.read())
+                break
+            except (urllib.error.URLError, OSError) as e:
+                if attempt == 4:
+                    raise
+                print(f"{name}: {e}; again in {30 * (attempt + 1)} s")
+                time.sleep(30 * (attempt + 1))
         print(name, p.stat().st_size)
     return 0
 
