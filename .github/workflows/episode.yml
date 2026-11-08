@@ -87,6 +87,9 @@ jobs:
             exit 0
           fi
           exit $rc
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with: {name: "vision-log-${{ env.SLUG }}", path: work/vision_log/, retention-days: 30, if-no-files-found: ignore, overwrite: true}
       - uses: actions/cache/save@v4
         if: always()
         with:

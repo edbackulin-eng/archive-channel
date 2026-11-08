@@ -117,6 +117,7 @@ def check(pairs):
     for i, v in zip(todo, fresh):
         if v.get("status") == "checked":
             store[keys[i]] = v
+            _record(pairs[i], keys[i], v)
     if todo:
         _flush()
     got = dict(zip(todo, fresh))
@@ -175,5 +176,28 @@ def _keep(pairs, verdicts):
     store = _store()
     for p, v in zip(pairs, verdicts):
         if v.get("status") == "checked":
-            store[_key(*p)] = v
+            k = _key(*p)
+            store[k] = v
+            _record(p, k, v)
     _flush()
+
+
+# 08.11 (owner): a local CLIP/SigLIP prefilter is to take the clear cases off Gemini; its
+# thresholds are set on Gemini's own answers, so every answer is logged with a small copy of
+# its frame (work/vision_log, the run's "vision-log-<slug>" artifact)
+LOG_DIR = ROOT / "work" / "vision_log"
+
+
+def _record(pair, k, v):
+    try:
+        line, era, kf = pair
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        im = Image.open(kf).convert("RGB")
+        im.thumbnail((384, 384))
+        im.save(LOG_DIR / f"{k}.jpg", quality=85)
+        with open(LOG_DIR / "log.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps({"key": k, "line": line, "era_hint": era, "kf": str(kf), "ok": bool(v.get("ok")),
+                                **{x: v.get(x) for x in ("match", "era", "place_us", "clean", "note")}},
+                               ensure_ascii=False) + "\n")
+    except Exception as e:                                           # noqa: BLE001
+        log.info("vision log not written (%s)", e)
