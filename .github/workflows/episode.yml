@@ -33,7 +33,7 @@ jobs:
           # or the plan changes (automation/pause.py); a slug given by hand still builds
           if [ -z "$s" ] && why=$(python automation/pause.py active); then
             echo "::notice::builds paused: $why"
-          elif [ -z "$s" ] && why=$(python automation/quota_hold.py active); then
+          elif [ -z "$s" ] && why=$(python automation/quota_hold.py waiting); then
             echo "::notice::no build: $why"
           else
             [ -n "$s" ] || s=$(python automation/next_topic.py)

@@ -215,6 +215,25 @@ def main():
           and quota_hold.spent("no provider answered: groq: HTTP 413; gemini: HTTP 429; gemini: HTTP 429")
           and quota_hold.spent("VISION_QUOTA_SPENT: x") and not quota_hold.spent("groq: HTTP 500"), str(h2))
     from pipeline import scriptwriter, vision
+    # 08.11: a short draft is expanded up to five times, the claims of the new lines kept with the old
+    saved_cj = scriptwriter.llm.complete_json
+    calls_x = []
+
+    def _grow(prompt, **k):
+        calls_x.append(1)
+        n = 700 + 300 * len(calls_x)
+        return {"script": "## One | Place | 1950\n" + "\n".join(["word " * 20] * (n // 20)),
+                "claims": [{"claim": f"c{len(calls_x)}"}]}
+    try:
+        scriptwriter.llm.complete_json = _grow
+        grown = scriptwriter.expand({"script": "## One | Place | 1950\n" + "word " * 700, "claims": [{"claim": "c0"}]},
+                                    "P")
+    finally:
+        scriptwriter.llm.complete_json = saved_cj
+    check("script: a short draft is expanded up to five rounds, claims kept",
+          len(calls_x) == 4 and len(grown["claims"]) == 5 and scriptwriter.words(grown["script"]) >= 1800
+          and scriptwriter.est_minutes(grown["script"]) >= scriptwriter.MIN_EST_MIN,
+          f"{len(calls_x)} rounds, {scriptwriter.words(grown['script'])} words")
     check("vision: a spent day is QuotaSpent, not unchecked", issubclass(vision.QuotaSpent, RuntimeError)
           and vision.QUOTA_MARK == "VISION_QUOTA_SPENT")
     # 08.11: answers are kept between runs, and the ones got before a spent day too

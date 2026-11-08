@@ -28,6 +28,14 @@ def main(slug):
         log.warning("BLS consumer spending report not read: %s", e)
     draft = scriptwriter.write(topic, found)
     script, checked = scriptwriter.fact_check(draft, found)
+    # 08.11: the fact check cuts lines; a script it left short is expanded and checked again
+    for _ in range(2):
+        if scriptwriter.est_minutes(script) >= scriptwriter.MIN_EST_MIN                 and scriptwriter.words(script) >= scriptwriter.WORDS_MIN:
+            break
+        log.info("after the fact check: %d words, ~%.1f min; expanded again", scriptwriter.words(script),
+                 scriptwriter.est_minutes(script))
+        draft = scriptwriter.expand({**draft, "script": script}, scriptwriter.prompt_of(topic, found), rounds=3)
+        script, checked = scriptwriter.fact_check(draft, found)
     out = ROOT / "episodes" / slug
     out.mkdir(parents=True, exist_ok=True)
     (out / "script.txt").write_text(script.strip() + "\n", encoding="utf-8")
