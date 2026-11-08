@@ -348,6 +348,49 @@ def main():
           not any(f.startswith("bad") for f in pl["films"]) and all((s.get("vision") or {}).get("ok") for s in cs)
           and all(abs(a["end"] - b["start"]) < 1e-6 for a, b in zip(pl["shots"], pl["shots"][1:])) and deferred,
           f"{len(cs)} shots, {pl.get('confirmed_min')} min confirmed")
+    # owner 08.11: the CPU prefilter takes the clear matches, drops the clear misses, and Gemini sees
+    # only the doubtful frames, 8 slots a request; a frame the CPU turned down is never on screen
+    from pipeline import prefilter as _pf
+    import zlib as _z
+    saved_pf = (_pf.thresholds, _pf.available, _pf.scores)
+    asked_px = []
+    sc_of = lambda line, kf: (_z.crc32(f"{line}|{Path(kf).parent.name}/{Path(kf).name}".encode()) % 100) / 100
+    try:
+        films.clear()
+        films.update({f"good{i}": "Suburban homes and families" for i in range(16)})
+        _ar.search = lambda *a, **k: [{"id": i, "title": v, "year": 1952, "colour": True, "description": v,
+                                       "subject": "", "licence": "PD", "page": ""} for i, v in films.items()]
+        _ar.files = lambda fid: {"proxy": "x", "best": "b", "best_size": (640, 480)}
+        _cl.shots = _shots
+        _llm.complete_json = lambda prompt, **k: {"results": [
+            {"i": i, "score": 3} for i, l in enumerate(l for l in prompt.split("FILMS:\n")[1].splitlines() if l.strip())]}
+        footage.vision.check = lambda pairs: (asked_px.append(len(pairs)) or
+                                              [{"ok": sc_of(_l, kf) > 0.45, "status": "checked", "note": "x"}
+                                               for _l, _e, kf in pairs])
+        _pf.thresholds, _pf.available = (lambda: (0.99, 0.2)), (lambda: True)
+        _pf.scores = lambda pairs: [sc_of(_l, kf) for _l, _e, kf in pairs]
+        pl2 = footage.plan(tl, 1150.0, (1946, 1962), fk / "pf", name="Life in a Brand-New 1950s Suburb")
+    finally:
+        _ar.search, _ar.files, _cl.shots, _llm.complete_json, footage.vision.check = saved_f
+        _pf.thresholds, _pf.available, _pf.scores = saved_pf
+    cs2 = [s for s in pl2["shots"] if s["kind"] == "clip" and not s.get("ran_on")]
+    st = pl2["vision_stats"]
+    check("prefilter: clear matches taken on the CPU, clear misses never shown, Gemini only for the doubtful, "
+          "24 frames a request",
+          st["local_accept"] > 0 and st["local_reject"] > 0 and all(n <= 24 for n in asked_px)
+          and all((s.get("vision") or {}).get("ok") for s in cs2)
+          and all(sc_of(s["line"], s["kf"]) > 0.2 for s in cs2 if s.get("kf") and not (s.get("vision") or {}).get("reused"))
+          and len(asked_px) < len(tl) // 4,
+          f"{st}, {len(asked_px)} requests")
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import calibrate_prefilter as _cal
+    _sc = [k / 100 for k in range(100)]
+    _ok = [x > 0.5 or (0.3 < x <= 0.5 and k % 2 == 0) for k, x in enumerate(_sc)]
+    _a, _r = _cal.choose(_sc, _ok)
+    _rep = _cal.report(_sc, _ok, _a, _r)
+    check("prefilter calibration: accept keeps 95% agreement with Gemini, reject loses at most 10% of the good",
+          _a is not None and _r is not None and _r < _a and _rep["their_gemini_ok_share"] >= 0.95
+          and _rep["good_frames_lost"] <= 0.10 * sum(_ok), f"accept {_a}, reject {_r}, {_rep}")
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",

@@ -197,9 +197,20 @@ def stage_render(slug):
             seen_kf.update({s["kf"], (s.get("film"), round(s.get("src_start") or 0))})
             uniq.append(s)
     asked = f"A thumbnail that says '{words}'. The picture must show: {subject}"
+    # owner 08.11: SigLIP on the CPU ranks the frames by the subject first and drops the clear
+    # misses; Gemini sees only the best of the rest, 24 in one request (was up to 36, 12 a request)
+    step, upto = 12, 36
+    from pipeline import prefilter
+    th = prefilter.thresholds() if prefilter.thresholds() and prefilter.available() else None
+    if th and uniq:
+        sc = prefilter.scores([(subject, f"{s.get('year') or ''}", s["kf"]) for s in uniq])
+        ranked_ = sorted(zip(uniq, sc), key=lambda x: -x[1])
+        kept = [s for s, x in ranked_ if x > th[1]]
+        log.info("thumbnail: %d of %d frames kept by the CPU check of '%s'", len(kept), len(uniq), subject)
+        uniq, step, upto = kept or [s for s, _x in ranked_], 24, 48
     cands = []
-    for k in range(0, min(36, len(uniq)), 12):
-        pool = uniq[k:k + 12]
+    for k in range(0, min(upto, len(uniq)), step):
+        pool = uniq[k:k + step]
         verdicts = vision.check([(asked, f"{s.get('year') or ''}", s["kf"]) for s in pool])
         cands += [s for s, v in zip(pool, verdicts) if v.get("ok")]
         if len(cands) >= 3:

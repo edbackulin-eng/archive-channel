@@ -43,7 +43,7 @@ import numpy as np
 from PIL import Image
 
 from core.logger import get_logger
-from pipeline import archive, clips, vision
+from pipeline import archive, clips, prefilter, vision
 
 log = get_logger("footage")
 ROOT = Path(__file__).resolve().parent.parent
@@ -131,6 +131,9 @@ def relevant(entries, name, years):
     return keep
 SCAN_THREADS = 4
 SLOTS_A_REQUEST = 4
+LOCAL_TOP = 400                  # with the prefilter: candidates a slot scored on the CPU (each frame embedded once)
+LOCAL_ASK = 3                    # the doubtful ones of them that go to Gemini
+LOCAL_SLOTS_A_REQUEST = 8        # 8 slots x 3 = one request of 24 frames
 _COLOUR = {}
 
 
@@ -359,24 +362,63 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
     # none of whose candidates matched gets a second round of other candidates (owner 07.11:
     # more candidates a slot, before any stretch of film is used again)
     asked = {}                       # id(slot) -> ids of the pool shots already checked for it
-    for i in range(0, len(todo), SLOTS_A_REQUEST):
-        block = todo[i:i + SLOTS_A_REQUEST]
+    # owner 08.11: SigLIP on the CPU first (pipeline/prefilter.py) - a clear match is taken without
+    # Gemini, a clear miss is never asked about, and only the doubtful frames go to Gemini, more
+    # slots a request; with no thresholds set, everything goes to Gemini as before
+    th = prefilter.thresholds() if prefilter.thresholds() and prefilter.available() else None
+    per_req = LOCAL_SLOTS_A_REQUEST if th else SLOTS_A_REQUEST
+    n_ask = LOCAL_ASK if th else check_top
+    stats = {"local_accept": 0, "local_reject": 0, "asked": 0}
+    req0 = vision.REQUESTS[0]
+    for i in range(0, len(todo), per_req):
+        block = todo[i:i + per_req]
         open_ = list(block)
         for rnd in range(ROUNDS):
             if not open_:
                 break
-            tops = []
+            tops, still = [], []
+            claimed = set()          # a candidate goes to one slot of the block (they share the 3-minute rule)
             for s in open_:
                 cands, era = ranked(s)
                 cands = [c for c in cands if id(c) not in asked.get(id(s), set())]
-                asked.setdefault(id(s), set()).update(id(c) for c in cands[:check_top])
-                tops.append((s, cands[:check_top + 2], era))
-            pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:check_top]]
+                if th:
+                    look = cands[:LOCAL_TOP]
+                    sc = prefilter.scores([(s["line"], era, c["kf"]) for c in look])
+                    order = sorted(zip(look, sc), key=lambda x: -x[1])
+                    # marked for the slot: what the CPU turned down and what goes to Gemini; the
+                    # other doubtful frames stay for the next round
+                    asked.setdefault(id(s), set()).update(id(c) for c, x in order if prefilter.decide(x, th) == "reject")
+                    stats["local_reject"] += sum(1 for _c, x in order if prefilter.decide(x, th) == "reject")
+                    best = next(((c, x) for c, x in order if prefilter.decide(x, th) == "accept" and free(c, s)), None)
+                    if best:
+                        c, x = best
+                        v = {"ok": True, "status": "checked", "by": "siglip", "score": round(x, 4),
+                             "note": "a clear match on the CPU"}
+                        if not any(y[0] is c for y in confirmed):
+                            confirmed.append((c, v, s.get("chapter_ctx")))
+                        d = s["end"] - s["start"]
+                        s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
+                                  "item": c["item"], "kf": c["kf"], "vision": v})
+                        used.append((c["film"], c["start"], c["start"] + d, s["start"]))
+                        stats["local_accept"] += 1
+                        continue
+                    doubt = [c for c, x in order if prefilter.decide(x, th) == "ask" and id(c) not in claimed]
+                    claimed.update(id(c) for c in doubt[:n_ask])
+                    if not doubt:
+                        still.append(s)
+                        continue
+                    asked[id(s)].update(id(c) for c in doubt[:n_ask])
+                    tops.append((s, doubt[:n_ask], era))
+                else:
+                    asked.setdefault(id(s), set()).update(id(c) for c in cands[:check_top])
+                    tops.append((s, cands[:check_top + 2], era))
+            pairs = [(s["line"], era, c["kf"]) for s, cs, era in tops for c in cs[:n_ask]]
+            stats["asked"] += len(pairs)
             verdicts = vision.check(pairs) if pairs else []
-            vi, still = 0, []
+            vi = 0
             for s, cs, era in tops:
-                vs = verdicts[vi:vi + len(cs[:check_top])]
-                vi += len(cs[:check_top])
+                vs = verdicts[vi:vi + len(cs[:n_ask])]
+                vi += len(cs[:n_ask])
                 d = s["end"] - s["start"]
                 for c, v in zip(cs, vs):
                     if v.get("ok") and not any(x[0] is c for x in confirmed):
@@ -408,7 +450,7 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
                 used.append((sh["film"], off, off + d, s["start"]))
             else:
                 s["missing"] = True
-        log.info("planned %d of %d slots", min(i + SLOTS_A_REQUEST, len(todo)), len(todo))
+        log.info("planned %d of %d slots", min(i + per_req, len(todo)), len(todo))
     short = sum(1 for s in sl if s.get("missing"))
     sl = _run_on(sl)
     _fix_repeats(sl)
@@ -420,6 +462,9 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
             conf_s += sh["end"] - sh["start"]
     log.info("confirmed film: %.1f min in %d shots; %d slots run on from the shot before", conf_s / 60, len(seen),
              sum(1 for s in sl if s.get("ran_on")))
+    stats["gemini_requests"] = vision.REQUESTS[0] - req0
+    log.info("vision: %d slots taken on the CPU, %d frames turned down there, %d frames asked of Gemini in %d "
+             "requests", stats["local_accept"], stats["local_reject"], stats["asked"], stats["gemini_requests"])
     # owner 07.11: rather than the same pictures again, a shorter episode. The slots left without
     # unique film were run on by their neighbours; past 10 % of the slots the episode is cut to
     # the film there is
@@ -432,7 +477,8 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
     if conf_s / 60 < MIN_CONFIRMED_MIN:
         raise Deferred(f"DEFERRED: {conf_s / 60:.1f} min of confirmed film for the topic, under "
                        f"{MIN_CONFIRMED_MIN:.0f}")
-    return {"shots": sl, "films": [e[0]["id"] for e in films], "confirmed_min": round(conf_s / 60, 1)}
+    return {"shots": sl, "films": [e[0]["id"] for e in films], "confirmed_min": round(conf_s / 60, 1),
+            "vision_stats": stats}
 
 
 def _fix_repeats(sl, gap=None):

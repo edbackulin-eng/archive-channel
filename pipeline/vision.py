@@ -42,6 +42,7 @@ URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateC
 BATCH = 24                  # 08.11: 24 frames a request (was 12) - the free day counts requests
 MIN_GAP_S = 4.0
 _last = [0.0]
+REQUESTS = [0]              # requests sent this process (the prefilter's budget, owner 08.11)
 # 08.11: 1950s-suburb spent the day at slot 96 of 223 and the rerun would have asked the same
 # frames again. Every checked answer is kept (key: the line, the era, the frame's bytes) and the
 # workflow carries the file from run to run (actions/cache), so each day goes on where the last stopped.
@@ -145,6 +146,7 @@ def _check(pairs):
             try:
                 req = urllib.request.Request(URL.format(model=MODEL), data=json.dumps(payload).encode(),
                                              headers={"Content-Type": "application/json", "x-goog-api-key": key()})
+                REQUESTS[0] += 1
                 with urllib.request.urlopen(req, timeout=180) as r:
                     d = json.loads(r.read())
                 text = "".join(p.get("text", "") for p in d["candidates"][0]["content"]["parts"])

@@ -61,6 +61,12 @@ jobs:
           path: assets/models
           key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py
+      - uses: actions/cache@v4
+        with:
+          path: assets/models/open_clip
+          key: open-clip-ViT-B-16-SigLIP-webli-1
+      # SigLIP on the CPU before Gemini (pipeline/prefilter.py)
+      - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu && pip install -q -r requirements-prefilter.txt
       - run: python automation/build.py "$SLUG" script
       - run: python automation/build.py "$SLUG" narrate
       # the vision answers of earlier runs of this topic (pipeline/vision.py): a day that ran out
@@ -158,7 +164,11 @@ jobs:
           key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: pip install -q -r requirements.txt && python automation/fetch_models.py && python automation/fetch_music.py
       # Real-ESRGAN for the thumbnail frame, on the CPU
-      - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+      - uses: actions/cache@v4
+        with:
+          path: assets/models/open_clip
+          key: open-clip-ViT-B-16-SigLIP-webli-1
+      - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu && pip install -q -r requirements-prefilter.txt
       - uses: actions/download-artifact@v5
         with: {path: "${{ runner.temp }}/a"}
       - run: |
