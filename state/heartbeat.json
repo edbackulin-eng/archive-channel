@@ -1,6 +1,6 @@
 {
  "date": "2026-11-08",
- "checked_at": "2026-11-08T13:49:56Z",
+ "checked_at": "2026-11-08T14:04:59Z",
  "ahead": [],
  "actions": [
   "builds paused: episode run 42479710225 failed 3 times (since 2026-11-08T13:34:53Z); they resume when the code or the plan changes"
