@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write
   issues: write
+  actions: write          # a deferred topic starts the next one (08.11: 403 without it)
 concurrency:
   group: episode
   cancel-in-progress: false
