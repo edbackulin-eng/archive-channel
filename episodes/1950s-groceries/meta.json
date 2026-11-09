@@ -1,0 +1,43 @@
+{
+ "slug": "1950s-groceries",
+ "name": "What a Week of Groceries Cost a 1950s Family",
+ "title": "What a Week of Groceries Cost a 1950s Family",
+ "thumbnail_words": "$0.98 TV DINNER",
+ "thumbnail_subject": "A 1950s family sitting in front of a television eating frozen meals from aluminum trays on TV tray tables.",
+ "words": 1861,
+ "minutes_at_150wpm": 12.4,
+ "sources": [
+  {
+   "title": "Grocery store",
+   "url": "https://en.wikipedia.org/wiki/Grocery_store"
+  },
+  {
+   "title": "Supermarket",
+   "url": "https://en.wikipedia.org/wiki/Supermarket"
+  },
+  {
+   "title": "Frozen food",
+   "url": "https://en.wikipedia.org/wiki/Frozen_food"
+  },
+  {
+   "title": "Frozen meal",
+   "url": "https://en.wikipedia.org/wiki/Frozen_meal"
+  },
+  {
+   "title": "Post–World War II economic expansion",
+   "url": "https://en.wikipedia.org/wiki/Post%E2%80%93World_War_II_economic_expansion"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 37,
+  "supported": 30
+ }
+}

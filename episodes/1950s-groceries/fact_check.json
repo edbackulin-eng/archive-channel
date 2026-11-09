@@ -1,0 +1,224 @@
+[
+ {
+  "claim": "In 1950, the average U.S. family's income was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, a pound of butter cost 73 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, a pound of round steak cost 94 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Michael J. Cullen opened the first true supermarket on August 4, 1930, in Jamaica, Queens.",
+  "source": "https://en.wikipedia.org/wiki/Supermarket",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1950, the number of American supermarkets had reached over 15,000.",
+  "source": "https://en.wikipedia.org/wiki/Supermarket",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, a pound of pork chops cost 75 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, the average manufacturing hourly wage was $1.59.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The original Swanson TV Dinner sold for 98 cents in 1953.",
+  "source": "https://en.wikipedia.org/wiki/Frozen_meal",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the average U.S. family income was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a pound of round steak cost $1.06.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a pound of pork chops cost 86 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a pound of butter cost 75 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a half-gallon of milk cost 52 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, the average U.S. family's income stood at $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of pork chops cost 75 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1950, the number of American supermarkets had surged to over 15,000.",
+  "source": "https://en.wikipedia.org/wiki/Supermarket",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Average hourly manufacturing wage was $1.59 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures in 1950 were $3,808.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average Boston family income was $4,178 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The original Swanson TV dinner sold for 98 cents.",
+  "source": "https://en.wikipedia.org/wiki/Frozen_meal",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average U.S. family income in 1960 was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures in 1960 were $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of pork chops cost 86 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 75 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A half-gallon of milk cost 52 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, average family income was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The price of a pound of butter in 1950 was 73 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The price of a pound of round steak in 1950 was 94 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The price of a pound of pork chops in 1950 was 75 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The first supermarket was opened in August 1930 by Michael J. Cullen in Jamaica, Queens.",
+  "source": "https://en.wikipedia.org/wiki/Supermarket",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "C.A. Swanson and Sons introduced the TV dinner in 1953.",
+  "source": "https://en.wikipedia.org/wiki/Frozen_meal",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The original Swanson TV Dinner sold for 98 cents.",
+  "source": "https://en.wikipedia.org/wiki/Frozen_meal",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, average family income was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, average family expenditures were $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]
