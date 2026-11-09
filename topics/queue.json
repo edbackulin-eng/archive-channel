@@ -56,14 +56,15 @@
         "OutofThi1954 (1954)",
         "Chickeno1948 (1948)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Grocery store",
         "Supermarket",
         "Frozen food",
         "Frozen meal",
         "Post–World War II economic expansion"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 120 of 235 slots had no unique matching shot; the unique film fits ~10.9 min"
     },
     {
       "slug": "1950s-kitchen",
