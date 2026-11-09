@@ -36,6 +36,11 @@ def main(slug):
                  scriptwriter.est_minutes(script))
         draft = scriptwriter.expand({**draft, "script": script}, scriptwriter.prompt_of(topic, found), rounds=3)
         script, checked = scriptwriter.fact_check(draft, found)
+    # 09.11: expanded past the ceiling (2022 words narrated 20.7 min): cut by whole lines to fit
+    if scriptwriter.est_minutes(script) > scriptwriter.MAX_EST_MIN:
+        log.info("%d words, ~%.1f min: cut to %.1f", scriptwriter.words(script), scriptwriter.est_minutes(script),
+                 scriptwriter.MAX_EST_MIN)
+        script = scriptwriter.shorten_to(script, scriptwriter.MAX_EST_MIN)
     out = ROOT / "episodes" / slug
     out.mkdir(parents=True, exist_ok=True)
     (out / "script.txt").write_text(script.strip() + "\n", encoding="utf-8")

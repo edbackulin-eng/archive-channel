@@ -285,7 +285,7 @@ def main():
           str(scriptwriter.words(cut)))
     # owner 07.11: a script is expanded up to the full 15-minute minimum, not only under 90 % of its words
     saved_llm = scriptwriter.llm.complete_json
-    short = "## One | Place | 1950\n" + "\n".join(f"Line {i} " + "word " * 15 for i in range(100))   # ~1700 words
+    short = "## One | Place | 1950\n" + "\n".join(f"Line {i} " + "word " * 15 for i in range(85))    # ~1450 words, ~14 min at the voice's pace
     longer = "## One | Place | 1950\n" + "\n".join(f"Line {i} " + "word " * 15 for i in range(128))  # ~2170 words
     asked = []
     try:

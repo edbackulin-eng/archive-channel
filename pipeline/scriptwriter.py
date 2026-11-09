@@ -95,7 +95,12 @@ def _sources_block(sources):
 MIN_EST_MIN = 15.5           # the episode's 15-minute floor and a margin for the voice's pace
 
 
-def est_minutes(script, wpm=150):
+# 09.11: the voice speaks 125-129 words a minute (bm_george, measured on 1950s-groceries: 1366 words
+# at 129, 2013 at 125); at 150 the estimate ran 3 minutes short and the script came out 20.7 min
+VOICE_WPM = 127
+
+
+def est_minutes(script, wpm=VOICE_WPM):
     """The running time the script will have once narrated: its words at the voice's pace, its
     pauses, and the film breaks pipeline/breathing.py will place (as the narrate stage does)."""
     from core import delivery

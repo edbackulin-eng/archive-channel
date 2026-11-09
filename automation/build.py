@@ -65,9 +65,20 @@ def stage_narrate(slug):
     if placed != script:                 # a rerun changes nothing, so it commits nothing
         (e / "script.txt").write_text(placed, encoding="utf-8")
     script = placed
-    audio, tl = narrate.synthesize(narrate.load_kokoro(), script)
+    voice = narrate.load_kokoro()
+    audio, tl = narrate.synthesize(voice, script)
     secs = len(audio) / SAMPLE_RATE
     ep = json.loads((ROOT / "config" / "channel.json").read_text(encoding="utf-8"))["episode"]
+    if secs > ep["minutes_max"] * 60:
+        # 09.11: a script that narrates past the ceiling is cut by whole lines to the time and narrated
+        # once more, instead of failing the build (1950s-groceries: 20.7 min, three runs)
+        from pipeline import scriptwriter
+        goal = scriptwriter.est_minutes(script) * (ep["minutes_max"] * 60 - 30) / secs
+        log.warning("%s narrates %.1f min; cut to ~%.1f estimated minutes and narrated again", slug, secs / 60, goal)
+        script = breathing.place(scriptwriter.shorten_to(script, goal)).rstrip() + "\n"
+        (e / "script.txt").write_text(script, encoding="utf-8")
+        audio, tl = narrate.synthesize(voice, script)
+        secs = len(audio) / SAMPLE_RATE
     if not ep["minutes_min"] * 60 <= secs <= ep["minutes_max"] * 60:
         # QA would fail on length after hours of cutting and rendering: stop here
         raise RuntimeError(f"LENGTH: the narration runs {secs / 60:.1f} min, the episode must be "
