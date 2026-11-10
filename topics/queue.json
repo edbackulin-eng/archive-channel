@@ -82,14 +82,15 @@
         "Foundati1951 (1951)",
         "American1958 (1958)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Kitchen",
         "Home appliance",
         "Frigidaire",
         "Dishwasher",
         "Tupperware"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 90 of 216 slots had no unique matching shot; the unique film fits ~13.1 min"
     },
     {
       "slug": "1950s-supermarket",
