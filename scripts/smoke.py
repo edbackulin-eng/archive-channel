@@ -422,6 +422,34 @@ def main():
           "unchecked one", sum(asked_ch) > 0 and all((s.get("vision") or {}).get("ok") for s in cs3)
           and all((s.get("vision") or {}).get("level") == "chapter" or (s.get("vision") or {}).get("reused")
                   for s in cs3), f"{len(cs3)} shots, {sum(asked_ch)} chapter-level frames asked")
+    # owner 10.11: no approve - a viewer's gate two minutes at a time, a judge of the thumbnails
+    from pipeline import viewer
+    _vid = W / "viewer.mp4"
+    subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i",
+                    "testsrc=size=320x180:rate=5:duration=250", "-pix_fmt", "yuv420p", str(_vid)], check=True)
+    _tlv = [{"start": i * 10.0, "end": i * 10.0 + 9.0, "text": f"line {i}"} for i in range(25)]
+    saved_ask = viewer._ask
+    seen_v = []
+    try:
+        viewer._ask = lambda prompt, images: (seen_v.append(prompt) or
+                                              {"marks": [{"t": "0:10", "kind": "logo", "why": "x"}] * 2})
+        v_bad = viewer.check(_vid, _tlv, W / "v1")
+        viewer._ask = lambda prompt, images: {"marks": []}
+        v_ok = viewer.check(_vid, _tlv, W / "v2")
+        viewer._ask = lambda prompt, images: None
+        v_none = viewer.check(_vid, _tlv, W / "v3")
+        viewer._ask = lambda prompt, images: {"best": 1, "why": "x"}
+        _th = []
+        for i in range(3):
+            Image.new("RGB", (64, 36), (i * 60, 0, 0)).save(W / f"jt{i}.jpg")
+            _th.append(W / f"jt{i}.jpg")
+        j = viewer.judge(_th, "THE $7,990 DREAM", "a new house")
+    finally:
+        viewer._ask = saved_ask
+    check("viewer gate: more than 3 marks stops the upload, none passes, an unanswered minute is no pass; "
+          "the judge picks the thumbnail",
+          not v_bad["pass"] and v_bad["sheets"] == 3 and v_ok["pass"] and not v_none["pass"] and j == 1
+          and "line 3" in seen_v[0], f"{v_bad['detail'][:60]} | {v_ok['detail'][:40]} | judge {j}")
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",

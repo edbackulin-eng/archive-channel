@@ -234,13 +234,24 @@ def stage_render(slug):
         r = thumbnail.compose_best(thumbnail.Image.open(base), year, words, out / f"thumb_{k}.jpg")
         r.update({"matches_words": True, "subject": subject, "film": s.get("film"), "t": s.get("src_start")})
         reports.append(r)
-    best = next((r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]
-                 and r["sharp_ok"]), reports[0] if reports else {"matches_words": False, "subject": subject,
-                                                                  "note": "no shot shows the thumbnail's subject"})
+    good = [r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]
+            and r["sharp_ok"]]
+    best = good[0] if good else (reports[0] if reports else {"matches_words": False, "subject": subject,
+                                                               "note": "no shot shows the thumbnail's subject"})
+    # owner 10.11: no approve - the judge picks the thumbnail of the ones that pass the checks
+    from pipeline import viewer
+    if len(good) >= 2:
+        k = viewer.judge([out / r["file"] for r in good], words, subject)
+        if k is not None:
+            best = good[k]
+            best["judged"] = True
     if best.get("file"):
         (out / "thumbnail.jpg").write_bytes((out / best["file"]).read_bytes())
     result = qa.check(plan, tl, out / "video.mp4", best)
     result["render"] = rep
+    # and the last look, a viewer's: more than viewer.VIEWER_MAX marks and it does not go up
+    result["viewer"] = viewer.check(out / "video.mp4", tl, b)
+    result["passed"] = bool(result["passed"] and result["viewer"]["pass"])
     (out / "qa.json").write_text(json.dumps(result, indent=1, ensure_ascii=False), encoding="utf-8")
     (out / "metadata.json").write_text(json.dumps({
         "title": meta["title"], "tags": ["1950s", "vintage america", "archive footage", "american history",

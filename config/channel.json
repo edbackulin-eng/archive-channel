@@ -115,7 +115,8 @@
  },
  "qa": {
   "match_share_min": 0.85,
-  "approve_first_episodes": 2,
+  "approve_first_episodes": 0,
+    "_approve_note": "owner 10.11: no approve - after QA and the viewer gate (pipeline/viewer.py) an episode is uploaded and scheduled on the nearest free slot",
   "no_voice_share": [
    0.2,
    0.3
