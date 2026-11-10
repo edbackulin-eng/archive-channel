@@ -43,8 +43,16 @@ def main(args):
     if quota_hold.active():
         log.info("the Gemini day is held; nothing written now")
         return 0
+    if "--building" in args:
+        # 11.11: a build uses the day's text tokens (Groq's 200 000) for its own script and fact
+        # check; nothing is written ahead while one runs, so it never waits on what was spent here
+        log.info("an episode is being built; nothing written ahead now")
+        return 0
+    per_run = int(args[args.index("--per-run") + 1]) if "--per-run" in args else 1
     written = []
     for slug in upcoming(n, skip):
+        if len(written) >= per_run:
+            break
         if (ROOT / "episodes" / slug / "script.txt").exists():
             continue
         log.info("writing ahead: %s", slug)

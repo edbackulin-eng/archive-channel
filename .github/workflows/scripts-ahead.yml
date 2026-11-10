@@ -28,9 +28,11 @@ jobs:
       - run: pip install -q -r requirements.txt
       - name: Write the next scripts (not the topic being built now)
         run: |
-          building=$(gh run list -R "${{ github.repository }}" -w episode.yml -L 5 --json status,displayTitle \
-            -q '[.[]|select(.status!="completed")|.displayTitle|sub("^episode ?";"")][0] // ""')
-          python automation/scripts_ahead.py --n 3 --skip "$building"
+          building=$(gh run list -R "${{ github.repository }}" -w episode.yml -L 5 --json status \
+            -q '[.[]|select(.status!="completed")]|length')
+          [ "$building" = "0" ] && building=""
+          # one script a run, and none while a build runs (it needs the day's text tokens itself)
+          if [ -n "$building" ]; then python automation/scripts_ahead.py --building; else python automation/scripts_ahead.py --n 3 --per-run 1; fi
       - name: Keep them in the repository
         if: always()
         run: |
