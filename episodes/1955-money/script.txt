@@ -1,0 +1,234 @@
+## The Golden Postwar Years | United States | 1950-1960
+
+[film 8]
+> The postwar American dream glowed warmly under a canopy of chrome and suburban ambition.
+> Archive film shows families stepping out of polished sedans onto freshly paved driveways.
+> Behind this prosperous facade, how did everyday dollars actually stretch when a typical family income was [today 4237 1950]?
+[price 4237 1950 | Average annual family income]
+> We will discover how a typical household balanced grocery bills, rent, and wages during an era of unprecedented economic expansion.
+> And we'll examine whether rising paychecks truly outpaced the cost of daily life.
+[film 3.5]
+> We'll come back to that.
+
+[pause 0.6]
+[film 8]
+< In nineteen fifty, the average U.S. family income reached [today 4237 1950] per year.
+[film 8]
+That income supported households where about half of families earned less than five thousand dollars.
+Archive footage captures bustling grocery aisles filled with brightly packaged goods.
+Shoppers browsed shelves under the steady hum of early fluorescent lighting.
+We see women inspecting cellophane-wrapped cuts of meat while children tug at their coats.
+The population had surged past one hundred fifty million residents across the nation.
+Nearly half of all families now owned their own home as subdivisions sprouted across the landscape.
+Average family expenditures had climbed to three thousand eight hundred eight dollars.
+[film 3.5]
+This sum reflected the strong inflationary pressures still rippling through the postwar economy.
+Fathers returned from wartime service to steady jobs in manufacturing and trade.
+Children played on wide suburban sidewalks under the watchful eyes of homemakers.
+The rhythm of the neighborhood was anchored by milk bottles left on front porches at dawn.
+New appliances like electric refrigerators and washing machines promised freedom from endless manual chores.
+Every household ledger reflected a careful balancing act between rising wages and climbing retail costs.
+
+[pause 0.6]
+[film 8]
+< [price 73 1950 | A pound of butter]
+[film 8]
+A pound of butter cost [today 73 1950] at the neighborhood store.
+That price represented a sharp rise from depression-era levels.
+[film 3.5]
+Shoppers also paid [today 94 1950] for a pound of round steak.
+[price 94 1950 | A pound of round steak]
+That single cut of beef took a noticeable bite out of the weekly food budget.
+Food claimed nearly thirty percent of total family spending across the nation.
+Families consumed an average of three thousand two hundred sixty calories per day.
+Widespread use of home refrigeration transformed daily dietary habits.
+Pork chops also rose significantly to seventy-five cents per pound during this period.
+[film 3.5]
+Hourly manufacturing wages jumped from fifty-eight cents in nineteen thirty-five to one dollar fifty-nine cents in nineteen fifty.
+Women entered the workforce in record numbers, reaching thirty-four percent participation nationwide.
+Neighborhood butchers greeted regular customers by name behind glass display cases.
+Flour bags sat stacked in neat pyramids while grocers weighed bulk sugar on brass scales.
+The weekly grocery run was a social ritual for homemakers comparing notes on household economy.
+
+## City Streets and Neighborhoods | New York and Boston | 1950-1960
+
+[film 8]
+> Walking the sidewalks of New York City and Boston reveals a denser urban rhythm.
+> Trams clatter past brick storefronts while pedestrians navigate crowded crosswalks in wool coats and fedoras.
+> Families here squeezed into smaller living quarters.
+[film 3.5]
+> Only eighteen percent of New York families owned their homes in nineteen fifty.
+
+[pause 0.6]
+[film 8]
+< City dwellers spent nearly three quarters of their total earnings on the absolute basics of food, clothing, and housing.
+[film 8]
+Average family income in New York City stood at [today 5105 1950].
+[price 5105 1950 | New York family income]
+That sum gave urban households slightly more purchasing power than the national average.
+Yet housing alone consumed over twenty-eight percent of their budget.
+New York City contained nearly eight million residents within its five boroughs.
+Over half of the city's workers labored in manufacturing and wholesale trade.
+Equipment operators and clerical workers formed the largest occupational groups on the city streets.
+[film 3.5]
+Thirty-nine percent of New York families managed to own an automobile despite the dense transit network.
+Buying and operating that car claimed nearly six percent of total household expenditures.
+Subway turnstiles clicked in a relentless rhythm as millions of workers descended underground each morning.
+Newstand vendors shouted headlines above the roar of elevated trains and bustling pedestrian traffic.
+Apartment buildings rose in sheer brick canyons where neighbors shared cramped laundry rooms in the basement.
+
+[pause 0.6]
+[film 8]
+< Only forty-two percent of Boston families owned an automobile in nineteen fifty.
+[film 8]
+Public transportation remained the primary lifeline for getting to the factory or office.
+Boston households averaged three point one members per family.
+Nearly half of Boston workers found employment in trade or manufacturing industries.
+[film 3.5]
+About twenty-six percent of Boston families achieved home ownership during this era.
+Expenditures for automobile purchase and maintenance took about eight percent of the family budget.
+Charitable contributions and personal insurance rounded out the typical ledger for urban wage earners.
+Cobblestone alleys echoed with the footsteps of dockworkers and textile operators heading to their shifts.
+Historic brick row houses accommodated generations of families under slate roofs.
+Corner bakeries filled the morning air with the rich aroma of fresh bread and pastries.
+
+## The Shift in Household Budgets | United States | 1950-1960
+
+[film 8]
+> By nineteen sixty, the American landscape had transformed visibly.
+> Subdivisions stretched further into former farmlands.
+[film 3.5]
+> Television antennas sprouted from nearly every rooftop.
+> We will explore how spending priorities shifted as families grew more affluent.
+> We'll come back to that.
+
+[pause 0.6]
+[film 8]
+< Average family income climbed to [today 6691 1960] by the dawn of the new decade.
+[price 6691 1960 | Average family income]
+[film 8]
+That represented a fifty-seven percent increase over the nineteen fifty average.
+Women continued entering the workforce in growing numbers, reaching nearly thirty-eight percent participation.
+The total U.S. population exceeded one hundred seventy-nine million people.
+The median age dropped slightly to twenty-nine point five years.
+Children under the age of fifteen surged to over thirty-one percent of the total population.
+[film 3.5]
+Average family size ticked upward to three point one members.
+Families experienced an elevated standard of living as luxury items became accessible.
+Charitable giving rose dramatically from one hundred sixty-five dollars to three hundred three dollars per family.
+Living rooms glowed with the flickering blue light of cathode-ray television tubes.
+Families gathered on patterned sofas to watch variety shows and evening serials.
+Backyard barbecues became a suburban institution as weekend leisure time expanded.
+
+[pause 0.6]
+[film 8]
+< Retail prices for key staples adjusted during the decade.
+[film 8]
+A pound of round steak rose to [today 106 1960] in city markets.
+[price 106 1960 | A pound of round steak]
+[film 3.5]
+Meanwhile, butter prices remained remarkably stable at [today 75 1960] per pound.
+[price 75 1960 | A pound of butter]
+Families now spent a slightly smaller share of their income on food.
+Housing quietly took over as the single largest expenditure category at nearly thirty percent of the budget.
+A pound of bacon cost sixty-six cents while a half-gallon of milk sold for fifty-two cents.
+Pork chops rose to eighty-six cents per pound in neighborhood groceries.
+Despite climbing prices, general prosperity allowed families to reduce the relative share spent on basic necessities.
+[film 3.5]
+Housing costs included shelter, furnishings, utilities, and daily operational expenses.
+Supermarket aisles widened to accommodate rolling metal carts heaped high with packaged goods.
+Display freezers hummed quietly while offering shoppers pre-cut frozen vegetables and prepared meals.
+
+## Urban Realities | New York City | 1960-1961
+
+[film 8]
+> Inside New York City apartments, living spaces remained compact and intensely utilized.
+> Archive footage shows homemakers operating early automatic washing machines.
+> The market value of the median owned home in New York City reached [today 17000 1960].
+[price 17000 1960 | Median New York home value]
+That figure reflected a housing market where seventy-five percent of units remained rentals.
+Average monthly rent for New York City tenants hovered at [today 73 1960].
+[price 73 1960 | Average monthly rent]
+[film 3.5]
+That rent purchased an apartment averaging just under four rooms.
+Over forty-two percent of New York jobs were concentrated in manufacturing and trade.
+Nearly forty percent of residents regularly relied on public transportation to reach their workplaces.
+The city's median age crept upward to thirty-five point one years.
+Foreign-born residents accounted for twenty percent of the urban population.
+Superintendents swept front stoops while children played stickball in asphalt streets.
+[film 3.5]
+Delivery boys maneuvered bicycles laden with groceries through dense traffic.
+Neon signs flickered on Broadway as evening crowds filled the glittering sidewalks.
+
+[pause 0.6]
+[film 8]
+< Families also invested more heavily in modern comforts.
+[film 8]
+Over eighty-eight percent of New York households now owned a television.
+Over seventy-six percent maintained a telephone.
+These conveniences redefined daily domestic life.
+Yet food, clothing, and housing still commanded seventy percent of total household spending.
+Clothes washers were found in over thirty-seven percent of homes across the boroughs.
+Air-conditioners slowly appeared in slightly over thirteen percent of households.
+[film 3.5]
+Average family income reached seven thousand nine hundred eighteen dollars.
+About fifteen percent of city households reported earnings below three thousand dollars.
+Meanwhile, nearly nineteen percent enjoyed incomes exceeding ten thousand dollars annually.
+Linoleum kitchen floors gleamed under the reflection of fluorescent ceiling fixtures.
+Housewives listened to daytime radio serials while folding freshly laundered sheets.
+
+## The Boston Experience | Boston, Massachusetts | 1960-1961
+
+[film 8]
+> Boston streets displayed a similar blend of old architecture and modern consumer habits.
+> Commuters lined up for buses while neighborhood grocers stacked crates of fresh produce on the sidewalk.
+> Boston residents completed an average of eleven point two years of formal schooling.
+[film 3.5]
+Only seven point seven percent of the adult population had less than five years of education.
+Housing units averaged four point six rooms, offering slightly more space than New York apartments.
+About thirty-two percent of Boston families owned their homes by nineteen sixty.
+Manufacturing and retail trade anchored local employment opportunities.
+Charitable donations climbed to three hundred ninety-six dollars per family.
+Newspaper stands displayed daily broadsheets featuring local sports scores and international news.
+[film 3.5]
+Students carrying leather briefcases hurried across university courtyards in the crisp autumn air.
+
+[pause 0.6]
+[film 8]
+< Home ownership rates in the city climbed to thirty-two percent over the decade.
+[film 8]
+Television ownership reached nearly eighty-seven percent among Boston households.
+Telephones were present in almost seventy-eight percent of local homes.
+Clothes washers surged in popularity, appearing in over fifty percent of households.
+Air-conditioning remained rare, installed in only three point nine percent of residences.
+Porch swings creaked gently on wooden verandas during warm summer evenings.
+Neighbors exchanged pleasantries across white picket fences while watering neatly manicured lawns.
+
+## Prosperity and the Standard of Living | United States | 1950-1960
+
+[film 8]
+> Looking back across the decade, the postwar boom delivered a measurable rise in living standards.
+> Rising wages outpaced moderate price increases for most basic goods.
+> Families directed more disposable income toward healthcare, personal care, and charitable giving.
+[film 3.5]
+> Automobile ownership climbed as seventy-three percent of American households parked a car in the driveway.
+> The questions we raised earlier about the balance of wages and costs find their answer in these expanding budgets.
+> Americans in the nineteen fifties truly experienced an unprecedented era of shared economic growth.
+> And that's not all.
+
+[pause 0.6]
+[film 8]
+< Healthcare and personal insurance absorbed a larger share of the modern household budget.
+[film 8]
+Nearly twenty-eight percent of healthcare spending went toward medical insurance or prepaid health plans.
+Dual-earner households became increasingly common as more married women joined the paid labor force.
+Convenience foods and pre-packaged supermarket items transformed everyday meal preparation.
+The blurring line between groceries and dining out reflected changing rhythms of family life.
+[film 3.5]
+Suburban migration accelerated as millions of veterans and young couples sought single-family homes.
+Government investment in highways and G.I. Bill educational benefits fueled the expansive middle class.
+Economic stability reduced the severity of business cycles compared to previous decades.
+Hourly manufacturing wages continued a steady upward climb across the entire ten-year span.
+Everyday American life settled into a comfortable rhythm of work, consumption, and suburban domesticity.
+Children chased hoops down sunlit suburban lanes while dogs barked at passing mail carriers.
+Factory whistles blew at shift changes, marking the steady pulse of a confident industrial nation.

@@ -1,0 +1,86 @@
+[
+ {
+  "claim": "In 1950, the average U.S. family income reached $4,237 per year.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in New York stood at $5,105 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Average family income in New York City stood at $5,105 in 1950."
+ },
+ {
+  "claim": "In Boston, families allocated $3,946 toward annual household expenditures in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income climbed to $6,691 by 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak rose to $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Butter prices remained relatively stable at 75 cents per pound in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The market value of a median owned home in New York reached $17,000 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "The market value of the median owned home in New York City reached $17,000 in 1960."
+ },
+ {
+  "claim": "Average monthly rent for New York city tenants hovered at $73 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Average monthly rent for New York City tenants hovered at $73 in 1960."
+ },
+ {
+  "claim": "Average family income in Boston reached $7,992 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing expenditures in Boston claimed 314 out of every thousand dollars spent on major budget items in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The median price for an owned home in Boston stood at $13,500 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Monthly rent averaged $78 for local Boston tenants in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ }
+]

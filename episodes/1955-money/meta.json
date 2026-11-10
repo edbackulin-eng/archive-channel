@@ -1,0 +1,43 @@
+{
+ "slug": "1955-money",
+ "name": "What Americans Earned and Spent in 1955",
+ "title": "What Americans Earned and Spent in 1955",
+ "thumbnail_words": "$4,237 TO LIVE IN 1950",
+ "thumbnail_subject": "A family standing proudly in front of their suburban home in the 1950s",
+ "words": 1848,
+ "minutes_at_150wpm": 12.3,
+ "sources": [
+  {
+   "title": "Post–World War II economic expansion",
+   "url": "https://en.wikipedia.org/wiki/Post%E2%80%93World_War_II_economic_expansion"
+  },
+  {
+   "title": "Minimum wage in the United States",
+   "url": "https://en.wikipedia.org/wiki/Minimum_wage_in_the_United_States"
+  },
+  {
+   "title": "Consumer price index",
+   "url": "https://en.wikipedia.org/wiki/Consumer_price_index"
+  },
+  {
+   "title": "Economy of the United States",
+   "url": "https://en.wikipedia.org/wiki/Economy_of_the_United_States"
+  },
+  {
+   "title": "Household income in the United States",
+   "url": "https://en.wikipedia.org/wiki/Household_income_in_the_United_States"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 14,
+  "supported": 6
+ }
+}
