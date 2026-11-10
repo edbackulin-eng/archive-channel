@@ -391,6 +391,37 @@ def main():
     check("prefilter calibration: accept keeps 95% agreement with Gemini, reject loses at most 10% of the good",
           _a is not None and _r is not None and _r < _a and _rep["their_gemini_ok_share"] >= 0.95
           and _rep["good_frames_lost"] <= 0.10 * sum(_ok), f"accept {_a}, reject {_r}, {_rep}")
+    # owner 10.11: voiced shots of 8-10 s over several short lines, a price tag starting its own shot
+    _tl = [{"start": i * 3.2, "end": i * 3.2 + 3.0, "text": f"short line {i}",
+            **({"chapter": "## Homes | Long Island | 1950"} if i == 0 else {}),
+            **({"price": {"amount": 7990, "year": 1949}} if i == 40 else {})} for i in range(120)]
+    _sl = [s for s in footage.slots(_tl, 384.0) if s["kind"] == "clip"]
+    _d = sorted(s["end"] - s["start"] for s in _sl)
+    check("footage: voiced shots of 8-10 s over several lines (at most 13 with the pauses), the price tag kept",
+          _d[len(_d) // 2] >= 8.0 and _d[-1] <= 13.0 and sum(1 for s in _sl if s.get("price")) == 1
+          and any("short line 1 " in s["line"] for s in _sl), f"median {_d[len(_d) // 2]:.1f}, max {_d[-1]:.1f}")
+    # a slot without a frame for its words takes one for its chapter's subject; off-topic stays out
+    asked_ch = []
+    try:
+        films.clear()
+        films.update({f"good{i}": "Suburban homes and families" for i in range(16)})
+        _ar.search = lambda *a, **k: [{"id": i, "title": v, "year": 1952, "colour": True, "description": v,
+                                       "subject": "", "licence": "PD", "page": ""} for i, v in films.items()]
+        _ar.files = lambda fid: {"proxy": "x", "best": "b", "best_size": (640, 480)}
+        _cl.shots = _shots
+        _llm.complete_json = lambda prompt, **k: {"results": [
+            {"i": i, "score": 3} for i, l in enumerate(l for l in prompt.split("FILMS:\n")[1].splitlines() if l.strip())]}
+        footage.vision.check = lambda pairs: (asked_ch.append(sum(1 for l, _e, _k in pairs if l.startswith("(what"))) or
+                                              [{"ok": l.startswith("(what"),
+                                                "status": "checked", "note": "x"} for l, _e, kf in pairs])
+        pl3 = footage.plan(tl, 1150.0, (1946, 1962), fk / "ch", name="Life in a Brand-New 1950s Suburb")
+    finally:
+        _ar.search, _ar.files, _cl.shots, _llm.complete_json, footage.vision.check = saved_f
+    cs3 = [s for s in pl3["shots"] if s["kind"] == "clip" and not s.get("ran_on")]
+    check("footage: with no frame for the words, a frame for the chapter's subject (asked as such), never an "
+          "unchecked one", sum(asked_ch) > 0 and all((s.get("vision") or {}).get("ok") for s in cs3)
+          and all((s.get("vision") or {}).get("level") == "chapter" or (s.get("vision") or {}).get("reused")
+                  for s in cs3), f"{len(cs3)} shots, {sum(asked_ch)} chapter-level frames asked")
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
     check("next topic: never one without its Wikipedia articles",

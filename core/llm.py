@@ -89,8 +89,39 @@ def _post(url, payload, headers, timeout=240):
         return json.loads(r.read().decode("utf-8", "replace"))
 
 
+# owner 10.11: Groq's free tier turns down a request whose prompt is over 8000 tokens (413; the
+# answer's tokens are not counted there - measured 10.11, ~4.6 characters a token). The long
+# paragraphs (the sources) are cut in proportion to fit; the draft and the instructions stay whole.
+GROQ_MAX_CHARS = 26000
+
+
+def fit_prompt(prompt, system="", limit=GROQ_MAX_CHARS):
+    """The prompt with its long paragraphs (over 600 characters, not a draft) shortened in proportion,
+    so prompt and system together stay within `limit` characters; unchanged when it fits."""
+    limit -= len(system or "")
+    if len(prompt) <= limit:
+        return prompt
+    parts = prompt.split("\n\n")
+    keep = [len(p) <= 600 or p.lstrip().startswith(("YOUR DRAFT", "EPISODE:")) for p in parts]
+    fixed = sum(len(p) for p, k in zip(parts, keep) if k) + 2 * len(parts)
+    long_ = [i for i, k in enumerate(keep) if not k]
+    total = sum(len(parts[i]) for i in long_)
+    if not long_ or fixed >= limit:
+        return prompt                       # nothing to shorten: Groq says 413 and Gemini is asked
+    ratio = (limit - fixed) / total
+    for i in long_:
+        cut = max(300, int(len(parts[i]) * ratio))
+        parts[i] = parts[i][:cut].rsplit(" ", 1)[0] + " [...]"
+    return "\n\n".join(parts)
+
+
 def _groq(prompt, system, max_tokens, temperature, as_json):
     model = groq_model()
+    short = fit_prompt(prompt, system)
+    if short is not prompt:
+        log.info("groq: the prompt cut from %d to %d characters (sources shortened to the request limit)",
+                 len(prompt), len(short))
+        prompt = short
     payload = {"model": model, "max_tokens": max_tokens, "temperature": temperature,
                "messages": ([{"role": "system", "content": system}] if system else [])
                + [{"role": "user", "content": prompt}]}

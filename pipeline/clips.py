@@ -71,7 +71,7 @@ def shots(proxy, work, max_shots=80):
     for a, b in spans:
         t = a
         while b - t >= MIN_SHOT_S and len(out) < max_shots * 3:
-            e = min(b, t + 8.0)
+            e = min(b, t + 12.0)          # 10.11: a piece covers one 8-10 s shot (was 8)
             out.append((round(t, 2), round(e, 2)))
             t = e
     keep = []
