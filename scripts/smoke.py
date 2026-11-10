@@ -167,15 +167,13 @@ def main():
     youtube.upload, youtube.set_thumbnail, youtube.schedule = (lambda *a: "v" + a[1]), (lambda *a: None), (lambda *a: None)
     try:
         release.upload()
-        s1 = [r["state"] for r in json.loads(st.read_text())]
-        release.approve("a")
-        release.approve("b")
         s2 = [(r["state"], r.get("publish_at")) for r in json.loads(st.read_text())]
     finally:
         release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule = saved
-    check("release: first two await approval, the third its turn, then all in order",
-          s1 == ["awaiting_approval", "awaiting_approval", "awaiting_turn"]
-          and all(x[0] == "scheduled" for x in s2) and s2[0][1] < s2[1][1] < s2[2][1], f"{s1} {s2}")
+    # owner 10.11: no approve (qa.approve_first_episodes 0) - each goes up scheduled, in order
+    check("release: no approve - every episode scheduled at once on the next free slots, in order",
+          release.CFG["qa"]["approve_first_episodes"] == 0
+          and all(x[0] == "scheduled" for x in s2) and s2[0][1] < s2[1][1] < s2[2][1], f"{s2}")
     # owner 07.11: after a QA failure no build starts again until the code or the plan changes
     from automation import pause
     saved_p = pause.PAUSE, pause.STATE
