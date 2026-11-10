@@ -1,0 +1,46 @@
+name: scripts-ahead
+# Owner 10.11: the next three topics' scripts written and fact-checked whenever the text quota allows,
+# so no build waits on a text provider (automation/scripts_ahead.py).
+on:
+  schedule:
+    - cron: "25 */3 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: scripts-ahead
+  cancel-in-progress: false
+jobs:
+  write:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      GROQ_API_KEY_AR: ${{ secrets.GROQ_API_KEY_AR }}
+      GEMINI_API_KEY_AR: ${{ secrets.GEMINI_API_KEY_AR }}
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: 1
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install -q -r requirements.txt
+      - name: Write the next scripts (not the topic being built now)
+        run: |
+          building=$(gh run list -R "${{ github.repository }}" -w episode.yml -L 5 --json status,displayTitle \
+            -q '[.[]|select(.status!="completed")|.displayTitle|sub("^episode ?";"")][0] // ""')
+          python automation/scripts_ahead.py --n 3 --skip "$building"
+      - name: Keep them in the repository
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # each path on its own: one that does not exist must not keep the others out
+          for f in episodes/*/script.txt episodes/*/meta.json episodes/*/fact_check.json data/cpi_u.json state/quota_hold.json; do
+            git add "$f" 2>/dev/null || true
+          done
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Scripts written ahead"
+          for i in 1 2 3 4 5; do git pull -q --rebase --autostash origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
+          exit 1
