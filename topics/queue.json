@@ -3,6 +3,162 @@
   "subtopic": "Everyday life in mid-century America (1946-1965), in colour",
   "topics": [
     {
+      "slug": "american-home-1950s",
+      "name": "American Home 1950s in Color",
+      "query": "suburb OR housing OR \"new home\" OR homeowner OR kitchen OR appliance OR refrigerator OR housewife",
+      "years": [
+        1946,
+        1962
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "History of the United States (1945–1964)",
+        "Levittown, New York",
+        "Levittown, Pennsylvania",
+        "William Levitt",
+        "Suburbanization",
+        "G.I. Bill",
+        "Post–World War II baby boom"
+      ],
+      "related": [
+        "Levittown",
+        "housing development",
+        "family life 1950s",
+        "new homes",
+        "home ownership",
+        "suburban living",
+        "veterans housing",
+        "postwar housing",
+        "Life in a Brand-New 1950s Suburb",
+        "Inside the 1950s Kitchen: The Machines That Promised Freedom"
+      ],
+      "merged_from": [
+        "1950s-suburb",
+        "1950s-kitchen"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+    },
+    {
+      "slug": "1950s-shopping-prices",
+      "name": "1950s Shopping & Prices in Color",
+      "query": "supermarket OR grocery OR \"department store\" OR shopping OR store OR budget OR money OR prices",
+      "years": [
+        1946,
+        1962
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "Post–World War II economic expansion",
+        "Minimum wage in the United States",
+        "Consumer price index",
+        "Economy of the United States",
+        "Household income in the United States",
+        "Grocery store",
+        "Supermarket"
+      ],
+      "related": [
+        "What Americans Earned and Spent in 1955",
+        "What a Week of Groceries Cost a 1950s Family",
+        "The 1950s Supermarket Was a Wonder of the World",
+        "How America Shopped Before Malls"
+      ],
+      "merged_from": [
+        "1955-money",
+        "1950s-groceries",
+        "1950s-supermarket",
+        "1950s-department-store"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+    },
+    {
+      "slug": "1950s-cars-roads",
+      "name": "1950s Cars, Roads & Drive-Ins in Color",
+      "query": "automobile OR car OR cars OR motorist OR highway OR motel OR \"drive-in\" OR \"road trip\"",
+      "years": [
+        1946,
+        1965
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "Automotive industry in the United States",
+        "Chevrolet Bel Air",
+        "Ford Thunderbird",
+        "Big Three (automobile manufacturers)",
+        "Diner",
+        "Drive-in",
+        "Drive-in theater"
+      ],
+      "related": [
+        "The 1950s Car Was a Living Room on Wheels",
+        "Diners, Drive-Ins and Motels: America on the Road",
+        "The Birth of the American Highway"
+      ],
+      "merged_from": [
+        "1950s-cars",
+        "1950s-road",
+        "1950s-highways"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+    },
+    {
+      "slug": "a-day-in-1955",
+      "name": "A Day in 1955 America in Color",
+      "query": "family OR factory OR office OR school OR workers OR city OR \"daily life\"",
+      "years": [
+        1950,
+        1960
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "1955 in the United States",
+        "Assembly line",
+        "United Auto Workers",
+        "Treaty of Detroit",
+        "Manufacturing in the United States",
+        "Ford River Rouge complex",
+        "Typewriter"
+      ],
+      "related": [
+        "A Day at a 1950s American Factory",
+        "The 1950s Office: Typewriters, Carbon Copies and the Coffee Break",
+        "Going to School in 1950s America"
+      ],
+      "merged_from": [
+        "1950s-factory",
+        "1950s-office",
+        "1950s-school"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+    },
+    {
+      "slug": "1950s-life",
+      "name": "Life in 1950s America in Color",
+      "query": "family OR city OR leisure OR teenagers OR home OR town OR parade OR \"daily life\"",
+      "years": [
+        1946,
+        1962
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "1950s",
+        "History of the United States (1945–1964)",
+        "Adolescence",
+        "Rock and roll",
+        "American Bandstand",
+        "Juvenile delinquency",
+        "Youth culture"
+      ],
+      "related": [
+        "How Teenagers Were Invented in the 1950s",
+        "What Women Were Told About Home and Work in the 1950s"
+      ],
+      "merged_from": [
+        "1950s-teenagers",
+        "1950s-women"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+    },
+    {
       "slug": "1950s-suburb",
       "name": "Life in a Brand-New 1950s Suburb",
       "query": "suburb OR suburbs OR housing OR homeowner OR \"new home\"",
@@ -18,7 +174,7 @@
         "RelaxedW1957 (1957)",
         "American1958 (1958)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Levittown, New York",
         "Levittown, Pennsylvania",
@@ -38,7 +194,8 @@
         "veterans housing",
         "postwar housing"
       ],
-      "deferred_why": "SHORT OF FILM: 32 of 193 slots had no unique matching shot; the unique film fits ~15.6 min"
+      "deferred_why": "SHORT OF FILM: 32 of 193 slots had no unique matching shot; the unique film fits ~15.6 min",
+      "merged_into": "american-home-1950s"
     },
     {
       "slug": "1950s-groceries",
@@ -56,7 +213,7 @@
         "OutofThi1954 (1954)",
         "Chickeno1948 (1948)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Grocery store",
         "Supermarket",
@@ -64,7 +221,8 @@
         "Frozen meal",
         "Post–World War II economic expansion"
       ],
-      "deferred_why": "SHORT OF FILM: 120 of 235 slots had no unique matching shot; the unique film fits ~10.9 min"
+      "deferred_why": "SHORT OF FILM: 120 of 235 slots had no unique matching shot; the unique film fits ~10.9 min",
+      "merged_into": "1950s-shopping-prices"
     },
     {
       "slug": "1950s-kitchen",
@@ -82,7 +240,7 @@
         "Foundati1951 (1951)",
         "American1958 (1958)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Kitchen",
         "Home appliance",
@@ -90,7 +248,8 @@
         "Dishwasher",
         "Tupperware"
       ],
-      "deferred_why": "SHORT OF FILM: 90 of 216 slots had no unique matching shot; the unique film fits ~13.1 min"
+      "deferred_why": "SHORT OF FILM: 90 of 216 slots had no unique matching shot; the unique film fits ~13.1 min",
+      "merged_into": "american-home-1950s"
     },
     {
       "slug": "1950s-supermarket",
@@ -108,7 +267,7 @@
         "Chickeno1948 (1948)",
         "American1958_2 (1958)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Supermarket",
         "King Kullen",
@@ -116,7 +275,8 @@
         "Shopping cart",
         "A&P"
       ],
-      "deferred_why": "SHORT OF FILM: 111 of 214 slots had no unique matching shot; the unique film fits ~10.3 min"
+      "deferred_why": "SHORT OF FILM: 111 of 214 slots had no unique matching shot; the unique film fits ~10.3 min",
+      "merged_into": "1950s-shopping-prices"
     },
     {
       "slug": "1955-money",
@@ -134,7 +294,7 @@
         "ItsEvery1954 (1954)",
         "OnGuard1956 (1956)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Post–World War II economic expansion",
         "Minimum wage in the United States",
@@ -142,7 +302,8 @@
         "Economy of the United States",
         "Household income in the United States"
       ],
-      "deferred_why": "SHORT OF FILM: 55 of 193 slots had no unique matching shot; the unique film fits ~15.2 min"
+      "deferred_why": "SHORT OF FILM: 55 of 193 slots had no unique matching shot; the unique film fits ~15.2 min",
+      "merged_into": "1950s-shopping-prices"
     },
     {
       "slug": "1950s-cars",
@@ -160,14 +321,15 @@
         "GoldenYe1960 (1960)",
         "Designfo1956 (1956)"
       ],
-      "status": "deferred",
+      "status": "merged",
       "wikipedia": [
         "Automotive industry in the United States",
         "Chevrolet Bel Air",
         "Ford Thunderbird",
         "Big Three (automobile manufacturers)"
       ],
-      "deferred_why": "SHORT OF FILM: 75 of 206 slots had no unique matching shot; the unique film fits ~14.0 min"
+      "deferred_why": "SHORT OF FILM: 75 of 206 slots had no unique matching shot; the unique film fits ~14.0 min",
+      "merged_into": "1950s-cars-roads"
     },
     {
       "slug": "1950s-factory",
@@ -185,14 +347,15 @@
         "isforAto1953 (1953)",
         "WhyPlayL1949 (1949)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Assembly line",
         "United Auto Workers",
         "Treaty of Detroit",
         "Manufacturing in the United States",
         "Ford River Rouge complex"
-      ]
+      ],
+      "merged_into": "a-day-in-1955"
     },
     {
       "slug": "1950s-road",
@@ -210,14 +373,15 @@
         "OneGotFa1963 (1963)",
         "Century21964 (1964)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Diner",
         "Drive-in",
         "Drive-in theater",
         "Motel",
         "U.S. Route 66"
-      ]
+      ],
+      "merged_into": "1950s-cars-roads"
     },
     {
       "slug": "1950s-school",
@@ -235,14 +399,15 @@
         "isforAto1953 (1953)",
         "DatingDo1949 (1949)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Education in the United States",
         "Duck and cover",
         "Brown v. Board of Education",
         "Baby boomers",
         "Sputnik crisis"
-      ]
+      ],
+      "merged_into": "a-day-in-1955"
     },
     {
       "slug": "1950s-department-store",
@@ -260,14 +425,15 @@
         "Corvairi1960 (1960)",
         "1955Chev1955 (1955)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Department store",
         "Sears",
         "Macy's",
         "Mail order",
         "Southdale Center"
-      ]
+      ],
+      "merged_into": "1950s-shopping-prices"
     },
     {
       "slug": "1960s-color",
@@ -334,14 +500,15 @@
         "Foundati1951 (1951)",
         "RelaxedW1957 (1957)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Housewife",
         "The Feminine Mystique",
         "Women in the workforce",
         "Second-wave feminism",
         "Women in the United States"
-      ]
+      ],
+      "merged_into": "1950s-life"
     },
     {
       "slug": "1950s-christmas",
@@ -432,14 +599,15 @@
         "OutofThi1954 (1954)",
         "ThisisCo1961 (1961)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Typewriter",
         "Carbon paper",
         "Break (work)",
         "Secretary",
         "IBM Selectric"
-      ]
+      ],
+      "merged_into": "a-day-in-1955"
     },
     {
       "slug": "1950s-highways",
@@ -457,13 +625,14 @@
         "Century21964 (1964)",
         "YourName1960 (1960)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Interstate Highway System",
         "Federal-Aid Highway Act of 1956",
         "Pennsylvania Turnpike",
         "Road trip"
-      ]
+      ],
+      "merged_into": "1950s-cars-roads"
     },
     {
       "slug": "1950s-teenagers",
@@ -481,14 +650,15 @@
         "DatingDo1949 (1949)",
         "Miracleo1955 (1955)"
       ],
-      "status": "queued",
+      "status": "merged",
       "wikipedia": [
         "Adolescence",
         "Rock and roll",
         "American Bandstand",
         "Juvenile delinquency",
         "Youth culture"
-      ]
+      ],
+      "merged_into": "1950s-life"
     },
     {
       "slug": "atomic-home",
@@ -515,5 +685,6 @@
         "Civil defense"
       ]
     }
-  ]
+  ],
+  "_note_10_11": "owner 10.11: broader topics first, built in the order of the film confirmed for the narrow ones they merge (suburb 43.2 + kitchen 23.2 min; money 32.2, groceries 12.6, supermarket 5.5; cars 23.7); the narrow topics are kept as 'merged'"
 }

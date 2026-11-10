@@ -145,35 +145,61 @@ def colourfulness(path):
     return _COLOUR[path]
 
 
+SHOT_MIN_S, SHOT_MAX_S = 8.0, 10.0      # owner 10.11: voiced shots 8-10 s (was 4-6)
+BREAK_MAX_S = 15.0                      # a film break (the chronicle pauses) in pieces of up to 12-15 s
+
+
+def _pieces(a, b, longest):
+    """[a, b) in equal pieces of at most `longest` seconds."""
+    n = max(1, int(-(-(b - a) // longest)))
+    return [(a + (b - a) * k / n, a + (b - a) * (k + 1) / n) for k in range(n)]
+
+
 def slots(timeline, total):
-    """Shots on the narration clock: voiced spans cut every 4-6 s, film breaks whole."""
+    """Shots on the narration clock (owner 10.11): voiced shots of 8-10 s, which may span several
+    short lines (their words together are what the shot must show), film breaks in pieces of up to
+    15 s. A line with a price tag starts a shot of its own, so the tag is on screen with it."""
     out, t = [], 0.0
     chapter = ""
+    run = None                       # the voiced shot being gathered: {start, lines, price}
+
+    def close(end):
+        nonlocal run
+        if run is None:
+            return
+        text = " ".join(run["lines"])[:400]
+        for k, (a_, b_) in enumerate(_pieces(run["start"], end, SHOT_MAX_S)):
+            out.append({"start": round(a_, 3), "end": round(b_, 3), "kind": "clip", "film_break": False,
+                        "line": text, "chapter_ctx": run["chapter"],
+                        **({"price": run["price"]} if k == 0 and run.get("price") else {})})
+        run = None
+
     for line in timeline:
         if line.get("chapter"):
             chapter = line["chapter"]
         fb = line.get("film_before", 0)
         if fb:
-            b0 = line["start"] - fb - 0.12
-            b0 = max(t, b0)
+            b0 = max(t, line["start"] - fb - 0.12)
+            close(b0)
             if line.get("chapter"):
                 out.append({"start": round(b0, 3), "end": round(b0 + CARD_S, 3), "kind": "card",
                             "chapter": line["chapter"], "film_break": True})
                 b0 += CARD_S
             if line["start"] - b0 > 0.5:
-                out.append({"start": round(b0, 3), "end": round(line["start"], 3), "kind": "clip",
-                            "film_break": True, "line": line["text"], "chapter_ctx": chapter})
+                for a_, b_ in _pieces(b0, line["start"], BREAK_MAX_S):
+                    out.append({"start": round(a_, 3), "end": round(b_, 3), "kind": "clip",
+                                "film_break": True, "line": line["text"], "chapter_ctx": chapter})
             t = line["start"]
-        # the voiced line, in 4-6 s pieces
         s, e = max(t, line["start"]), line["end"]
-        n = max(1, round((e - s) / 5.0))
-        for k in range(n):
-            a = s + (e - s) * k / n
-            b = s + (e - s) * (k + 1) / n
-            out.append({"start": round(a, 3), "end": round(b, 3), "kind": "clip", "film_break": False,
-                        "line": line["text"], "chapter_ctx": chapter,
-                        **({"price": line["price"]} if k == 0 and line.get("price") else {})})
+        if run is not None and (line.get("price") or line.get("chapter") or run["chapter"] != chapter):
+            close(s)
+        if run is None:
+            run = {"start": s, "lines": [], "chapter": chapter, "price": line.get("price")}
+        run["lines"].append(line["text"])
+        if e - run["start"] >= SHOT_MIN_S:
+            close(e)
         t = e
+    close(t)
     # the picture is continuous: every shot runs to the start of the next, so the
     # gaps between spoken lines are covered and picture and voice never drift
     if out:
@@ -181,14 +207,19 @@ def slots(timeline, total):
         for a, b in zip(out, out[1:]):
             a["end"] = b["start"]
         out[-1]["end"] = round(max(total, out[-1]["end"]), 3)
-    # glue very short pieces onto their neighbour, so no cut is under 2.5 s
+    # a shot under 8 s (cut short by a film break, a chapter or a price tag) joins its neighbour of
+    # the same kind while the two stay within 12 s (voiced) or 15 s (a break); a price stays first
     merged = []
     for sl in out:
-        if merged and sl["kind"] == "clip" and merged[-1]["kind"] == "clip" and sl["end"] - sl["start"] < 2.5 \
-                and sl["film_break"] == merged[-1]["film_break"]:
-            merged[-1]["end"] = sl["end"]
-            if sl.get("price") and not merged[-1].get("price"):
-                merged[-1]["price"] = sl["price"]
+        prev = merged[-1] if merged else None
+        d, both = sl["end"] - sl["start"], (sl["end"] - prev["start"]) if prev else 0
+        cap = BREAK_MAX_S if sl["film_break"] else SHOT_MAX_S + 2
+        if prev and sl["kind"] == "clip" and prev["kind"] == "clip" and sl["film_break"] == prev["film_break"] \
+                and not sl.get("price") and sl.get("chapter_ctx") == prev.get("chapter_ctx") \
+                and (d < 4.0 or ((d < SHOT_MIN_S or prev["end"] - prev["start"] < SHOT_MIN_S) and both <= cap)):
+            prev["end"] = sl["end"]
+            if sl["line"] not in prev["line"]:
+                prev["line"] = (prev["line"] + " " + sl["line"])[:400]
         else:
             merged.append(sl)
     return merged
@@ -289,6 +320,69 @@ def episode_films(timeline, topic_years, query=None, n=FILMS, name=None, extra_q
     return chosen[:n[1]]
 
 
+def _chapter_subject(chapter, name):
+    """'## Homes | Long Island | 1950' and the episode -> 'Life in ...: Homes, Long Island, 1950'."""
+    parts = [p.strip() for p in (chapter or "").lstrip("#").split("|") if p.strip()]
+    return ": ".join(x for x in (name, ", ".join(parts)) if x)
+
+
+def _chapter_level(open_, confirmed, ranked, asked, free, used, rejected, name, check_top):
+    """Owner 10.11: a slot with no frame for its own words takes one that fits its paragraph's and
+    chapter's subject; a frame not about the topic stays forbidden. First a frame Gemini confirmed for
+    another line of the same chapter that is not on screen anywhere yet; then one more round, the
+    candidates asked against the chapter's subject. Returns the slots still without a shot."""
+    def on_screen(c):
+        return any(f == c["film"] and not (c["end"] < a or c["start"] > b) for f, a, b, _at in used)
+
+    def take(s, c, v, note):
+        d = s["end"] - s["start"]
+        s.update({"film": c["film"], "src_start": c["start"], "src_end": c["end"], "best": c["best"],
+                  "item": c["item"], "kf": c["kf"], "vision": {**v, "level": "chapter", "note": note}})
+        used.append((c["film"], c["start"], c["start"] + d, s["start"]))
+
+    still = []
+    for s in open_:
+        d = s["end"] - s["start"]
+        got = next(((c, v) for c, v, ch in confirmed if ch == s.get("chapter_ctx") and not on_screen(c)
+                    and free(c, s) and c["end"] - c["start"] >= min(d, 5.0)), None)
+        if got:
+            take(s, got[0], got[1], f"fits the chapter: {got[1].get('note', '')}")
+        else:
+            still.append(s)
+    if not still:
+        return []
+    tops, pairs = [], []
+    chapter_asked = set()           # each shot asked once against a chapter in this block
+    for s in still:
+        cands, era = ranked(s, chapter_level=True)
+        cands = [c for c in cands if id(c) not in chapter_asked and not on_screen(c)][:check_top]
+        chapter_asked.update(id(c) for c in cands)
+        subject = _chapter_subject(s.get("chapter_ctx"), name)
+        tops.append((s, cands))
+        pairs += [(f"(what this part of the episode is about) {subject}", era, c["kf"]) for c in cands]
+    verdicts = vision.check(pairs) if pairs else []
+    rest, vi = [], 0
+    for s, cands in tops:
+        vs = verdicts[vi:vi + len(cands)]
+        vi += len(cands)
+        got = None
+        for c, v in zip(cands, vs):
+            if v.get("ok"):
+                if not any(x[0] is c for x in confirmed):
+                    confirmed.append((c, v, s.get("chapter_ctx")))
+                if got is None and free(c, s) and not on_screen(c):
+                    got = (c, v)
+            elif v.get("status") == "checked":
+                rejected[id(c)] = rejected.get(id(c), 0) + 1
+        if got:
+            take(s, got[0], got[1], f"fits the chapter's subject: {got[1].get('note', '')}")
+        else:
+            rest.append(s)
+    log.info("chapter level: %d of %d slots without a frame for their words took one for their chapter",
+             len(open_) - len(rest), len(open_))
+    return rest
+
+
 def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, query=None, name=None,
          extra_queries=()):
     """The shot plan. `picks` ({slot index: {film, start}}) overrides the search for a slot."""
@@ -328,15 +422,16 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
                 off += 1.0
         return None
 
-    def ranked(s):
+    def ranked(s, chapter_level=False):
         d = s["end"] - s["start"]
         ws = words(s["line"] + " " + s.get("chapter_ctx", ""))
         y0, y1 = _years(s.get("chapter_ctx"), topic_years)
-        cands = [sh for sh in shots_all if sh["end"] - sh["start"] >= min(d, 3.0) and free(sh, s)
+        cands = [sh for sh in shots_all if sh["end"] - sh["start"] >= min(d, 5.0) and free(sh, s)
                  and (not sh["item"].get("year") or y0 - 6 <= int(sh["item"]["year"]) <= y1 + 6)]
         # a shot turned down twice is not asked again, and one confirmed already is asked last
         # (it can still take a slot as a confirmed stretch): the checks spread over the pool
-        cands = [c for c in cands if rejected.get(id(c), 0) < 2]
+        # (the chapter level asks another question: a shot turned down for some line may fit it)
+        cands = [c for c in cands if chapter_level or rejected.get(id(c), 0) < 2]
         cands.sort(key=lambda c: (any(x[0] is c for x in confirmed),
                                   -(_score(c["item"], ws) + colourfulness(c["kf"]) / 60 * (2 if s["film_break"] else 1)
                                     + (0.7 if (c.get("res") or (0, 0))[1] >= 720 else 0))))
@@ -435,6 +530,8 @@ def plan(timeline, total, topic_years, work, picks=None, check_top=CHECK_TOP, qu
                 else:
                     still.append(s)
             open_ = still
+        if open_:
+            open_ = _chapter_level(open_, confirmed, ranked, asked, free, used, rejected, name, check_top)
         for s in open_:
             d = s["end"] - s["start"]
             # no candidate matches: never one that does not (owner 07.11) - another stretch of a
