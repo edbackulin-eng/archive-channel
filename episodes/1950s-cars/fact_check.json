@@ -1,0 +1,134 @@
+[
+ {
+  "claim": "By 1950, three-quarters of all automobiles in the world were built in the United States.",
+  "source": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The Bel Air coupe cost $1,741 in 1950.",
+  "source": "https://en.wikipedia.org/wiki/Chevrolet_Bel_Air",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average U.S. family income was $4,237 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The base Bel Air sedan cost $2,025 in 1956.",
+  "source": "https://en.wikipedia.org/wiki/Chevrolet_Bel_Air",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average manufacturing wage was $1.59 an hour in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The Diamond Jubilee Thunderbird option package cost almost $12,000 in 1978.",
+  "source": "https://en.wikipedia.org/wiki/Ford_Thunderbird",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the average family income climbed to $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing accounted for 29.5 percent of the family budget in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Food accounted for 24.3 percent of family spending in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Clothing accounted for 10.4 percent of family spending in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Pork chops cost 86 cents a pound in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A half-gallon of milk cost 52 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The Federal Aid Highway Act of 1956 allocated $33 billion for roads.",
+  "source": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, 73 percent of Americans owned automobiles.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The UAW won recognition from GM and Chrysler in 1937 and Ford in 1941.",
+  "source": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, automakers granted workers a company-paid pension for those 65 years old with 30 years seniority.",
+  "source": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the U.S. population surpassed 179 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Female workforce participation climbed steadily to 37.7 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Male workforce participation declined to 83.3 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family size rested at 3.1 persons in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Americans consumed an average of 3,260 calories per day in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]

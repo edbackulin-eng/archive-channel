@@ -1,0 +1,39 @@
+{
+ "slug": "1950s-cars",
+ "name": "The 1950s Car Was a Living Room on Wheels",
+ "title": "When Cars Were Living Rooms on Wheels",
+ "thumbnail_words": "$1,741 BEL AIR",
+ "thumbnail_subject": "A classic 1950s Chevrolet Bel Air parked in front of a suburban home",
+ "words": 1827,
+ "minutes_at_150wpm": 12.2,
+ "sources": [
+  {
+   "title": "Automotive industry in the United States",
+   "url": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States"
+  },
+  {
+   "title": "Chevrolet Bel Air",
+   "url": "https://en.wikipedia.org/wiki/Chevrolet_Bel_Air"
+  },
+  {
+   "title": "Ford Thunderbird",
+   "url": "https://en.wikipedia.org/wiki/Ford_Thunderbird"
+  },
+  {
+   "title": "Big Three (automobile manufacturers)",
+   "url": "https://en.wikipedia.org/wiki/Big_Three_(automobile_manufacturers)"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 22,
+  "supported": 17
+ }
+}
