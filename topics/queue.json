@@ -108,14 +108,15 @@
         "Chickeno1948 (1948)",
         "American1958_2 (1958)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Supermarket",
         "King Kullen",
         "Piggly Wiggly",
         "Shopping cart",
         "A&P"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 111 of 214 slots had no unique matching shot; the unique film fits ~10.3 min"
     },
     {
       "slug": "1955-money",
