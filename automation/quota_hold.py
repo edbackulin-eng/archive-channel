@@ -14,6 +14,7 @@ writes state/quota_hold.json: until 08:05 UTC the pick job of episode.yml starts
 the watchdog starts again the topics that stopped, in their order, on the newest code.
 """
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -68,9 +69,17 @@ def clear():
 
 
 def spent(text):
-    """True when an error says the Gemini day is spent (and no other provider answered)."""
+    """True when an error says the Gemini day is spent (and no other provider answered), or when no
+    text provider could answer at all: every one out of its day or overloaded (10.11: Groq's 200 000
+    tokens a day were spent and Gemini answered 503 for hours; three builds failed in a row)."""
     t = str(text)
-    return any(m in t for m in MARKS) or ("no provider answered" in t and "gemini: HTTP 429" in t)
+    if any(m in t for m in MARKS) or ("no provider answered" in t and "gemini: HTTP 429" in t):
+        return True
+    if "no provider answered" in t:
+        codes = re.findall(r"HTTP (\d{3})", t)
+        return bool(codes) and all(c in ("429", "500", "502", "503", "504") for c in codes) \
+            and ("TPD" in t or "429" in codes)
+    return False
 
 
 if __name__ == "__main__":

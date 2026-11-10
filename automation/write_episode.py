@@ -26,7 +26,15 @@ def main(slug):
         found += sources.bls_spending(tuple(topic["years"]))      # prices and daily life, from BLS
     except Exception as e:                                       # noqa: BLE001
         log.warning("BLS consumer spending report not read: %s", e)
-    draft = scriptwriter.write(topic, found)
+    try:
+        draft = scriptwriter.write(topic, found)
+    except Exception as e:                                       # noqa: BLE001
+        from automation import quota_hold
+        if quota_hold.spent(e):
+            h = quota_hold.set_(slug)
+            log.warning("GEMINI_DAY_SPENT: no text provider can write %s today (%s); builds wait until %s",
+                        slug, str(e)[:160], h["until"])
+        raise
     script, checked = scriptwriter.fact_check(draft, found)
     # 08.11: the fact check cuts lines; a script it left short is expanded and checked again
     for _ in range(2):

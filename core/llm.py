@@ -208,6 +208,15 @@ def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False,
                     return text
                 errors.append(f"{name}: empty answer")
             except urllib.error.HTTPError as e:
+                body = ""
+                try:                                   # 10.11: what the provider said, in the log
+                    body = e.read().decode("utf-8", "replace")[:240].replace("\n", " ")
+                    log.info("%s: HTTP %s: %s", name, e.code, body)
+                except Exception:                                    # noqa: BLE001
+                    pass
+                if e.code == 429 and "per day" in body:
+                    errors.append(f"{name}: HTTP 429 TPD")     # its day is spent: waiting minutes is no use
+                    break
                 errors.append(f"{name}: HTTP {e.code}")
                 if e.code not in (429, 500, 502, 503, 504):
                     break
