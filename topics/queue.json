@@ -134,14 +134,15 @@
         "ItsEvery1954 (1954)",
         "OnGuard1956 (1956)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Post–World War II economic expansion",
         "Minimum wage in the United States",
         "Consumer price index",
         "Economy of the United States",
         "Household income in the United States"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 55 of 193 slots had no unique matching shot; the unique film fits ~15.2 min"
     },
     {
       "slug": "1950s-cars",
