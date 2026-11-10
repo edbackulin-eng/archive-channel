@@ -1,0 +1,43 @@
+{
+ "slug": "1950s-supermarket",
+ "name": "The 1950s Supermarket Was a Wonder of the World",
+ "title": "When the Supermarket Was a Wonder of the World",
+ "thumbnail_words": "GROCERIES FOR $0.73",
+ "thumbnail_subject": "A 1950s American family shopping in a bright supermarket with a metal cart",
+ "words": 1871,
+ "minutes_at_150wpm": 12.5,
+ "sources": [
+  {
+   "title": "Supermarket",
+   "url": "https://en.wikipedia.org/wiki/Supermarket"
+  },
+  {
+   "title": "King Kullen",
+   "url": "https://en.wikipedia.org/wiki/King_Kullen"
+  },
+  {
+   "title": "Piggly Wiggly",
+   "url": "https://en.wikipedia.org/wiki/Piggly_Wiggly"
+  },
+  {
+   "title": "Shopping cart",
+   "url": "https://en.wikipedia.org/wiki/Shopping_cart"
+  },
+  {
+   "title": "A&P",
+   "url": "https://en.wikipedia.org/wiki/A%26P"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 72,
+  "supported": 53
+ }
+}
