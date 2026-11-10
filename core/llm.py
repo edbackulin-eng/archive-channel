@@ -96,11 +96,30 @@ GROQ_MAX_CHARS = 26000
 
 
 def fit_prompt(prompt, system="", limit=GROQ_MAX_CHARS):
-    """The prompt with its long paragraphs (over 600 characters, not a draft) shortened in proportion,
-    so prompt and system together stay within `limit` characters; unchanged when it fits."""
+    """The prompt with its source blocks ("SOURCE n: ..." / "CLAIM n: ...", each up to the next one or
+    to the draft) shortened in proportion - or, without such blocks, its long paragraphs - so prompt
+    and system together stay within `limit` characters; unchanged when it fits. 10.11: a source of
+    many short paragraphs was kept whole paragraph by paragraph and 160 541 characters became 38 739."""
     limit -= len(system or "")
     if len(prompt) <= limit:
         return prompt
+    import re
+    marks = [m.start() for m in re.finditer(r"(?m)^(?:SOURCE|CLAIM) \d+: ", prompt)]
+    if marks:
+        tail_at = len(prompt)
+        for key in ("\n\nYOUR DRAFT", "\n\nThe channel's angle"):
+            k = prompt.find(key, marks[-1])
+            if k != -1:
+                tail_at = min(tail_at, k)
+        head, tail = prompt[:marks[0]], prompt[tail_at:]
+        blocks = [prompt[a:b] for a, b in zip(marks, marks[1:] + [tail_at])]
+        room = limit - len(head) - len(tail) - 8 * len(blocks)
+        total = sum(len(b) for b in blocks)
+        if room > 300 * len(blocks):
+            ratio = room / total
+            blocks = [b if len(b) * ratio >= len(b) else b[:int(len(b) * ratio)].rsplit(" ", 1)[0] + " [...]\n\n"
+                      for b in blocks]
+            return head + "".join(blocks) + tail
     parts = prompt.split("\n\n")
     keep = [len(p) <= 600 or p.lstrip().startswith(("YOUR DRAFT", "EPISODE:")) for p in parts]
     fixed = sum(len(p) for p, k in zip(parts, keep) if k) + 2 * len(parts)
@@ -134,14 +153,23 @@ def _groq(prompt, system, max_tokens, temperature, as_json):
     return d["choices"][0]["message"]["content"]
 
 
-def _gemini(prompt, system, max_tokens, temperature, as_json):
+# 10.11: flash-lite answered 503 (overloaded) for hours; the text goes to flash then - its own small
+# day (~20 requests), only for what flash-lite could not take
+GEMINI_SECOND = "gemini-flash-latest"
+
+
+def _gemini_second(prompt, system, max_tokens, temperature, as_json):
+    return _gemini(prompt, system, max_tokens, temperature, as_json, model=GEMINI_SECOND)
+
+
+def _gemini(prompt, system, max_tokens, temperature, as_json, model=None):
     payload = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
                "generationConfig": {"maxOutputTokens": max_tokens, "temperature": temperature}}
     if system:
         payload["systemInstruction"] = {"parts": [{"text": system}]}
     if as_json:
         payload["generationConfig"]["responseMimeType"] = "application/json"
-    d = _post(GEMINI_URL.format(model=CFG["gemini_fallback"]), payload, {"x-goog-api-key": gemini_key()})
+    d = _post(GEMINI_URL.format(model=model or CFG["gemini_fallback"]), payload, {"x-goog-api-key": gemini_key()})
     cand = (d.get("candidates") or [{}])[0]
     return "".join(p.get("text", "") for p in cand.get("content", {}).get("parts", []))
 
@@ -163,6 +191,7 @@ def providers():
         out.append(("groq", _groq))
     if gemini_key():
         out.append(("gemini", _gemini))
+        out.append(("gemini-flash", _gemini_second))
     if not out and os.environ.get("ARCHIVE_LOCAL_LLM") == "claude":
         out.append(("claude-cli", _claude_cli))
     return out
