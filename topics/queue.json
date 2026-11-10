@@ -160,13 +160,14 @@
         "GoldenYe1960 (1960)",
         "Designfo1956 (1956)"
       ],
-      "status": "queued",
+      "status": "deferred",
       "wikipedia": [
         "Automotive industry in the United States",
         "Chevrolet Bel Air",
         "Ford Thunderbird",
         "Big Three (automobile manufacturers)"
-      ]
+      ],
+      "deferred_why": "SHORT OF FILM: 75 of 206 slots had no unique matching shot; the unique film fits ~14.0 min"
     },
     {
       "slug": "1950s-factory",
