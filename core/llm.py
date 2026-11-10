@@ -216,6 +216,15 @@ def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False,
                     # script; an overloaded model gets minutes, not seconds
                     time.sleep(30 * (attempt + 1))
                     continue
+                if e.code == 429 and name == "groq" and attempt < retries - 1:
+                    # 10.11: Groq's minute of tokens (8000) is spent by the previous answer; it says when
+                    # to come back (retry-after), the 4-12 s here before were too short
+                    try:
+                        wait = float(e.headers.get("retry-after") or 0)
+                    except (TypeError, ValueError):
+                        wait = 0
+                    time.sleep(min(90.0, max(wait, 20.0)) + 2)
+                    continue
             except Exception as e:                                   # noqa: BLE001
                 errors.append(f"{name}: {e}")
             time.sleep(4 * (attempt + 1))

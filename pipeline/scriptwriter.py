@@ -30,7 +30,9 @@ from core.logger import get_logger
 log = get_logger("scriptwriter")
 # 12-15 minutes of speech at 150 wpm, so that with 20-30 % film breaks the
 # episode lands at 15-20 minutes (config/channel.json "breathing")
-WORDS_MIN, WORDS_MAX = 1800, 2250
+# 10.11: at the voice's 127 words a minute and its film breaks, 15.5-19.4 min is ~1450-1850 words
+# (was 1800-2250, set at 150: a 1548-word script of 16.8 min was still sent back for more)
+WORDS_MIN, WORDS_MAX = 1450, 1850
 
 SYSTEM = """You write narration for an English-language YouTube documentary channel about everyday
 life in twentieth-century America, told over public-domain archive film. The viewer is
@@ -242,7 +244,7 @@ def expand(out, prompt, rounds=EXPAND_ROUNDS):
         n, mins = words(out["script"]), est_minutes(out["script"])
         if n >= WORDS_MIN and mins >= MIN_EST_MIN:
             break
-        missing = max(WORDS_MIN - n, round((MIN_EST_MIN - mins) * 150), 0) + 150
+        missing = max(WORDS_MIN - n, round((MIN_EST_MIN - mins) * VOICE_WPM), 0) + 120
         log.info("script is %d words, ~%.1f min; asking for the missing length (~%d words)", n, mins, missing)
         more = llm.complete_json(
             prompt + f"\n\nYOUR DRAFT ({n} words, about {mins:.1f} minutes - too short, the episode must run at "
