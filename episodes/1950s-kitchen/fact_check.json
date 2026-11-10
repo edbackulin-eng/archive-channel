@@ -1,0 +1,584 @@
+[
+ {
+  "claim": "Unemployment averaged four percent during the 1948-1953 business cycle.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average hourly wages in manufacturing rose to $1.59 in 1950 from 58 cents in 1935.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of pork chops cost 75 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average U.S. family income was $4,237 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "General Motors sold the Frigidaire appliance division to White Consolidated Industries for approximately $120 million on January 31, 1979.",
+  "source": "https://en.wikipedia.org/wiki/Frigidaire",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The median home value in New York City was $17,000 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average monthly rent in New York City was $73 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Tupperware active distributors on the lowest level had average gross earnings of $653 in 2017.",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Countertop dishwashers are available for under $300.",
+  "source": "https://en.wikipedia.org/wiki/Dishwasher",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Female workforce participation was 37.7 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family income in the U.S. was $6,691 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 75 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of bacon cost 66 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A half-gallon of milk cost 52 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Frigidaire was sold to White Consolidated Industries for approximately $120 million in 1979",
+  "source": "https://en.wikipedia.org/wiki/Frigidaire",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average hourly wages in manufacturing rose to $1.59 in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Pork chops sold for 75 cents per pound in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average U.S. family income was $4,237 in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In New York City by 1960, the market value of a median owned home was $17,000",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average monthly rent in New York City in 1960 was $73",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Active distributors on the lowest tier of Tupperware earned an average gross income of $653 in 2017",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Indonesia's Tupperware sales in 2013 were more than $200 million",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1991, dishwasher manufacturing market share was split between General Electric with 40%, Whirlpool with 31%, Electrolux with 20%, Maytag with 7% and Thermador with 2%",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "During the 1980s, the U.S. appliance industry shipped $1.5 billion worth of goods each year",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Revenues for the appliance industry doubled between 1982 and 1990 to $3.3 billion",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average U.S. family income in 1960 was $6,691",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 75 cents in 1960",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of bacon cost 66 cents in 1960",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A half-gallon of milk cost 52 cents in 1960",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In Boston by 1960, the market value of a median owned home was $13,500",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The average monthly rent in Boston in 1960 was $78",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "In the post-war business cycle between 1948 and 1953, unemployment averaged four percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The population surpassed 150 million, a gain of 10.4 percent since 1940.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "58.2 percent of families had children younger than 18 living at home.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family size settled at 3.0.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Food, clothing, and housing accounted for 68.4 percent of total spending in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average hourly wages in manufacturing had risen to $1.59 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak increased to 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Pork chops sold for 75 cents per pound in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average U.S. family income in 1950 was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average American in 1950 consumed 3,260 calories per day.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A 5-pound bag of flour cost 55 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "42.1 percent of households had family heads employed as craftsmen or machine operators in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The market value of the median owned home in New York City in 1960 was $17,000.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average monthly rent in New York City in 1960 was $73.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Only 18 percent of New York City families owned their own home in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "18 percent of New York City families owned their own home."
+ },
+ {
+  "claim": "Only 26 percent of Boston families owned their home in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The average New York City household allocated 73.9 percent of its expenditure budget for food, clothing, and housing in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "The average New York City household allocated 73.9 percent of its expenditure budget for food, clothing, and housing."
+ },
+ {
+  "claim": "Food was 33.4 percent of New York City expenditures in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Food was 33.4 percent of New York City expenditures."
+ },
+ {
+  "claim": "Housing had an expenditure share of 28.3 percent in New York City in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Housing had an expenditure share of 28.3 percent in New York City."
+ },
+ {
+  "claim": "Average family income in New York City had risen to $5,105 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Average family income in New York City had risen to $5,105."
+ },
+ {
+  "claim": "54.7 percent of New York City households earned less than $3,500 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "54.7 percent of New York City households earned less than $3,500."
+ },
+ {
+  "claim": "Active distributors on the lowest level of the Tupperware pyramid had average gross earnings of $653 over the year 2017.",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Indonesia's sales of Tupperware in 2013 were more than $200 million.",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Premium dishwashers can be bought for as expensive as $1,500+.",
+  "source": "https://en.wikipedia.org/wiki/Dishwasher",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1991, dishwasher manufacturing market share was split between General Electric with 40%, Whirlpool with 31%, Electrolux with 20%, Maytag with 7% and Thermador with just 2%.",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "During the 1980s, the U.S. appliance industry shipped $1.5 billion worth of goods each year and employed over 14,000 workers.",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Revenues for the appliance industry doubled between 1982 and 1990 to $3.3 billion.",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the U.S. population had surpassed 179 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Female workforce participation rates climbed from 33.9 percent in 1950 to 37.7 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in the country was $6,691 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The price of a pound of butter was 75 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "The price of a pound of butter was relatively unchanged over the 10-year period, at 75 cents a pound in 1960."
+ },
+ {
+  "claim": "Housing became the largest category of expense in 1960-61, at 29.5 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Food was in second place at 24.3 percent in 1960-61.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Clothing accounted for 10.4 percent of family spending in 1960-61.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In Boston by 1960, the market value of the median owned home was $13,500.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The average monthly rent in Boston in 1960 was $78.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "General Motors sold the Frigidaire appliance division to White Consolidated Industries for approximately $120 million in 1979.",
+  "source": "https://en.wikipedia.org/wiki/Frigidaire",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In the postwar business cycle between 1948 and 1953, unemployment averaged four percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The U.S. population surpassed 150 million, a gain of 10.4 percent since 1940.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "58.2 percent of families had children younger than 18 living at home in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "In 58.2 percent of families, there were children younger than 18 living at home in 1950."
+ },
+ {
+  "claim": "Average family size settled at 3.0 people in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Average family size had decreased to 3.0 in 1950."
+ },
+ {
+  "claim": "Average hourly wages in manufacturing rose to $1.59 an hour in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak was priced at 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "A pound of round steak was priced at 94 cents in 1950."
+ },
+ {
+  "claim": "The average American consumed 3,260 calories per day in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "42.1 percent of household heads worked as craftsmen or machine operators in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In New York City by 1960, the market value of a median owned home was $17,000.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average monthly rent in New York City was $73 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "18 percent of New York City families and 26 percent of Boston families owned their homes in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "18 percent of New York City families owned their own home in 1950."
+ },
+ {
+  "claim": "New York City households allocated 73.9 percent of their budget to food, clothing, and housing in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Food was 33.4 percent and housing was 28.3 percent of New York City expenditures in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in New York City was $5,105 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Active distributors on the lowest tier of Tupperware earned an average gross income of $653 over the year 2017.",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Indonesia Tupperware sales in 2013 were more than $200 million.",
+  "source": "https://en.wikipedia.org/wiki/Tupperware",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Premium dishwashers can cost as expensive as $1,500+.",
+  "source": "https://en.wikipedia.org/wiki/Dishwasher",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1991, dishwasher manufacturing market share was split between GE with 40%, Whirlpool with 31%, Electrolux with 20%, Maytag with 7%, and Thermador with 2%.",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Appliance industry revenues doubled between 1982 and 1990 to $3.3 billion.",
+  "source": "https://en.wikipedia.org/wiki/Home_appliance",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing was the largest category of expense in 1960-61, at 29.5 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Food was in second place at 24.3 percent and clothing at 10.4 percent in 1960-61.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In Boston by 1960, the market value of a median owned home was $13,500.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Average monthly rent in Boston was $78 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ }
+]

@@ -1,0 +1,43 @@
+{
+ "slug": "1950s-kitchen",
+ "name": "Inside the 1950s Kitchen: The Machines That Promised Freedom",
+ "title": "Inside the 1950s Kitchen: The Machines That Promised Freedom",
+ "thumbnail_words": "$400 TO MOVE IN",
+ "thumbnail_subject": "A gleaming 1950s kitchen with white appliances and a suburban family",
+ "words": 1853,
+ "minutes_at_150wpm": 12.4,
+ "sources": [
+  {
+   "title": "Kitchen",
+   "url": "https://en.wikipedia.org/wiki/Kitchen"
+  },
+  {
+   "title": "Home appliance",
+   "url": "https://en.wikipedia.org/wiki/Home_appliance"
+  },
+  {
+   "title": "Frigidaire",
+   "url": "https://en.wikipedia.org/wiki/Frigidaire"
+  },
+  {
+   "title": "Dishwasher",
+   "url": "https://en.wikipedia.org/wiki/Dishwasher"
+  },
+  {
+   "title": "Tupperware",
+   "url": "https://en.wikipedia.org/wiki/Tupperware"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 97,
+  "supported": 74
+ }
+}
