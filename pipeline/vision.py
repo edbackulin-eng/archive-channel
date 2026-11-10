@@ -137,7 +137,7 @@ def _check(pairs):
                    "systemInstruction": {"parts": [{"text": SYSTEM}]},
                    "generationConfig": {"temperature": 0.0, "responseMimeType": "application/json",
                                         "maxOutputTokens": 4096}}
-        res = None
+        res, last_5xx = None, False
         for attempt in range(5):
             wait = MIN_GAP_S - (time.monotonic() - _last[0])
             if wait > 0:
@@ -158,10 +158,17 @@ def _check(pairs):
                                 "08:00 UTC", QUOTA_MARK, MODEL)
                     _keep(pairs[:k], out)
                     raise QuotaSpent(f"{QUOTA_MARK}: the day's Gemini vision requests are spent")
-                time.sleep(6 * (attempt + 1))
+                last_5xx = e.code >= 500
+                # 11.11: an overloaded model (503) gets minutes; a few seconds left frames unchecked,
+                # and unchecked frames count as not matching - a topic could be deferred on a 503 storm
+                time.sleep((30 if last_5xx else 6) * (attempt + 1))
             except Exception as e:                                   # noqa: BLE001
                 log.info("vision retry (%s)", e)
                 time.sleep(6 * (attempt + 1))
+        if res is None and last_5xx:
+            _keep(pairs[:k], out)
+            raise RuntimeError("VISION_UNAVAILABLE: Gemini answered 5xx for every try; the stage stops (the "
+                               "answers so far are kept) and is run again, rather than frames left unchecked")
         for i in range(len(part)):
             r = (res or {}).get(i)
             if r is None:

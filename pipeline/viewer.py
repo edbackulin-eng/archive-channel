@@ -138,8 +138,11 @@ def check(video, timeline, work):
             if isinstance(m, dict):
                 marks.append({"t": m.get("t"), "kind": m.get("kind"), "why": str(m.get("why", ""))[:120],
                               "minute": t0 // 60})
-    # a minute nobody looked at is not passed: the gate stays shut until every sheet was seen
-    ok = unanswered == 0 and len(marks) <= VIEWER_MAX
+    # a minute nobody looked at is not passed - and not failed either: Gemini overloaded is no verdict
+    # on the film, so the stage stops and runs again (11.11) instead of a QA failure pausing builds
+    if unanswered:
+        raise RuntimeError(f"VIEWER_UNAVAILABLE: {unanswered} of {sheets} sheets got no answer; run again")
+    ok = len(marks) <= VIEWER_MAX
     detail = (f"{len(marks)} places a viewer would switch off (max {VIEWER_MAX})"
               + (f", {unanswered} of {sheets} sheets unanswered" if unanswered else "") + ": "
               + (str([(m["t"], m["kind"], m["why"][:50]) for m in marks[:8]]) if marks else "none"))

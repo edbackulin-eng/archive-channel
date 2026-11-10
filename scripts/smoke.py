@@ -435,7 +435,11 @@ def main():
         viewer._ask = lambda prompt, images: {"marks": []}
         v_ok = viewer.check(_vid, _tlv, W / "v2")
         viewer._ask = lambda prompt, images: None
-        v_none = viewer.check(_vid, _tlv, W / "v3")
+        try:
+            viewer.check(_vid, _tlv, W / "v3")
+            v_none = {"pass": True}
+        except RuntimeError as e:
+            v_none = {"pass": False, "stopped": "VIEWER_UNAVAILABLE" in str(e)}
         viewer._ask = lambda prompt, images: {"best": 1, "why": "x"}
         _th = []
         for i in range(3):
@@ -444,9 +448,9 @@ def main():
         j = viewer.judge(_th, "THE $7,990 DREAM", "a new house")
     finally:
         viewer._ask = saved_ask
-    check("viewer gate: more than 3 marks stops the upload, none passes, an unanswered minute is no pass; "
+    check("viewer gate: more than 3 marks stops the upload, none passes, an unanswered minute stops the stage; "
           "the judge picks the thumbnail",
-          not v_bad["pass"] and v_bad["sheets"] == 3 and v_ok["pass"] and not v_none["pass"] and j == 1
+          not v_bad["pass"] and v_bad["sheets"] == 3 and v_ok["pass"] and v_none.get("stopped") and j == 1
           and "line 3" in seen_v[0], f"{v_bad['detail'][:60]} | {v_ok['detail'][:40]} | judge {j}")
     nt = subprocess.run([sys.executable, str(ROOT / "automation" / "next_topic.py")], capture_output=True, text=True)
     q = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
