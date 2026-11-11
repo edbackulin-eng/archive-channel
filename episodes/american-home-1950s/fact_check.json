@@ -1,0 +1,362 @@
+[
+ {
+  "claim": "The U.S. population surpassed 150 million by 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average U.S. family income in 1950 was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt & Sons reached a production rate of 30 houses a day by July 1948.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt ranch homes offered in 1949 had a planned price of $7,990.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The up-front cost of a Levitt house with G.I. Bill and federal housing subsidies was around $400.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The retail price of a pound of butter in 1950 was 73 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The retail price of a pound of round steak in 1950 was 94 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average hourly wages in manufacturing rose to $1.59 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Female labor force participation reached 34 percent in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the U.S. population had surpassed 179 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in the U.S. in 1960 was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures in 1960 were $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing became the largest category of expense in 1960-61 at 29.5 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 75 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levittown, Pennsylvania construction began in February 1952.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "William and Daisy Myers bought a home in the Dogwood Hollow section of Levittown, Pennsylvania in 1957.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The postwar economy boomed, with unemployment slipping to a mere four percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "By 1950, the country was in the midst of the post-World War II business cycle (1948-1953), which brought nearly full employment, with unemployment averaging a mere 4 percent during this 5-year period."
+ },
+ {
+  "claim": "The nation’s population had crossed 150 million, swelling as veterans returned home.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "The population had surpassed 150 million, a gain of 10.4 percent since 1940."
+ },
+ {
+  "claim": "A baby boom followed, as couples hurried to start families.",
+  "source": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Women were stepping into factories, now making up nearly twenty percent of the workforce.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Women were stepping into factories, now making up 28.8 percent of the U.S. workforce."
+ },
+ {
+  "claim": "Families averaged three members, and the average hourly wage had climbed to one dollar and fifty‑nine cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "Families averaged three members."
+ },
+ {
+  "claim": "Levitt & Sons had built four Levittowns across the country, starting with Long Island.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "William Levitt, born in 1907 to a Jewish family in Brooklyn, led the company as president and architect.",
+  "source": "https://en.wikipedia.org/wiki/William_Levitt",
+  "verdict": "partly",
+  "fix": "William Levitt, born in 1907 to a Jewish family in Brooklyn, led the company as president."
+ },
+ {
+  "claim": "The builder’s low down payment of $400 made homeownership accessible for many veterans.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family consisted of three members, with a husband and wife in the majority of households.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "About nineteen percent of wives were employed, while forty‑two percent of household heads worked as craftsmen or machine operators.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Roughly fifty‑one percent of the nation’s housing units were owned by their occupants.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The country housed forty‑six million homes, and the population had grown to over one‑hundred‑fifty million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Unemployment hovered around four percent, a testament to the era’s full employment.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The labor market saw women’s participation rise to nearly forty percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Families averaged three members, and about sixty‑percent had children under eighteen.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Roughly seventeen percent of households consisted of a single person, while eight percent housed six or more people.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The typical head of a household was forty‑eight years old and had completed the eleventh grade.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "About thirty‑six percent of household heads worked as craftsmen or machine operators.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "In 38.7 percent of households, the head of the family was employed as a craftsman or a machine operator."
+ },
+ {
+  "claim": "The community was built on land purchased in 1951, and construction began in February 1952.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt & Sons offered only six house models, all single‑family dwellings with modest exterior variations.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "William Levitt, the developer, was born in 1907 to a Jewish family in Brooklyn and later became the company’s president.",
+  "source": "https://en.wikipedia.org/wiki/William_Levitt",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1998, he was honored as one of Time Magazine's \"100 Most Influential People of the 20th Century.\"",
+  "source": "https://en.wikipedia.org/wiki/William_Levitt",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Veterans could obtain low‑interest mortgages under the G.I. Bill.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The G.I. Bill provided low-cost mortgages.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The G.I. Bill provided low-interest loans to start a business or farm.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The G.I. Bill provided tuition and living expenses for education.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The G.I. Bill provided one year of unemployment compensation.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The G.I. Bill was passed in 1944.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A sign reading 'No Negroes Allowed' was present in Levittown homes.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "partly",
+  "fix": "A restrictive covenant in the standard lease agreement stated that Levittown homes could not be used or occupied by anyone other than members of the Caucasian race."
+ },
+ {
+  "claim": "The average family size was three in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Women were employed in 19.8% of families in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average hourly wage was $1.59 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family income in 1950 was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Unemployment was 4% in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The baby boom started after WWII.",
+  "source": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The baby boom coincided with a marriage boom.",
+  "source": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The baby boom was driven by a decrease in childlessness.",
+  "source": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt & Sons built four Levittowns.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt & Sons built Levittown, New York in 1947.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_New_York",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Levitt & Sons built Levittown, Pennsylvania in 1952.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Construction of Levittown, Pennsylvania began in February 1952.",
+  "source": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing accounted for nearly thirty percent of family spending in 1960-61.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A protest occurred when the first Black family moved into Dogwood Hollow in 1957.",
+  "source": "https://en.wikipedia.org/wiki/G.I._Bill",
+  "verdict": "partly",
+  "fix": "The move of Levittown's first Black family into Dogwood Hollow in 1957 was marked with racist harassment and mob violence rather than a simple protest."
+ }
+]

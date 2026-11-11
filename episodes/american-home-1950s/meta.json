@@ -1,0 +1,51 @@
+{
+ "slug": "american-home-1950s",
+ "name": "American Home 1950s in Color",
+ "title": "Suburban Dreams: The 1950s Home in Color",
+ "thumbnail_words": "$400 TO MOVE IN",
+ "thumbnail_subject": "a house with a $400 price tag",
+ "words": 1746,
+ "minutes_at_150wpm": 11.6,
+ "sources": [
+  {
+   "title": "History of the United States (1945–1964)",
+   "url": "https://en.wikipedia.org/wiki/History_of_the_United_States_(1945%E2%80%931964)"
+  },
+  {
+   "title": "Levittown, New York",
+   "url": "https://en.wikipedia.org/wiki/Levittown,_New_York"
+  },
+  {
+   "title": "Levittown, Pennsylvania",
+   "url": "https://en.wikipedia.org/wiki/Levittown,_Pennsylvania"
+  },
+  {
+   "title": "William Levitt",
+   "url": "https://en.wikipedia.org/wiki/William_Levitt"
+  },
+  {
+   "title": "Suburbanization",
+   "url": "https://en.wikipedia.org/wiki/Suburbanization"
+  },
+  {
+   "title": "G.I. Bill",
+   "url": "https://en.wikipedia.org/wiki/G.I._Bill"
+  },
+  {
+   "title": "Mid-20th-century baby boom",
+   "url": "https://en.wikipedia.org/wiki/Mid-20th-century_baby_boom"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 60,
+  "supported": 48
+ }
+}
