@@ -1,8 +1,0 @@
-{
- "until": "2026-11-11T08:05:00Z",
- "slugs": [
-  "american-home-1950s"
- ],
- "since": "2026-11-10T17:47:10Z",
- "why": "10.11: Groq gpt-oss-20b spent its 200 000 tokens a day and Gemini answered 503 for hours"
-}
