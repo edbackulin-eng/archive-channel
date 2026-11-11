@@ -1,0 +1,117 @@
+## Hook
+> In the glare of a 1950s suburban street, a family walks past an appliance store, their hands full of groceries, their wallets heavy with the promise of an era.
+[price 0.25 1938 | Minimum wage]
+< The minimum wage was 25 cents an hour.
+> How did the price of everyday goods shape the lives of families during that decade?
+> We’ll trace the numbers that mattered: the wage of a minimum‑wage worker, the cost of a grocery cart, the price of a home.
+> And that's not all.
+
+## The Post‑War Boom | America | 1946‑1948
+< A quiet street in a small town, a family walking to the local shop, the sun casting long shadows.
+> The country had just emerged from war, factories humming, soldiers returning home.
+> Full employment meant most men had jobs and women were beginning to join the workforce.
+> The unemployment rate hovered around 4 percent, a sign of the post‑war boom.
+[price 0.25 1938 | Minimum wage]
+< That is [today 0.25 1938] in today's money.
+> A 25‑cent wage meant a worker could earn a few dollars a day, enough for a modest meal and a small toy.
+> Families stretched their pennies, buying a loaf of bread and a can of soup for the whole family.
+> The economy was fueled by high productivity and a surge in consumer demand.
+> The newsboy shouted headlines, the radio crackled with the latest hits.
+> The air smelled of fresh bread and fried dough, the scent drifting from the corner bakery.
+> The clerk counted coins with a practiced rhythm, his ledger a quiet testament to the era's commerce.
+> The street was lined with storefronts, each window display a promise of modern convenience.
+> The family paused at a display of canned peaches, the bright red label catching the light.
+> The hum of the refrigerator in the shop was a constant companion to the day's bustle.
+> The post‑war boom brought new factories, new jobs, and a sense of optimism in every corner.
+
+## Grocery Shopping in the 1950s | Suburban America | 1950‑1955
+< A bustling corner shop, shelves lined with canned tomatoes, jars of pickles, and a row of fresh bread.
+> The shopkeeper greets a young mother with a friendly nod, the bell above the door chiming.
+> The family’s basket is filled with essentials: milk, eggs, a loaf of bread, and a box of cereal.
+> In 1950, a week's work covered most household costs.
+> With that income, a family could afford a modest home, a car, and the occasional holiday.
+> The grocery aisle was a place of choice, with fresh produce, canned goods, and new household appliances.
+> The average family size had decreased to three, and 19.8 percent of families had a wife employed.
+> The wage of a minimum‑wage worker remained at 25 cents, a price that shaped the budget of many.
+> The market was full of new products, reflecting the consumerism of the era.
+> The clerk's ledger showed the day's sales, a quiet record of the community's consumption.
+> The family paused to weigh the price of a loaf of bread, the coins clinking in their hands.
+> The mother checked the list, ensuring each item fit within the budget.
+> The father nodded, the rhythm of the shop a steady backdrop to their routine.
+> The shop's fluorescent lights flickered softly, a gentle reminder of the era's technological progress.
+> The family left with a bag of groceries, the scent of fresh bread lingering in the air.
+
+## The Rise of the Supermarket | City America | 1955‑1960
+< A large, brightly lit supermarket opens its doors, the first of its kind in the city.
+> Shoppers in bright shirts and hats line the aisles, their carts full of fresh produce, canned goods, and new household appliances.
+> The supermarket’s layout is designed for self‑service, a novelty that saves time and money.
+> In 1960, average family expenditures were $5,390, showing how families spent on food, clothing, and household items.
+[price 5390 1960 | Average family expenditures]
+< That is [today 5390 1960] in today's money.
+> The self‑service model meant families could shop more efficiently, picking items directly from shelves.
+> The average family size had grown to 3.1, and 60.6 percent of families had children under 18.
+> The supermarket also carried non‑food items, from kitchenware to pet supplies, reflecting the expanding consumer market.
+> The aisles were wide, the displays arranged in neat rows, the fluorescent lights casting a steady glow.
+> The clerk behind the counter scanned items with a mechanical click, the sound echoing through the space.
+> The family paused at the dairy section, the smell of fresh milk and butter filling the air.
+> The mother noted the price tags, the numbers a quiet reminder of the era's economics.
+> The father compared the cost of a loaf of bread to the price of a new appliance, a subtle calculation of value.
+> The children ran between the aisles, their laughter a soundtrack to the bustling environment.
+> The supermarket's parking lot filled with cars, a sign of the era's growing automobile culture.
+> The family left with a basket full of goods, the sense of abundance palpable.
+
+## Minimum Wage and Working Hours | Urban America | 1960‑1962
+< A factory worker in a steel plant, his hands calloused from the job, takes a short break to eat a sandwich.
+> The minimum wage in 1968 would rise to $1.60 an hour, but in the early 1960s it remained at 25 cents.
+[price 0.25 1938 | Minimum wage]
+< That is [today 0.25 1938] in today's money.
+> A worker earning 25 cents would need to work 40 hours a week to earn $10, enough for a modest dinner and a small toy for a child.
+> By 1968, the wage would double, allowing more hours of leisure and the ability to save for a family car.
+[price 1.60 1968 | Minimum wage]
+< That is [today 1.60 1968] in today's money.
+> The higher wage meant families could afford a new refrigerator, a television set, and a more comfortable home.
+> The average family size had increased slightly, and 37.7 percent of women were in the workforce.
+> The unemployment rate had risen to 5.5 percent in 1960, a mild recession that still allowed many to work.
+> The factory's machines clanged, the rhythm of production a steady backdrop to the workers' day.
+> The worker's lunch break was brief, the sandwich a quick respite from the clang of metal.
+> The factory's windows reflected the sun, the light casting patterns on the floor.
+> The workers' faces were focused, the sense of duty palpable in the air.
+> The factory's safety signs reminded of the era's growing emphasis on worker protection.
+> The worker's watch ticked, a silent companion to the hours of labor.
+> The day ended with the clatter of the plant closing, the workers heading home with tired but satisfied smiles.
+
+## The Price of a Home | America | 1946‑1962
+< A family stands in front of a modest house, the windows gleaming in the afternoon sun.
+> In 1950, many families were able to consider home ownership.
+> The average family size had grown, and 51.3 percent of housing units were owner‑occupied.
+> The house's porch was a small garden, the lawn trimmed neatly, a symbol of the era's suburban ideal.
+> The family walked along the front steps, the sound of their shoes echoing on the pavement.
+> The front door opened to a bright living room, the wallpaper a soft pastel.
+> The kitchen was simple, a place where meals were prepared with care and love.
+> The family sat at the table, the tablecloth a gentle reminder of domestic life.
+> The neighbor's dog barked in the distance, a familiar sound in the neighborhood.
+> The family's future seemed bright, the home a promise of stability.
+> The house's roof shone in the sun, a testament to the era's construction boom.
+> The family felt a sense of pride, the home a tangible reward for their hard work.
+
+## Changing Landscape of Shopping | America | 1946‑1962
+< A family walks into a large supermarket, the aisles filled with new products: frozen dinners, canned soups, and the first plastic containers.
+> The supermarket’s self‑service model saved time and money, allowing families to shop more efficiently.
+> The average family expenditures in 1960 were $5,390, showing how families spent on food, clothing, and household items.
+[price 5390 1960 | Average family expenditures]
+< That is [today 5390 1960] in today's money.
+> The average family size had increased slightly to 3.1, and 60.6 percent of families had children under 18.
+> The supermarket also carried non‑food items, from kitchenware to pet supplies, reflecting the expanding consumer market.
+> The aisles were wide, the displays neat, the fluorescent lights steady.
+> The family paused at the cereal aisle, the bright boxes a visual feast.
+> The mother checked the price tags, the numbers a quiet reminder of the era's economics.
+> The father compared the cost of a loaf of bread to the price of a new appliance, a subtle calculation of value.
+> The children ran between the aisles, their laughter a soundtrack to the bustling environment.
+> The supermarket's parking lot filled with cars, a sign of the era's growing automobile culture.
+> The family left with a basket full of goods, the sense of abundance palpable.
+
+## Closing Reflection | America | 1946‑1962
+< The footage fades to a family gathered around a kitchen table, the glow of a television in the background.
+> The prices of the 1950s shaped the rhythm of everyday life, from the wages earned to the groceries bought to the homes owned.
+> The numbers tell a story of growth, opportunity, and the simple act of buying a loaf of bread.
+> Thank you for joining us on this journey through the prices that defined an era.
