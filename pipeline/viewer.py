@@ -72,6 +72,7 @@ def _b64(p, side=1280):
 
 def _ask(prompt, images):
     """Gemini's JSON answer for a prompt and images; None if no model could answer."""
+    vision.require_key("viewer")
     parts = [{"text": prompt}] + [{"inline_data": {"mime_type": "image/jpeg", "data": _b64(p)}} for p in images]
     payload = {"contents": [{"role": "user", "parts": parts}],
                "generationConfig": {"temperature": 0.0, "responseMimeType": "application/json",
@@ -92,6 +93,11 @@ def _ask(prompt, images):
                 if e.code == 429 and "PerDay" in body:
                     spent += 1
                     break                                   # this model's day: the next model
+                if e.code in (400, 401, 403, 404):
+                    raise vision.refused(e.code, body, "viewer")
+                # 12.11: the code is written down - it was not, and 54 refusals read as an outage
+                log.info("viewer: %s HTTP %s (attempt %d): %s", model, e.code, attempt + 1,
+                         body[:160].replace(chr(10), " "))
                 time.sleep(20 * (attempt + 1))
             except Exception as e:                          # noqa: BLE001
                 log.info("viewer: %s (%s)", model, e)

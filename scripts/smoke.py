@@ -59,6 +59,18 @@ def main():
                 check(f"import {pkg}.{m.name}", False, repr(e)[:200])
     check("imports", not failures)
 
+    # 12.11: the render job asked Gemini (viewer gate, thumbnail frames) without its key; every request
+    # was a 403, read as "no answer", and three failed attempts paused the channel. Every job of
+    # episode.yml that runs a stage asking Gemini has to carry the key.
+    import re as _re
+    flow = (ROOT / ".github" / "workflows" / "episode.yml").read_text(encoding="utf-8")
+    jobs = _re.split(r"(?m)^  (?=[a-z][a-z_-]*:\s*$)", flow.split("\njobs:\n", 1)[1])
+    gemini_stages = ("script", "narrate", "plan", "render")
+    missing = [j.split(":", 1)[0] for j in jobs
+               if any(f'build.py "$SLUG" {s}' in j for s in gemini_stages) and "GEMINI_API_KEY_AR:" not in j]
+    check("episode.yml: every job that asks Gemini has GEMINI_API_KEY_AR", not missing,
+          f"missing in: {missing}" if missing else "")
+
     from core import delivery, narrate
     from core.voice import SAMPLE_RATE
     from pipeline import archive, breathing, cards, clips, edit, qa, thumbnail

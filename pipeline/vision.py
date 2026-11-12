@@ -96,6 +96,27 @@ def key():
     return os.environ.get("GEMINI_API_KEY_AR", "").strip()
 
 
+class NotConfigured(RuntimeError):
+    """Gemini cannot be asked at all from here: no key, or a key it refuses. Not a verdict and not an
+    outage - a fault in the job's setup, which no amount of waiting fixes."""
+
+
+def require_key(who):
+    """Raise NotConfigured when this job has no vision key. 12.11: the render job had none, every
+    request came back 403, and the viewer read that as 'no answer' for 40 minutes, twice."""
+    if not key():
+        raise NotConfigured(f"VISION_NOT_CONFIGURED: GEMINI_API_KEY_AR is empty in this job ({who}); "
+                            "add it to the job's env in .github/workflows/episode.yml")
+
+
+def refused(code, body, who):
+    """NotConfigured for an answer that says the request itself is wrong (400/401/403/404):
+    retrying the same request cannot help, and it must not pass as 'no answer'."""
+    msg = body[:200].replace(chr(10), " ")
+    log.warning("%s: Gemini refused the request: HTTP %s %s", who, code, msg)
+    return NotConfigured(f"VISION_NOT_CONFIGURED: Gemini refused {who}'s request with HTTP {code}: {msg}")
+
+
 def _img(path, side=640):
     im = Image.open(path).convert("RGB")
     s = min(1.0, side / max(im.size))
@@ -126,6 +147,7 @@ def check(pairs):
 
 
 def _check(pairs):
+    require_key("frame check")
     out = []
     for k in range(0, len(pairs), BATCH):
         part = pairs[k:k + BATCH]
@@ -153,11 +175,16 @@ def _check(pairs):
                 res = {int(x["i"]): x for x in llm.extract_json(text).get("results", [])}
                 break
             except urllib.error.HTTPError as e:
-                if e.code == 429 and "PerDay" in e.read().decode("utf-8", "replace"):
+                body = e.read().decode("utf-8", "replace")
+                if e.code == 429 and "PerDay" in body:
                     log.warning("%s: Gemini's day for %s is spent; the stage stops and is rerun after "
                                 "08:00 UTC", QUOTA_MARK, MODEL)
                     _keep(pairs[:k], out)
                     raise QuotaSpent(f"{QUOTA_MARK}: the day's Gemini vision requests are spent")
+                if e.code in (400, 401, 403, 404):
+                    _keep(pairs[:k], out)
+                    raise refused(e.code, body, "frame check")
+                log.info("vision: HTTP %s (attempt %d): %s", e.code, attempt + 1, body[:160].replace(chr(10), " "))
                 last_5xx = e.code >= 500
                 # 11.11: an overloaded model (503) gets minutes; a few seconds left frames unchecked,
                 # and unchecked frames count as not matching - a topic could be deferred on a 503 storm
