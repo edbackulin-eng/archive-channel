@@ -171,6 +171,11 @@ def _gemini(prompt, system, max_tokens, temperature, as_json, model=None):
         payload["generationConfig"]["responseMimeType"] = "application/json"
     d = _post(GEMINI_URL.format(model=model or CFG["gemini_fallback"]), payload, {"x-goog-api-key": gemini_key()})
     cand = (d.get("candidates") or [{}])[0]
+    finish = cand.get("finishReason")
+    if finish and finish != "STOP":
+        # an answer the model did not finish (MAX_TOKENS, SAFETY, RECITATION...) is not an answer:
+        # cut JSON parsed as half a fact check is worse than asking again
+        raise LLMError(f"gemini stopped with {finish}")
     return "".join(p.get("text", "") for p in cand.get("content", {}).get("parts", []))
 
 
@@ -240,5 +245,22 @@ def complete(prompt, system="", max_tokens=4000, temperature=0.6, as_json=False,
     raise LLMError("no provider answered: " + "; ".join(errors[-6:]) if errors else "no provider configured")
 
 
-def complete_json(prompt, system="", max_tokens=4000, temperature=0.4):
-    return extract_json(complete(prompt, system, max_tokens, temperature, as_json=True))
+JSON_ATTEMPTS = 3
+
+
+def complete_json(prompt, system="", max_tokens=4000, temperature=0.4, attempts=JSON_ATTEMPTS):
+    """complete() parsed as JSON - asked again when the answer does not parse.
+
+    11.11: american-home-1950s' fact check came back from Gemini as JSON broken at its 370th character
+    ("Expecting ':' delimiter") and the whole script stage died on that one answer. One malformed
+    answer is a bad draw, not a verdict on the script; the same question is asked again, and only an
+    answer that never parses stops the stage - as an LLMError the callers know, not a JSONDecodeError."""
+    last = None
+    for attempt in range(1, attempts + 1):
+        text = complete(prompt, system, max_tokens, temperature, as_json=True)
+        try:
+            return extract_json(text)
+        except (json.JSONDecodeError, LLMError) as e:
+            last = e
+            log.info("answer %d/%d is not valid JSON (%s); asking again", attempt, attempts, str(e)[:120])
+    raise LLMError(f"no valid JSON in {attempts} answers: {last}")

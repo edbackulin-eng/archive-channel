@@ -153,6 +153,9 @@ jobs:
       SLUG: ${{ needs.pick.outputs.slug }}
       YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
       GH_TOKEN: ${{ github.token }}
+      # 12.11: the viewer gate and the thumbnail's frame check run in this job and ask Gemini; without
+      # the key every request was a 403 that read as "no answer" - 9 of 9 sheets, twice, and a pause
+      GEMINI_API_KEY_AR: ${{ secrets.GEMINI_API_KEY_AR }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
