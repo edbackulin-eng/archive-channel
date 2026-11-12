@@ -1,0 +1,51 @@
+{
+ "slug": "1950s-cars-roads",
+ "name": "1950s Cars, Roads & Drive-Ins in Color",
+ "title": "1950s Cars, Roads & Drive-Ins in Color",
+ "thumbnail_words": "$1,741 CHEVROLET BEL AIR",
+ "thumbnail_subject": "A classic 1950s Chevrolet Bel Air parked outside a glowing neon drive-in theater.",
+ "words": 1560,
+ "minutes_at_150wpm": 10.4,
+ "sources": [
+  {
+   "title": "Automotive industry in the United States",
+   "url": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States"
+  },
+  {
+   "title": "Chevrolet Bel Air",
+   "url": "https://en.wikipedia.org/wiki/Chevrolet_Bel_Air"
+  },
+  {
+   "title": "Ford Thunderbird",
+   "url": "https://en.wikipedia.org/wiki/Ford_Thunderbird"
+  },
+  {
+   "title": "Big Three (automobile manufacturers)",
+   "url": "https://en.wikipedia.org/wiki/Big_Three_(automobile_manufacturers)"
+  },
+  {
+   "title": "Diner",
+   "url": "https://en.wikipedia.org/wiki/Diner"
+  },
+  {
+   "title": "Drive-in",
+   "url": "https://en.wikipedia.org/wiki/Drive-in"
+  },
+  {
+   "title": "Drive-in theater",
+   "url": "https://en.wikipedia.org/wiki/Drive-in_theater"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 6,
+  "supported": 6
+ }
+}

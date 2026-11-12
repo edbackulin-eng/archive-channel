@@ -1,0 +1,38 @@
+[
+ {
+  "claim": "The Chevrolet Bel Air cost $1,741 in 1950.",
+  "source": "https://en.wikipedia.org/wiki/Chevrolet_Bel_Air",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Pork chops cost 75 cents per pound in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family income was $4,237 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family income rose to $6,691 by 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]
