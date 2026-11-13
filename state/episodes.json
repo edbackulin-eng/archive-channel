@@ -6,5 +6,15 @@
    "repeats",
    "thumbnail"
   ]
+ },
+ {
+  "slug": "american-home-1950s",
+  "state": "qa-failed",
+  "qa_failed": [
+   "hook",
+   "prices",
+   "thumbnail",
+   "viewer"
+  ]
  }
 ]

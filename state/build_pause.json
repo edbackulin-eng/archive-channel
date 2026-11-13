@@ -1,0 +1,7 @@
+{
+ "why": "american-home-1950s failed QA: hook, prices, thumbnail, viewer",
+ "slug": "american-home-1950s",
+ "fingerprint": "0282b58b40730733",
+ "since": "2026-11-13T10:12:06Z",
+ "lifted_by": "a change to pipeline, automation, config, topics, .github/workflows/episode.yml"
+}
