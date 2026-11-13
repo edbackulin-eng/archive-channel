@@ -1,11 +1,12 @@
 [
  {
   "slug": "1950s-suburb",
-  "state": "qa-failed",
+  "state": "rebuilding",
   "qa_failed": [
    "repeats",
    "thumbnail"
-  ]
+  ],
+  "qa_rebuilds": 1
  },
  {
   "slug": "american-home-1950s",
