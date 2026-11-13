@@ -211,6 +211,10 @@ def main():
                 busy = True
         elif held:
             pass                                     # a paused build is not rerun either
+        elif "QA gate" in failed_step(last["id"]):
+            # 13.11: the run ended on the QA verdict - a rerun keeps the old commit's code and gives
+            # the same verdict; qa_rebuild below builds the topic again by a new run of today's code
+            pass
         elif last.get("run_attempt", 1) < MAX_ATTEMPTS:
             try:
                 gh("run", "rerun", str(last["id"]), "-R", REPO, "--failed", parse=False)
