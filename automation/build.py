@@ -226,13 +226,20 @@ def stage_render(slug):
         cands += [s for s, v in zip(pool, verdicts) if v.get("ok")]
         if len(cands) >= 3:
             break
+    matched = {id(s) for s in cands}
+    if not cands:
+        # owner 12.11: missing material never stops a film - no checked frame shows the subject, so
+        # the thumbnail is made of the best checked frames (ranked by the subject, then vividness);
+        # "matches_words" stays false in the report as a score
+        cands = list(uniq[:3])
+        log.info("thumbnail: no frame shows '%s'; the %d best checked frames are used", subject, len(cands))
     cands = cands[:3]
     year = f"{meta.get('decade') or str(min(s.get('year') or 1950 for s in cands) // 10 * 10) + 's'}" if cands else "1950s"
     reports = []
     for k, s in enumerate(cands):
         base = thumbnail.hd_frame(s["best"], s["src_start"] + 1.0, b / f"thumb_base_{k}.png")
         r = thumbnail.compose_best(thumbnail.Image.open(base), year, words, out / f"thumb_{k}.jpg")
-        r.update({"matches_words": True, "subject": subject, "film": s.get("film"), "t": s.get("src_start")})
+        r.update({"matches_words": id(s) in matched, "subject": subject, "film": s.get("film"), "t": s.get("src_start")})
         reports.append(r)
     good = [r for r in reports if r["corner_empty"] and r["readable_small"] and not r["text_over_face"]
             and r["sharp_ok"]]

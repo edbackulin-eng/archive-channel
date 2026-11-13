@@ -54,6 +54,19 @@ def silences(video, db=-50, min_s=3.0):
     return [round(float(x), 1) for x in re.findall(r"silence_start:\s*(-?[\d.]+)", r.stderr)]
 
 
+def frames(video, plan):
+    """Owner 12.11: black stretches of 0.5 s or more outside the chapter cards and the first second,
+    and frames the decoder cannot read."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(video), "-vf",
+                        "blackdetect=d=0.5:pix_th=0.10:pic_th=0.98", "-an", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    cards = [(s["start"] - 0.5, s["end"] + 0.5) for s in plan["shots"] if s["kind"] != "clip"]
+    black = [round(float(a), 1) for a, b in re.findall(r"black_start:\s*([\d.]+)\s+black_end:\s*([\d.]+)", r.stderr)
+             if float(a) > 1.0 and not any(c0 <= float(a) and float(b) <= c1 for c0, c1 in cards)]
+    broken = len(re.findall(r"(?i)error while decoding|corrupt|invalid data found", r.stderr))
+    return {"black_at": black[:10], "decode_errors": broken, "pass": not black and not broken, "blocking": True}
+
+
 def check(plan, timeline, video, thumb_report=None, full_episode=True):
     shots = [s for s in plan["shots"] if s["kind"] == "clip"]
     total = plan["shots"][-1]["end"]
@@ -124,6 +137,8 @@ def check(plan, timeline, video, thumb_report=None, full_episode=True):
     if thumb_report is not None:
         t = thumb_report
         res["thumbnail_text"] = {"pass": bool(t.get("readable_small") and not t.get("text_over_face")), "blocking": True}
+    if Path(str(video)).exists():
+        res["frames"] = frames(video, plan)
     for k in ("continuity", "length", "licences"):
         res[k]["blocking"] = True
     for k, v in res.items():

@@ -18,6 +18,7 @@ Sound (config/channel.json "sound", "breathing"):
   all        two-pass loudnorm to -14 LUFS, true peak -1 dBTP
 """
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -121,10 +122,47 @@ def _vol_expr(base_db, up_db, windows):
     return f"'if({inside},{lin_up:.5f},{lin_base:.5f})'"
 
 
+BLACK_S = 0.25            # this much black in a clip and it is replaced (owner 12.11: black frames block)
+
+
+def black_s(path, d=0.1):
+    """Seconds of (nearly) black picture in a clip (ffmpeg blackdetect)."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf",
+                        f"blackdetect=d={d}:pix_th=0.10:pic_th=0.98", "-an", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    return round(sum(float(x) for x in re.findall(r"black_duration:\s*([\d.]+)", r.stderr)), 2)
+
+
+def repair_black(shots):
+    """Owner 12.11: no black frame reaches the film and no shot is left empty - a clip with black in
+    it is replaced by a checked clip (the vision check passed) of the same chapter, the least reused
+    first, never the shot next to it. Returns [(shot index, donor index)]."""
+    clips = [k for k, s in enumerate(shots) if s["kind"] == "clip" and s.get("clip") and Path(s["clip"]).exists()]
+    bad = {k for k in clips if black_s(shots[k]["clip"]) >= BLACK_S}
+    if not bad:
+        return []
+    good = [k for k in clips if k not in bad and (shots[k].get("vision") or {}).get("ok")] or \
+        [k for k in clips if k not in bad]
+    used, fixed = {}, []
+    for k in sorted(bad):
+        s = shots[k]
+        pool = [g for g in good if abs(g - k) > 1]
+        same = [g for g in pool if shots[g].get("chapter") == s.get("chapter")]
+        pick = min(same or pool, key=lambda g: (used.get(g, 0), -abs(g - k)), default=None)
+        if pick is None:
+            continue
+        used[pick] = used.get(pick, 0) + 1
+        s.update({"clip": shots[pick]["clip"], "repaired_from": pick, "film": shots[pick].get("film"),
+                  "year": shots[pick].get("year"), "place": shots[pick].get("place")})
+        fixed.append((k, pick))
+    return fixed
+
+
 def render(plan, narration_wav, music_mp3, out, work):
     work = Path(work)
     work.mkdir(parents=True, exist_ok=True)
     shots = plan["shots"]
+    repaired = repair_black(shots)
     total = shots[-1]["end"]
     vids = [_shot_video(s, k, work) for k, s in enumerate(shots)]
     lst = work / "v.txt"
@@ -157,5 +195,5 @@ def render(plan, narration_wav, music_mp3, out, work):
     _ff(["-y", "-i", str(picture), "-i", str(mix), "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast",
          "-b:v", "12M", "-maxrate", "16M", "-bufsize", "24M", "-c:a", "aac", "-b:a", "192k", "-shortest",
          "-movflags", "+faststart", str(out)], timeout=3600)
-    return {"seconds": round(total, 2), "shots": len(shots), "film_breaks": len(win),
+    return {"seconds": round(total, 2), "shots": len(shots), "film_breaks": len(win), "black_replaced": repaired,
             "music_bed_gain_db": round(bed_gain, 1)}
