@@ -1,15 +1,14 @@
 {
  "date": "2026-11-13",
- "checked_at": "2026-11-13T14:01:16Z",
+ "checked_at": "2026-11-13T14:16:18Z",
  "ahead": [
   [
    "american-home-1950s",
-   "built",
-   null
+   "scheduled",
+   "2026-11-13T17:00:00Z"
   ]
  ],
  "actions": [
-  "Gemini's day is spent until 2026-11-14T08:05:00Z; 1950s-suburb wait",
-  "buffered episodes sent to upload"
+  "Gemini's day is spent until 2026-11-14T08:05:00Z; 1950s-suburb wait"
  ]
 }
