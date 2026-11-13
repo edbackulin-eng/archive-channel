@@ -6,6 +6,7 @@
 Картинки лежать у `assets/channel/options/`:
 - `avatar_1.png`, `avatar_2.png`, `avatar_3.png` (800×800)
 - `banner_1.jpg`, `banner_2.jpg`, `banner_3.jpg` (2560×1440, текст у безпечній зоні 1546×423)
+- `banner_city_1.jpg` (2560×1440, без тексту): Market Street у Філадельфії, 1955, кадр із фільму «Miracle on the Delaware» (archive.org/details/Miracleo1955, Public Domain), збільшений Real-ESRGAN x4
 
 **Де вставити:** Studio → Customization (Налаштування каналу) → Branding:
 - Picture: аватарка;
