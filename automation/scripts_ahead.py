@@ -31,6 +31,9 @@ def upcoming(n, skip=()):
         if t.get("status", "queued") != "queued" or not t.get("wikipedia") or t["slug"] in done \
                 or t["slug"] in skip:
             continue
+        from automation import material                 # owner 12.11: film first, then a script
+        if not material.usable(t, q):
+            continue
         out.append(t["slug"])
         if len(out) >= n:
             break

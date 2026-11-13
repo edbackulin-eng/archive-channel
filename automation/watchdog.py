@@ -71,7 +71,7 @@ def skip_topic(slug, why):
     for t in q["topics"]:
         if t["slug"] == slug:
             t.update({"status": "skipped", "skipped_why": why, "skipped_at": now().strftime("%Y-%m-%dT%H:%M:%SZ")})
-    QUEUE.write_text(json.dumps(q, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    QUEUE.write_text(json.dumps(q, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
     for r in rows:
         if r.get("slug") == slug and r.get("state") in ("qa-failed", "rebuilding"):
