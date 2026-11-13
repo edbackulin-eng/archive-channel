@@ -4,6 +4,13 @@ name: upload
 # Tue/Fri 12:00 America/New_York slot. Files come from each build's artifact.
 on:
   workflow_dispatch:
+    inputs:
+      run_id:
+        description: the build run whose release artifact to upload (empty = each episode's latest)
+        default: ""
+      publish_at:
+        description: "publish time, UTC (2026-11-13T17:00:00Z); empty = the nearest free slot"
+        default: ""
 permissions:
   contents: write
   actions: read
@@ -16,6 +23,7 @@ jobs:
     timeout-minutes: 120
     env:
       PYTHONUTF8: 1
+      PUBLISH_AT: ${{ inputs.publish_at }}
       YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -27,7 +35,9 @@ jobs:
       - name: Fetch the buffered episodes' files
         run: |
           for slug in $(python -c "import json;print(' '.join(r['slug'] for r in json.load(open('state/episodes.json')) if r.get('state')=='built' and not r.get('youtube_id')))"); do
-            gh run download -R ${{ github.repository }} -n "release-$slug" -D "$RUNNER_TEMP/r_$slug" && tar xf "$RUNNER_TEMP/r_$slug/out.tar"
+            gh run download ${{ inputs.run_id }} -R ${{ github.repository }} -n "release-$slug" -D "$RUNNER_TEMP/r_$slug" && tar xf "$RUNNER_TEMP/r_$slug/out.tar"
+            # a thumbnail made after the build (episodes/<slug>/thumbnail.jpg) when the build had none
+            [ -f "episodes/$slug/out/thumbnail.jpg" ] || cp "episodes/$slug/thumbnail.jpg" "episodes/$slug/out/" 2>/dev/null || true
           done
       - run: python automation/release.py upload
       - name: Save the state
