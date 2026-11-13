@@ -1,8 +1,9 @@
 {
  "date": "2026-11-13",
- "checked_at": "2026-11-13T10:30:40Z",
+ "checked_at": "2026-11-13T11:30:50Z",
  "ahead": [],
  "actions": [
+  "the code or the plan changed: builds resume",
   "reran episode run 43391741551"
  ]
 }
