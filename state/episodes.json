@@ -10,8 +10,11 @@
  },
  {
   "slug": "american-home-1950s",
-  "state": "built",
+  "state": "scheduled",
   "build_run": 43391741551,
-  "qa_note": "13.11 re-graded on the owner's two tiers, owner confirmed: every blocking check passes (match 1.0, sound -14.1 LUFS / -1.1 dBTP, no 3 s silence, length 16.5 min, continuity, licences; black 1.6 s at 8:46 not a fault per owner 13.11); thumbnail from the film's own 1956 kitchen frame"
+  "qa_note": "13.11 re-graded on the owner's two tiers, owner confirmed: every blocking check passes (match 1.0, sound -14.1 LUFS / -1.1 dBTP, no 3 s silence, length 16.5 min, continuity, licences; black 1.6 s at 8:46 not a fault per owner 13.11); thumbnail from the film's own 1956 kitchen frame",
+  "youtube_id": "12t0lIZqjCk",
+  "title": "Suburban Dreams: The 1950s Home in Color",
+  "publish_at": "2026-11-13T17:00:00Z"
  }
 ]
