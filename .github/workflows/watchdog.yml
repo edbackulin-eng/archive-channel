@@ -40,6 +40,7 @@ jobs:
             commit=$(grep -o "^commit=.*" "$GITHUB_OUTPUT" 2>/dev/null | tail -1 | cut -d= -f2)
             git add state/watchdog.json
             git add -A state/build_pause.json 2>/dev/null || true
+            git add -A state/episodes.json topics/queue.json 2>/dev/null || true
             git add -A state/quota_hold.json 2>/dev/null || true
             [ "$commit" = "true" ] && git add state/heartbeat.json
             if ! git diff --cached --quiet; then

@@ -249,9 +249,10 @@ def stage_render(slug):
         (out / "thumbnail.jpg").write_bytes((out / best["file"]).read_bytes())
     result = qa.check(plan, tl, out / "video.mp4", best)
     result["render"] = rep
-    # and the last look, a viewer's: more than viewer.VIEWER_MAX marks and it does not go up
-    result["viewer"] = viewer.check(out / "video.mp4", tl, b)
-    result["passed"] = bool(result["passed"] and result["viewer"]["pass"])
+    # and the last look, a viewer's - owner 12.11: a score, not a gate
+    result["viewer"] = {**viewer.check(out / "video.mp4", tl, b), "blocking": False}
+    scored = [v for v in result.values() if isinstance(v, dict) and "pass" in v and not v.get("blocking")]
+    result["score"] = round(sum(bool(v["pass"]) for v in scored) / max(1, len(scored)), 2)
     (out / "qa.json").write_text(json.dumps(result, indent=1, ensure_ascii=False), encoding="utf-8")
     (out / "metadata.json").write_text(json.dumps({
         "title": meta["title"], "tags": ["1950s", "vintage america", "archive footage", "american history",

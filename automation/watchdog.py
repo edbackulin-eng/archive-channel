@@ -10,9 +10,14 @@ Each pass:
   4. state/heartbeat.json is committed once a day, so the repository never goes
      60 days without a commit and GitHub never turns its schedules off.
 
-A build that cannot pass is not started again (owner 07.11): after a QA failure, or a run
-that failed all its attempts, builds pause (automation/pause.py, state/build_pause.json)
-until the code or the plan changes - no reruns, no next episode. The owner gets one letter.
+Owner 12.11 - no pause that waits for the owner:
+  - a run that failed all its attempts: the topic is built again by a new run (today's code); a
+    topic that fails twice is skipped (topics/queue.json "skipped") and the next one is built,
+    one letter;
+  - an episode whose QA found a real fault (only faults block: pipeline/qa.py) is built again once,
+    then skipped the same way;
+  - only when the same step fails for two different topics is the code taken to be broken: builds
+    pause (automation/pause.py) until the code changes, one letter.
 """
 import json
 import os
@@ -31,6 +36,96 @@ MEM = ROOT / "state" / "watchdog.json"
 BEAT = ROOT / "state" / "heartbeat.json"
 AHEAD = 2
 MAX_ATTEMPTS = 3
+TOPIC_FAILS = 2           # owner 12.11: failed builds of one topic before the next topic is built
+QA_REBUILDS = 1           # builds again after a QA fault before the topic is skipped
+QUEUE = ROOT / "topics" / "queue.json"
+
+
+def run_slug(run_id):
+    """The topic a run built: the SLUG its jobs show in their log."""
+    import re
+    r = subprocess.run(["gh", "run", "view", str(run_id), "-R", REPO, "--log"], capture_output=True, text=True)
+    m = re.search(r"\bSLUG: ([a-z0-9-]+)", r.stdout or "")
+    return m.group(1) if m else None
+
+
+def failed_step(run_id):
+    try:
+        jobs = gh("api", f"repos/{REPO}/actions/runs/{run_id}/jobs")["jobs"]
+    except Exception:                                                # noqa: BLE001
+        return "?"
+    for j in jobs:
+        if j.get("conclusion") == "failure":
+            st = next((s["name"] for s in j.get("steps", []) if s.get("conclusion") == "failure"), "?")
+            return f"{j['name']} / {st}"
+    return "?"
+
+
+def notify(subject, body):
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"), subject, body])
+
+
+def skip_topic(slug, why):
+    """The topic is left; the next queued one is built (next_topic.py takes only "queued")."""
+    q = json.loads(QUEUE.read_text(encoding="utf-8"))
+    for t in q["topics"]:
+        if t["slug"] == slug:
+            t.update({"status": "skipped", "skipped_why": why, "skipped_at": now().strftime("%Y-%m-%dT%H:%M:%SZ")})
+    QUEUE.write_text(json.dumps(q, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
+    for r in rows:
+        if r.get("slug") == slug and r.get("state") in ("qa-failed", "rebuilding"):
+            r["state"] = "skipped"
+    STATE.write_text(json.dumps(rows, indent=1, ensure_ascii=False), encoding="utf-8")
+    notify(f"{slug} skipped - the next topic is being built", why)
+
+
+def failed_build(last, mem, fp, actions):
+    """Owner 12.11: a run that failed all its attempts - the topic again, the next topic, or (the same
+    step failing for two topics) a pause until the code changes. True when a run was started."""
+    slug = run_slug(last["id"]) or (last.get("display_title") or "").removeprefix("episode").strip() or "?"
+    sig = failed_step(last["id"])
+    fails = mem.setdefault("topic_fails", [])
+    fails.append({"slug": slug, "sig": sig, "run": last["id"]})
+    mem["topic_fails"] = fails[-100:]
+    others = sorted({f["slug"] for f in fails if f["sig"] == sig and f["slug"] not in (slug, "?")})
+    url = f"https://github.com/{REPO}/actions/runs/{last['id']}"
+    if others:
+        pause.set_(f"the code is broken: '{sig}' failed for {slug} and {', '.join(others)}", slug, fp=fp)
+        notify(f"The code is broken: '{sig}' fails for two topics; builds pause until the code changes",
+               f"{url}\nTopics: {slug}, {', '.join(others)}. Any change to the code lifts the pause.")
+        actions.append(f"builds paused: '{sig}' failed for {slug} and {others}")
+        return False
+    n = sum(1 for f in fails if f["slug"] == slug)
+    if slug != "?" and n >= TOPIC_FAILS:
+        skip_topic(slug, f"its build failed {n} times ('{sig}'), last {url}")
+        actions.append(f"{slug} skipped after {n} failed builds; the next topic follows")
+        return False
+    if slug != "?":
+        gh("workflow", "run", "episode.yml", "-R", REPO, "-f", f"slug={slug}", parse=False)
+        actions.append(f"{slug}: its run failed all attempts ('{sig}'); built again by a new run")
+        return True
+    return False
+
+
+def qa_rebuild(rows, busy, actions):
+    """Owner 12.11: an episode whose QA found a real fault is built again once, then skipped."""
+    if busy:
+        return False
+    for r in rows:
+        if r.get("state") != "qa-failed":
+            continue
+        n = int(r.get("qa_rebuilds", 0))
+        if n >= QA_REBUILDS:
+            skip_topic(r["slug"], f"QA found a real fault in {n + 1} builds: {r.get('qa_failed')}")
+            actions.append(f"{r['slug']} skipped after {n + 1} QA faults; the next topic follows")
+            return False
+        r.update({"state": "rebuilding", "qa_rebuilds": n + 1})
+        STATE.write_text(json.dumps(rows, indent=1, ensure_ascii=False), encoding="utf-8")
+        gh("workflow", "run", "episode.yml", "-R", REPO, "-f", f"slug={r['slug']}", parse=False)
+        actions.append(f"{r['slug']}: QA fault {r.get('qa_failed')}; built again ({n + 1}/{QA_REBUILDS})")
+        return True
+    return False
 
 
 def now():
@@ -124,17 +219,15 @@ def main():
             actions.append(f"reran episode run {last['id']}")
             busy = True
         elif f"run-{last['id']}" not in mem["emailed"]:
-            held = pause.set_(f"episode run {last['id']} failed {last.get('run_attempt')} times", fp=fp)
-            subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"),
-                            f"Episode build {last['id']} failed {last.get('run_attempt')} times; builds paused",
-                            f"https://github.com/{REPO}/actions/runs/{last['id']}\n"
-                            "No build starts again until the code or the plan changes."])
             mem["emailed"].append(f"run-{last['id']}")
+            busy = failed_build(last, mem, fp, actions) or busy
+            held = pause.active(fp)
     rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
     ahead = [r for r in rows if r.get("state") in ("built", "awaiting_approval", "awaiting_turn")
              or (r.get("state") == "scheduled" and r.get("publish_at", "") > now().strftime("%Y-%m-%dT%H:%M:%SZ"))]
     keys = os.environ.get("KEYS_READY") == "true"
-    failed_run = [r for r in rows[-2:] if r.get("state") == "qa-failed"]
+    if not held and keys:
+        busy = qa_rebuild(rows, busy, actions) or busy
     if held:
         actions.append(f"builds paused: {held['why']} (since {held['since']}); "
                        "they resume when the code or the plan changes")
@@ -142,13 +235,6 @@ def main():
         if not keys:
             # without the text and vision keys every build would fail QA and use up a topic
             actions.append("waiting for GROQ_API_KEY_AR and GEMINI_API_KEY_AR; no build started")
-        elif len(failed_run) >= 2:
-            if "two-qa-failed" not in mem["emailed"]:
-                subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"),
-                                "Two episodes in a row failed the QA gate; builds paused",
-                                ", ".join(f"{r['slug']}: {r.get('qa_failed')}" for r in failed_run)])
-                mem["emailed"].append("two-qa-failed")
-            actions.append("two QA failures in a row; builds paused until a passing one")
         else:
             gh("workflow", "run", "episode.yml", "-R", REPO, parse=False)
             actions.append(f"only {len(ahead)} ahead; next episode started")

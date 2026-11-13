@@ -186,21 +186,38 @@ def main():
     check("release: no approve - every episode scheduled at once on the next free slots, in order",
           release.CFG["qa"]["approve_first_episodes"] == 0
           and all(x[0] == "scheduled" for x in s2) and s2[0][1] < s2[1][1] < s2[2][1], f"{s2}")
-    # owner 07.11: after a QA failure no build starts again until the code or the plan changes
+    # owner 12.11: a QA failure never pauses; a pause (broken code) holds until the code changes;
+    # a failed topic is built again, then skipped; the same step failing for two topics pauses
     from automation import pause
+    from automation import watchdog as _wd
     saved_p = pause.PAUSE, pause.STATE
+    saved_w = (_wd.run_slug, _wd.failed_step, _wd.gh, _wd.notify, _wd.skip_topic)
+    started, skipped, notes = [], [], []
     try:
         pause.PAUSE, pause.STATE = W / "pause.json", W / "episodes.json"
         pause.STATE.write_text(json.dumps([{"slug": "a", "state": "qa-failed", "qa_failed": ["length"]}]))
         fp = pause.fingerprint()
-        pause.from_state("a")
+        no_qa_pause = pause.from_state("a") is None and pause.active(fp) is None
+        _wd.failed_step = lambda rid: "prepare / Plan"
+        _wd.gh = lambda *a, **k: started.append(a) or ""
+        _wd.notify = lambda subj, body: notes.append(subj)
+        _wd.skip_topic = lambda slug, why: skipped.append(slug)
+        mem = {"emailed": []}
+        _wd.run_slug = lambda rid: "topic-a"
+        again = _wd.failed_build({"id": 1}, mem, fp, [])
+        _wd.failed_build({"id": 2}, mem, fp, [])
+        _wd.run_slug = lambda rid: "topic-b"
+        _wd.failed_build({"id": 3}, mem, fp, [])
         held = pause.active(fp)
         kept = pause.lift_if_changed(fp) is False and pause.active(fp)
         lifted = pause.lift_if_changed(fp + "x") and pause.active(fp) is None and not pause.PAUSE.exists()
     finally:
         pause.PAUSE, pause.STATE = saved_p
-    check("pause: a QA failure pauses builds; the same code keeps the pause, a change lifts it",
-          bool(held) and "length" in held["why"] and bool(kept) and lifted and len(fp) == 16, str(held))
+        (_wd.run_slug, _wd.failed_step, _wd.gh, _wd.notify, _wd.skip_topic) = saved_w
+    check("watchdog 12.11: no pause after a QA fault; a failed topic is built again, then skipped; the same "
+          "step failing for two topics pauses until the code changes",
+          no_qa_pause and again and skipped == ["topic-a"] and len(started) == 1 and bool(held)
+          and "broken" in held["why"] and bool(kept) and lifted and len(fp) == 16, str((started, skipped, held)))
     # owner 07.11: Gemini's spent day stops the stage (rerun after 08:05 UTC); a long script is cut
     from datetime import datetime as _dt, timezone as _tz
     from automation import watchdog

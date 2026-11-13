@@ -64,10 +64,8 @@ def set_(why, slug=None, fp=None):
 
 
 def from_state(slug):
-    rows = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []
-    row = next((r for r in reversed(rows) if r.get("slug") == slug), None)
-    if row and row.get("state") == "qa-failed":
-        return set_(f"{slug} failed QA: {', '.join(row.get('qa_failed') or [])}", slug)
+    """Owner 12.11: a QA failure no longer pauses the channel - the watchdog builds the topic again
+    once and then goes on with the next topic (automation/watchdog.py qa_rebuild)."""
     return None
 
 

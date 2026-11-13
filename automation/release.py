@@ -90,7 +90,8 @@ def record(slug):
     row = row_of(r, slug)
     if not qa.get("passed"):
         row["state"] = "qa-failed"
-        row["qa_failed"] = [k for k, v in qa.items() if isinstance(v, dict) and v.get("pass") is False]
+        row["qa_failed"] = [k for k, v in qa.items() if isinstance(v, dict) and v.get("pass") is False
+                            and v.get("blocking", True)]
         save(r)
         log.error("%s failed QA: %s", slug, row["qa_failed"])
         return 1
