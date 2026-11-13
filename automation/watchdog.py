@@ -201,7 +201,11 @@ def main():
                 # code, a new run has today's and the vision answers kept so far (actions/cache)
                 slug = (last.get("display_title") or "").removeprefix("episode").strip()
                 n = mem.setdefault("quota_runs", {}).get(slug, 0)
-                if slug and n < 6:
+                on_yt = any(x.get("slug") == slug and x.get("youtube_id")
+                            for x in (json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else []))
+                if on_yt:
+                    actions.append(f"{slug} is already on YouTube; its stopped run is not started again")
+                elif slug and n < 6:
                     gh("workflow", "run", "episode.yml", "-R", REPO, "-f", f"slug={slug}", parse=False)
                     mem["quota_runs"][slug] = n + 1
                     actions.append(f"episode {slug} started again after Gemini's day turned (run {last['id']})")

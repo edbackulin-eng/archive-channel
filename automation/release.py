@@ -19,6 +19,7 @@ One episode, one video: the channel is asked first (youtube.find_by_title) and t
 id is written to the state the moment YouTube returns it.
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -72,6 +73,9 @@ def _upload(slug, r):
         state, when = "awaiting_turn", None              # the first still wait; it does not jump them
     else:
         state, when = "scheduled", youtube.next_slot([x["publish_at"] for x in r if x.get("publish_at")])
+        if os.environ.get("PUBLISH_AT"):                 # upload.yml publish_at: a slot given by hand
+            from datetime import datetime
+            when = datetime.fromisoformat(os.environ["PUBLISH_AT"].replace("Z", "+00:00"))
     vid = youtube.upload(out / "video.mp4", meta["title"], meta["description"], meta["tags"], when)
     row.update({"youtube_id": vid, "state": state,
                 "title": meta["title"], **({"publish_at": when.strftime("%Y-%m-%dT%H:%M:%SZ")} if when else {})})
@@ -88,6 +92,10 @@ def record(slug):
     r = rows()
     qa = json.loads((ROOT / "episodes" / slug / "out" / "qa.json").read_text(encoding="utf-8"))
     row = row_of(r, slug)
+    if row.get("youtube_id"):
+        # 13.11: already on YouTube - a later build of the same topic changes nothing there
+        log.info("%s is already on YouTube (%s); this build is not recorded", slug, row["youtube_id"])
+        return 0
     if not qa.get("passed"):
         row["state"] = "qa-failed"
         row["qa_failed"] = [k for k, v in qa.items() if isinstance(v, dict) and v.get("pass") is False
