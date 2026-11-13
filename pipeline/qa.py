@@ -44,6 +44,7 @@ def loudness(video):
     return (float(i[-1]) if i else None), (float(p[-1]) if p else None)
 
 
+BLACK_BLOCK_S = 3.0        # owner 13.11: black for 1-2 s is not a fault; 3 s and more is
 BLOCK_MATCH = 0.6          # under this share of matching shots the film shows the wrong things
 
 
@@ -55,10 +56,10 @@ def silences(video, db=-50, min_s=3.0):
 
 
 def frames(video, plan):
-    """Owner 12.11: black stretches of 0.5 s or more outside the chapter cards and the first second,
-    and frames the decoder cannot read."""
+    """Owner 12.11/13.11: black stretches of BLACK_BLOCK_S or more outside the chapter cards and the
+    first second, and frames the decoder cannot read (a black second or two is no fault)."""
     r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(video), "-vf",
-                        "blackdetect=d=0.5:pix_th=0.10:pic_th=0.98", "-an", "-f", "null", "-"],
+                        f"blackdetect=d={BLACK_BLOCK_S}:pix_th=0.10:pic_th=0.98", "-an", "-f", "null", "-"],
                        capture_output=True, text=True)
     cards = [(s["start"] - 0.5, s["end"] + 0.5) for s in plan["shots"] if s["kind"] != "clip"]
     black = [round(float(a), 1) for a, b in re.findall(r"black_start:\s*([\d.]+)\s+black_end:\s*([\d.]+)", r.stderr)
