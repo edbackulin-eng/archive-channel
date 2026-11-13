@@ -19,6 +19,13 @@
                   never more than 6 minutes without one, each rendered with its
                   today's-dollars figure (config "prices")
 The report goes to episodes/<slug>/qa.json; release reads "passed".
+
+Owner 12.11 - two tiers. Only real faults stop an upload ("blocking": true): the wrong thing on
+screen for the words (match_share under BLOCK_MATCH), broken sound or silence (sound: clipping,
+loudness far off, 3 s of silence), broken picture (continuity: gaps, a video shorter or longer
+than its plan), a length outside the range, a source without a licence, a thumbnail whose words
+cannot be read or sit on a face. The rest - the 85 % match target, repeats, breathing, the hook's
+words, prices, sharpness, the viewer's marks - is a score: reported, aimed at, never a stop.
 """
 import json
 import re
@@ -35,6 +42,16 @@ def loudness(video):
     i = re.findall(r"I:\s*(-?[\d.]+)\s*LUFS", r.stderr)
     p = re.findall(r"Peak:\s*(-?[\d.]+)\s*dBFS", r.stderr)
     return (float(i[-1]) if i else None), (float(p[-1]) if p else None)
+
+
+BLOCK_MATCH = 0.6          # under this share of matching shots the film shows the wrong things
+
+
+def silences(video, db=-50, min_s=3.0):
+    """Stretches of min_s or more with the whole mix under db (ffmpeg silencedetect)."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(video), "-af",
+                        f"silencedetect=noise={db}dB:d={min_s}", "-f", "null", "-"], capture_output=True, text=True)
+    return [round(float(x), 1) for x in re.findall(r"silence_start:\s*(-?[\d.]+)", r.stderr)]
 
 
 def check(plan, timeline, video, thumb_report=None, full_episode=True):
@@ -97,5 +114,22 @@ def check(plan, timeline, video, thumb_report=None, full_episode=True):
                             "matches_words": t.get("matches_words"), "subject": t.get("subject"),
                             "pass": bool(t.get("corner_empty") and t.get("readable_small") and not t.get("text_over_face")
                                          and t.get("sharp_ok") and t.get("matches_words"))}
-    res["passed"] = all(v["pass"] for v in res.values() if isinstance(v, dict) and "pass" in v)
+    # owner 12.11: what stops an upload, and what is only a score
+    quiet = silences(video) if Path(str(video)).exists() else []
+    res["sound"] = {"lufs": lufs, "true_peak": peak, "silent_at": quiet[:10],
+                    "pass": lufs is not None and abs(lufs - CFG["sound"]["target_lufs"]) <= 3.0
+                    and (peak is None or peak <= -0.5) and not quiet, "blocking": True}
+    res["wrong_on_screen"] = {"value": res["match_share"]["value"], "min": BLOCK_MATCH,
+                              "pass": res["match_share"]["value"] >= BLOCK_MATCH, "blocking": True}
+    if thumb_report is not None:
+        t = thumb_report
+        res["thumbnail_text"] = {"pass": bool(t.get("readable_small") and not t.get("text_over_face")), "blocking": True}
+    for k in ("continuity", "length", "licences"):
+        res[k]["blocking"] = True
+    for k, v in res.items():
+        if isinstance(v, dict) and "pass" in v:
+            v.setdefault("blocking", False)
+    scored = [v for v in res.values() if isinstance(v, dict) and "pass" in v and not v["blocking"]]
+    res["score"] = round(sum(bool(v["pass"]) for v in scored) / max(1, len(scored)), 2)
+    res["passed"] = all(v["pass"] for v in res.values() if isinstance(v, dict) and v.get("blocking"))
     return res
