@@ -46,7 +46,7 @@
         1946,
         1962
       ],
-      "status": "queued",
+      "status": "skipped",
       "wikipedia": [
         "Post–World War II economic expansion",
         "Minimum wage in the United States",
@@ -68,7 +68,9 @@
         "1950s-supermarket",
         "1950s-department-store"
       ],
-      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it",
+      "skipped_why": "its build failed 2 times ('prepare / Run python automation/build.py \"$SLUG\" narrate'), last https://github.com/edbackulin-eng/archive-channel/actions/runs/43595600319",
+      "skipped_at": "2026-11-14T14:05:58Z"
     },
     {
       "slug": "1950s-cars-roads",
