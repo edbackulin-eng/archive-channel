@@ -13,71 +13,32 @@ And who was not allowed to live there?
 ## The Potato Fields | Long Island, New York | 1947
 [film 8]
 > The war was over, and the men were coming home.
-Millions of them, with young wives, with babies on the way, and with nowhere to live.
-During the war, the home building business had almost stopped.
-Now a whole generation needed somewhere to start a family, all at once.
 [pause 0.4]
-[film 8]
-One building firm on Long Island thought it knew what to do with them.
-It was called Levitt and Sons.
-So he bought options on large stretches of onion and potato fields on Long Island.
 [pause 0.4]
 [film 8]
 < He was about to build houses the way Henry Ford built cars.
 [film 8]
 Those are not our words. Years later, Levitt made the comparison himself.
-And we'll come back to what that did to the price.
 
 ## A House in Twenty-Six Steps | Long Island, New York | 1947-1948
 [film 8]
 > The first homes were small, and deliberately so.
-One floor. A kitchen, a living room, bedrooms.
-And upstairs, an unfinished attic, left open so a growing family could expand into it later.
-The plan was simple: build them quickly, and rent them quickly, to returning soldiers.
-On May the seventh, 1947, the project was announced.
-It was planned as a community of two thousand rental homes.
 < Within two days, half of them had been rented.
 [film 8]
 The New York Herald Tribune reported it.
-Demand kept rising, faster than the houses could be built.
-So the Levitts added four thousand more homes, and schools, and postal delivery.
-To build that fast, they rethought the whole job.
-[film 3.5]
-Every house was broken down into twenty-six steps.
-Each step belonged to one team of subcontractors, who did that one thing, again and again, house after house.
-But the need for housing was so urgent that the town agreed to change it.
-The firm also cut out the middlemen.
-It bought lumber, and even televisions, straight from the manufacturers.
-It used non-union contractors, and there were picket lines.
-But the pay was good.
-With the extra incentives, a worker could often earn twice as much in a week as he could elsewhere.
-< By July of 1948, they were finishing thirty houses a day.
 [pause 0.4]
-[film 8]
-On the first of October, 1947, the first three hundred families moved in.
-And on the first day of 1948, the place got the name it is still known by.
-It had been called Island Trees.
-Now it was Levittown.
 
 ## What It Cost | Long Island, New York | 1947-1951
 [film 8]
 > So, the question we left open. What did a house actually cost?
-Building thousands of houses at once made each one cheap.
 [price 8000 1947 | A Levitt house, appliances in]
 The Levitts could sell a house, with the kitchen stocked with modern appliances and a television in the living room, for as little as eight thousand dollars.
-[film 3.5]
 That is [today 8000 1947] in today's money, and it was still a great deal for a young family.
-But here is where Washington came in.
 In June of 1944, before the war had even ended, Congress had passed the Servicemen's Readjustment Act.
 Everyone called it the G.I. Bill.
-Among its benefits were low-interest home loans for veterans, with no down payment at all.
-And the terms were better for new houses than for old ones.
 [price 400 1947 | Up front, with the G.I. Bill]
 < With the G.I. Bill and federal housing subsidies, the money many buyers needed up front fell to around four hundred dollars.
 [film 8]
-At first, Levittown was meant for renting.
-But once federal support for housing was fully in place, through the Federal Housing Administration, the firm switched from renting to selling.
-Buyers were offered a thirty-year mortgage, with no down payment.
 < And the monthly cost was the same as the rent.
 [film 8]
 Think about what that meant for a young couple who had grown up in a city apartment.
@@ -98,7 +59,6 @@ Most of the men found jobs quickly, or went back to school instead.
 > In 1949, the firm unveiled something new.
 They called it the ranch house.
 It was bigger, thirty-two feet by twenty-five, and more modern.
-[film 3.5]
 And it was only for sale.
 [price 7990 1949 | The 1949 ranch house]
 < The planned price was seven thousand, nine hundred and ninety dollars: [today 7990 1949] today.
@@ -130,7 +90,6 @@ The Levittowner. The Rancher. The Jubilee. The Pennsylvanian. The Colonial. And 
 Every one was a single-family home with a lawn.
 [price 4237 1950 | Average family income, a year]
 And who could pay for one? In 1950, the average American family earned four thousand, two hundred and thirty-seven dollars a year.
-[film 3.5]
 That is [today 4237 1950] today.
 The method was the twenty-six steps again, perfected.
 The house stayed where it was, and the workers moved from site to site.
@@ -156,7 +115,6 @@ When backyard pools became affordable, people wanted privacy, and the fences wen
 Daily life had its own price list. In 1950, a pound of butter cost seventy-three cents, and a pound of round steak, ninety-four.
 That butter would be [today 0.73 1950] today.
 By 1958, when the building was done, seventeen thousand, three hundred and eleven homes stood there.
-[film 3.5]
 And the children of those homes grew up fast.
 < In 1960, a baseball team from Levittown, Pennsylvania, won the Little League World Series.
 [film 8]
@@ -181,7 +139,6 @@ In Pennsylvania, in 1957, William and Daisy Myers became Levittown's first Black
 Their arrival was met with racist harassment and mob violence.
 The state had to step in.
 The Myers family did not give up, and they won national praise for it.
-[film 3.5]
 Daisy Myers has been called the Rosa Parks of the North.
 [pause 0.5]
 [film 8]
@@ -194,7 +151,7 @@ It is only since the 2010s that the town has drawn many South Asian and Hispanic
 But for many years, it was not offered to everyone.
 
 ## The King of Suburbia | United States | 1950-1967
-[film 8]
+[film 7.72333]
 > By now, the builder himself had become famous.
 On July the third, 1950, William Levitt was on the cover of Time magazine.
 < The tag line read: For Sale, a new way of life.
@@ -210,7 +167,6 @@ Teams of specialized workers followed one another from house to house, each fini
 He used new techniques, like spray painting.
 He even built his own factory to make nails.
 At his height, he was completing a suburban house every eleven minutes.
-[film 3.5]
 In 1954, William took control of the family firm.
 In 1960, the company went public.
 His Levittowns spread: Long Island, Pennsylvania, Willingboro in New Jersey, and later Levittown in Puerto Rico.
@@ -226,7 +182,7 @@ William Levitt died in 1994, at the age of eighty-six.
 Four years later, Time magazine named him one of the hundred most important people of the twentieth century.
 
 ## The Pattern for a Nation | United States | 1946-1964
-[film 8]
+[film 7]
 > Levittown was widely seen as the model for the suburbs that spread across the whole country after the war.
 And the families kept coming.
 In 1946, the number of babies born each month in the United States rose from about two hundred and twenty thousand in January to nearly three hundred and forty thousand in October.
@@ -236,7 +192,6 @@ In 1950, when a California couple spent seven dollars to go to the movies, five 
 That babysitter's five dollars is [today 5 1950] today.
 In 1954, births topped four million in a single year for the first time.
 They did not fall below that until 1965.
-[film 3.5]
 By then, four in ten Americans were under the age of twenty.
 All those children needed houses with yards, and schools, and roads.
 In 1956, President Eisenhower signed the law that created the Interstate Highway System.

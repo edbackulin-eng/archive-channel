@@ -3,8 +3,8 @@
  "name": "Life in a Brand-New 1950s Suburb",
  "title": "The $7,990 Dream: Life in America's First Mass-Produced Suburb",
  "thumbnail_words": "THE $7,990 DREAM",
- "words": 2184,
- "minutes_at_150wpm": 14.6,
+ "words": 1783,
+ "minutes_at_150wpm": 11.9,
  "written_by": "review draft written in the session from the same sources and rules (no text-model key on the PC); production uses Groq, fallback Gemini",
  "sources": [
   "https://en.wikipedia.org/wiki/G.I._Bill",
