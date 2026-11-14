@@ -15,6 +15,14 @@
   "run-42361063616",
   "run-42479710225",
   "run-42832189241",
-  "run-42984385916"
+  "run-42984385916",
+  "run-43589029345"
+ ],
+ "topic_fails": [
+  {
+   "slug": "1950s-shopping-prices",
+   "sig": "prepare / Run python automation/build.py \"$SLUG\" narrate",
+   "run": 43589029345
+  }
  ]
 }
