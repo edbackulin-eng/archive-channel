@@ -69,8 +69,8 @@
         "1950s-department-store"
       ],
       "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it",
-      "skipped_why": "its build failed 2 times ('prepare / Run python automation/build.py \"$SLUG\" narrate'), last https://github.com/edbackulin-eng/archive-channel/actions/runs/43595600319",
-      "skipped_at": "2026-11-14T14:05:58Z"
+      "skipped_why": "its build failed 3 times ('prepare / Run python automation/build.py \"$SLUG\" narrate'), last https://github.com/edbackulin-eng/archive-channel/actions/runs/43603078079",
+      "skipped_at": "2026-11-14T15:51:36Z"
     },
     {
       "slug": "1950s-cars-roads",
