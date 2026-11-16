@@ -1,0 +1,74 @@
+[
+ {
+  "claim": "A pound of butter cost $73 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "A pound of butter cost 73 cents in 1950."
+ },
+ {
+  "claim": "A pound of pork chops cost $75 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "A pound of pork chops cost 75 cents in 1950."
+ },
+ {
+  "claim": "A pound of round steak cost $94 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "A pound of round steak cost 94 cents in 1950."
+ },
+ {
+  "claim": "The average family expenditure in 1950 was $3,808.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family income in 1950 was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family expenditure in 1960 was $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 73 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of pork chops cost 75 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average U.S. family income was $4,237 in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family expenditure was $5,390 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing costs took 29.5 percent of the household budget in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost 94 cents in 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]

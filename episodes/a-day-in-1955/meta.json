@@ -1,0 +1,51 @@
+{
+ "slug": "a-day-in-1955",
+ "name": "A Day in 1955 America in Color",
+ "title": "A Day in 1955 America in Color",
+ "thumbnail_words": "$4,237 FAMILY INCOME",
+ "thumbnail_subject": "A family gathered in a bright suburban living room in 1955",
+ "words": 1746,
+ "minutes_at_150wpm": 11.6,
+ "sources": [
+  {
+   "title": "1955 in the United States",
+   "url": "https://en.wikipedia.org/wiki/1955_in_the_United_States"
+  },
+  {
+   "title": "Assembly line",
+   "url": "https://en.wikipedia.org/wiki/Assembly_line"
+  },
+  {
+   "title": "United Auto Workers",
+   "url": "https://en.wikipedia.org/wiki/United_Auto_Workers"
+  },
+  {
+   "title": "Treaty of Detroit",
+   "url": "https://en.wikipedia.org/wiki/Treaty_of_Detroit"
+  },
+  {
+   "title": "Manufacturing in the United States",
+   "url": "https://en.wikipedia.org/wiki/Manufacturing_in_the_United_States"
+  },
+  {
+   "title": "Ford River Rouge complex",
+   "url": "https://en.wikipedia.org/wiki/Ford_River_Rouge_complex"
+  },
+  {
+   "title": "Typewriter",
+   "url": "https://en.wikipedia.org/wiki/Typewriter"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 12,
+  "supported": 9
+ }
+}
