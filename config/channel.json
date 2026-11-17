@@ -116,7 +116,7 @@
  "qa": {
   "match_share_min": 0.85,
   "approve_first_episodes": 0,
-    "_approve_note": "owner 10.11: no approve - after QA and the viewer gate (pipeline/viewer.py) an episode is uploaded and scheduled on the nearest free slot",
+  "_approve_note": "owner 10.11: no approve - after QA and the viewer gate (pipeline/viewer.py) an episode is uploaded and scheduled on the nearest free slot",
   "no_voice_share": [
    0.2,
    0.3
@@ -152,5 +152,6 @@
   "max_gap_s": 360,
   "in_hook": true,
   "_why": "per chapter was tried first (2026-11-03): episode 1's sources state prices for 5 of its 9 chapters, and a price without a source is not allowed"
- }
+ },
+ "youtube_channel_id": "UCa61CmHbJAAThlxDw_dNJFA"
 }

@@ -115,6 +115,11 @@ def _upload(slug, r):
     if row.get("youtube_id"):
         return row
     yt = youtube.service()
+    from core import ytguard
+    try:
+        ytguard.check_channel(yt, CFG.get("youtube_channel_id"))     # the token is this channel's
+    except ytguard.Doubt as e:
+        raise youtube.Doubt(str(e))
     known = [x["youtube_id"] for x in r if x.get("youtube_id")]
     videos = youtube.all_uploads(yt, known)               # raises Doubt: no upload
     same = youtube.find_existing(videos, slug, meta["title"])
@@ -211,6 +216,9 @@ def dry(slug=""):
     os.environ["DRY_RUN"] = "1"
     r = rows()
     yt = youtube.service()
+    from core import ytguard
+    ch = ytguard.check_channel(yt, CFG.get("youtube_channel_id"))
+    print(f"the token is the channel {ch['id']} ({ch['snippet']['title']}), as configured")
     known = [x["youtube_id"] for x in r if x.get("youtube_id")]
     videos = youtube.all_uploads(yt, known)
     print(f"the channel: {len(videos)} videos read in full; the state knows {len(known)} of them, all present")

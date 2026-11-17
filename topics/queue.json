@@ -133,34 +133,6 @@
       "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
     },
     {
-      "slug": "1950s-life",
-      "name": "Life in 1950s America in Color",
-      "query": "family OR city OR leisure OR teenagers OR home OR town OR parade OR \"daily life\"",
-      "years": [
-        1946,
-        1962
-      ],
-      "status": "queued",
-      "wikipedia": [
-        "1950s",
-        "History of the United States (1945–1964)",
-        "Adolescence",
-        "Rock and roll",
-        "American Bandstand",
-        "Juvenile delinquency",
-        "Youth culture"
-      ],
-      "related": [
-        "How Teenagers Were Invented in the 1950s",
-        "What Women Were Told About Home and Work in the 1950s"
-      ],
-      "merged_from": [
-        "1950s-teenagers",
-        "1950s-women"
-      ],
-      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it"
-    },
-    {
       "slug": "1950s-suburb",
       "name": "Life in a Brand-New 1950s Suburb",
       "query": "suburb OR suburbs OR housing OR homeowner OR \"new home\"",
@@ -686,6 +658,35 @@
         "Atoms for Peace",
         "Civil defense"
       ]
+    },
+    {
+      "slug": "1950s-life",
+      "name": "1950s Teenagers, Rock 'n' Roll and the Weekend in Color",
+      "query": "family OR city OR leisure OR teenagers OR home OR town OR parade OR \"daily life\"",
+      "years": [
+        1946,
+        1962
+      ],
+      "status": "queued",
+      "wikipedia": [
+        "1950s",
+        "History of the United States (1945–1964)",
+        "Adolescence",
+        "Rock and roll",
+        "American Bandstand",
+        "Juvenile delinquency",
+        "Youth culture"
+      ],
+      "related": [
+        "How Teenagers Were Invented in the 1950s",
+        "What Women Were Told About Home and Work in the 1950s"
+      ],
+      "merged_from": [
+        "1950s-teenagers",
+        "1950s-women"
+      ],
+      "_note": "owner 10.11: a broad topic in the manner of the niche's top; prices then and now in it",
+      "_renamed": "owner 17.11: was 'Life in 1950s America in Color' - too broad next to a-day-in-1955; moved to the end"
     }
   ],
   "_note_10_11": "owner 10.11: broader topics first, built in the order of the film confirmed for the narrow ones they merge (suburb 43.2 + kitchen 23.2 min; money 32.2, groceries 12.6, supermarket 5.5; cars 23.7); the narrow topics are kept as 'merged'"

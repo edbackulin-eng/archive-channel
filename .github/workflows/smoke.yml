@@ -42,6 +42,8 @@ jobs:
           key: models-${{ hashFiles('automation/fetch_models.py') }}
       - run: python automation/fetch_models.py && python automation/fetch_music.py
       - run: python scripts/smoke.py
+      - name: Shared guards (owner 17.11)
+        run: pip install -q pyyaml google-api-python-client google-auth && python -X utf8 scripts/smoke_guards.py
       - name: Promote dev to main
         if: (inputs.ref || 'dev') == 'dev'
         run: |
