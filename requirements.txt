@@ -6,3 +6,4 @@ opencv-python-headless>=4.10
 google-api-python-client>=2.100
 google-auth>=2.20
 pypdf>=4.0
+pyyaml

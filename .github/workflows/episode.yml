@@ -231,4 +231,5 @@ jobs:
         if: failure() && steps.save.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/notify.py "Run failed: $SLUG" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} - a step after the upload failed; check state/episodes.json for $SLUG." || true
+        run: |
+          python scripts/notify.py "Run failed: $SLUG" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} - a step after the upload failed; check state/episodes.json for $SLUG." || true

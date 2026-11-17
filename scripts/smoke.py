@@ -216,6 +216,15 @@ def main():
     check("release: slots skip the days the channel holds (publishAt and published)",
           held == ["2026-11-20T17:00:00Z", "2026-11-24T17:00:00Z"] and slot.strftime("%Y-%m-%d") == "2026-11-27",
           f"{held} {slot}")
+    # 17.11: a workflow file that does not parse is never run (episode.yml was broken for 40 minutes by one colon)
+    import yaml
+    bad = []
+    for wf in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        try:
+            yaml.safe_load(wf.read_text(encoding="utf-8"))
+        except Exception as e:                                       # noqa: BLE001
+            bad.append(f"{wf.name}: {str(e)[:80]}")
+    check("workflows: every file parses as YAML", not bad, "; ".join(bad))
     # owner 17.11: a topic with a video or a build never renders again; a repeated subject is refused
     from automation import topic_guard
     g_rows = [{"slug": "american-home-1950s", "state": "published", "youtube_id": "x"}, {"slug": "z", "state": "built"}]
