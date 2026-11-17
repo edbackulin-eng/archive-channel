@@ -8,6 +8,10 @@ on:
       slug:
         description: topic slug (empty = the next queued one)
         default: ""
+      force:
+        description: "build a topic the queue marks merged/skipped or that repeats another (never one with a video)"
+        type: boolean
+        default: false
 permissions:
   contents: write
   issues: write
@@ -20,6 +24,8 @@ env:
 jobs:
   pick:
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
     outputs:
       slug: ${{ steps.p.outputs.slug }}
     steps:
@@ -38,6 +44,13 @@ jobs:
             echo "::notice::no build: $why"
           else
             [ -n "$s" ] || s=$(python automation/next_topic.py)
+          fi
+          # owner 17.11: a topic with a video, a build or a repeated subject never renders again
+          # (cars-roads was built ten times and went up twice): refused here, before any hour is spent
+          if [ -n "$s" ] && why=$(FORCE=${{ inputs.force && '1' || '0' }} python automation/topic_guard.py "$s"); then
+            echo "::warning::$s is not rendered: $why"
+            [ -z "${{ inputs.slug }}" ] || python scripts/notify.py "Build of $s refused" "$why"
+            s=""
           fi
           echo "slug=$s" >> "$GITHUB_OUTPUT"
   prepare:
@@ -199,13 +212,23 @@ jobs:
       - name: Record (QA gate; upload when a token exists, else buffer)
         run: python automation/release.py record "$SLUG"
       - name: Save the state
+        id: save
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           python automation/pause.py from-state "$SLUG" || true
-          git add state/episodes.json state/build_pause.json 2>/dev/null || true
+          # one path at a time: `git add a b` with a missing b adds NOTHING (17.11: the state of
+          # three videos was never committed, so the topic was built ten times and uploaded twice)
+          for f in state/episodes.json state/build_pause.json topics/queue.json; do
+            if [ -e "$f" ]; then git add "$f"; fi
+          done
           git diff --cached --quiet && exit 0
           git commit -q -m "state: $SLUG"
           for i in 1 2 3 4 5; do git pull -q --rebase --autostash origin main && git push -q origin HEAD:main && exit 0; sleep $((i*8)); done
           exit 1
+      - name: Mail the owner when the state could not be saved
+        if: failure() && steps.save.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/notify.py "Run failed: $SLUG" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} - a step after the upload failed; check state/episodes.json for $SLUG." || true

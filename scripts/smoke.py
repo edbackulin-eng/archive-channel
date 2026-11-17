@@ -174,14 +174,68 @@ def main():
     for s in ("a", "b", "c"):
         (tmp / "episodes" / s / "out").mkdir(parents=True)
         (tmp / "episodes" / s / "out" / "metadata.json").write_text(json.dumps({"title": s, "description": "", "tags": []}))
-    saved = (release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule)
+    saved = (release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule,
+             youtube.service, youtube.all_uploads, release.notify)
     release.ROOT, release.rows, release.save = tmp, (lambda: json.loads(st.read_text())), (lambda r: st.write_text(json.dumps(r)))
-    youtube.upload, youtube.set_thumbnail, youtube.schedule = (lambda *a: "v" + a[1]), (lambda *a: None), (lambda *a: None)
+    youtube.upload, youtube.set_thumbnail, youtube.schedule = (lambda *a, **k: "v" + a[1]), (lambda *a: None), (lambda *a: None)
+    youtube.service, release.notify = (lambda: None), (lambda *a: None)
+    os.environ["NO_PERSIST"] = "1"                 # the smoke run must never commit to the repository
+    youtube.all_uploads = lambda yt, known=(): []
     try:
         release.upload()
         s2 = [(r["state"], r.get("publish_at")) for r in json.loads(st.read_text())]
+        # owner 17.11: the video is on the channel already (marker in the description) - nothing is sent
+        sent = []
+        youtube.upload = lambda *a, **k: sent.append(a) or "new"
+        st.write_text(json.dumps([{"slug": "a", "state": "built"}]))
+        youtube.all_uploads = lambda yt, known=(): [{"id": "old1", "title": "other", "description": "x\n[ref: archive/a]",
+                                                     "privacy": "private", "publish_at": "2026-12-01T17:00:00Z",
+                                                     "published_at": "2026-11-17T10:00:00Z"}]
+        release.upload()
+        dup = json.loads(st.read_text())[0]
+        # owner 17.11: when the channel cannot be read in full nothing is sent, the episode waits
+        st.write_text(json.dumps([{"slug": "a", "state": "built"}]))
+
+        def _doubtful(yt, known=()):
+            raise youtube.Doubt("the uploads list has 3 of 9 videos")
+        youtube.all_uploads = _doubtful
+        release.upload()
+        doubt = json.loads(st.read_text())[0]
+        # the slots come from the channel's own dates: a day the channel holds is never taken again
+        held = youtube.channel_dates([{"publish_at": "2026-11-20T17:00:00Z", "published_at": "x", "privacy": "private"},
+                                      {"publish_at": None, "published_at": "2026-11-24T17:00:00Z", "privacy": "public"}])
+        slot = youtube.next_slot(held, now=__import__("datetime").datetime(2026, 11, 17, 15, 0, tzinfo=__import__("datetime").timezone.utc))
     finally:
-        release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule = saved
+        (release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule,
+         youtube.service, youtube.all_uploads, release.notify) = saved
+    check("release: a video already on the channel (marker) is not uploaded again; its id is kept",
+          not sent and dup.get("youtube_id") == "old1", f"{dup} {sent}")
+    check("release: the channel not read in full - no upload, the episode waits, built",
+          not sent and doubt.get("state") == "built" and not doubt.get("youtube_id") and doubt.get("doubt_mailed"),
+          f"{doubt}")
+    check("release: slots skip the days the channel holds (publishAt and published)",
+          held == ["2026-11-20T17:00:00Z", "2026-11-24T17:00:00Z"] and slot.strftime("%Y-%m-%d") == "2026-11-27",
+          f"{held} {slot}")
+    # owner 17.11: a topic with a video or a build never renders again; a repeated subject is refused
+    from automation import topic_guard
+    g_rows = [{"slug": "american-home-1950s", "state": "published", "youtube_id": "x"}, {"slug": "z", "state": "built"}]
+    g_q = {"topics": [{"slug": "american-home-1950s", "name": "American Home", "status": "built",
+                       "wikipedia": ["Levittown, New York", "G.I. Bill", "Suburbanization"], "related": []},
+                      {"slug": "z", "name": "Z", "status": "queued", "wikipedia": ["Z"], "related": []},
+                      {"slug": "sub", "name": "Suburb", "status": "queued",
+                       "wikipedia": ["Levittown, New York", "G.I. Bill"], "related": []}]}
+    topic_guard.ROOT = tmp
+    (tmp / "state").mkdir(exist_ok=True)
+    (tmp / "topics").mkdir(exist_ok=True)
+    (tmp / "state" / "episodes.json").write_text(json.dumps(g_rows))
+    (tmp / "topics" / "queue.json").write_text(json.dumps(g_q))
+    check("topics: a topic with a video or a build is refused, a repeated subject too, a new one passes",
+          "already on YouTube" in topic_guard.blocked("american-home-1950s")
+          and "built" in topic_guard.blocked("z") and "repeats" in topic_guard.blocked("sub")
+          and topic_guard.blocked("sub", force=True) == "", "")
+    check("thumbnail: the cover names the title's decade, never a frame's year",
+          thumbnail.decade_of({"title": "1950s Cars, Roads"}) == "1950s" and not thumbnail.in_decade(1961, "1950s")
+          and thumbnail.in_decade(1958, "1950s"), "")
     # owner 10.11: no approve (qa.approve_first_episodes 0) - each goes up scheduled, in order
     check("release: no approve - every episode scheduled at once on the next free slots, in order",
           release.CFG["qa"]["approve_first_episodes"] == 0

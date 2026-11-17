@@ -1,20 +1,32 @@
 [
  {
   "slug": "1950s-suburb",
-  "state": "rebuilding",
   "qa_failed": [
    "repeats",
    "thumbnail"
   ],
-  "qa_rebuilds": 1
+  "qa_rebuilds": 1,
+  "state": "scheduled",
+  "youtube_id": "89z6AuMVwMs",
+  "publish_at": "2026-11-20T17:00:00Z",
+  "title": "The $7,990 Dream: Life in America's First Mass-Produced Suburb",
+  "note": "17.11: a second Levittown video; kept on 20.11 by the owner's decision"
  },
  {
   "slug": "american-home-1950s",
-  "state": "scheduled",
+  "state": "published",
   "build_run": 43391741551,
   "qa_note": "13.11 re-graded on the owner's two tiers, owner confirmed: every blocking check passes (match 1.0, sound -14.1 LUFS / -1.1 dBTP, no 3 s silence, length 16.5 min, continuity, licences; black 1.6 s at 8:46 not a fault per owner 13.11); thumbnail from the film's own 1956 kitchen frame",
   "youtube_id": "12t0lIZqjCk",
   "title": "Suburban Dreams: The 1950s Home in Color",
   "publish_at": "2026-11-13T17:00:00Z"
+ },
+ {
+  "slug": "1950s-cars-roads",
+  "state": "published",
+  "youtube_id": "AbKkqPCxOOg",
+  "publish_at": "2026-11-17T17:00:00Z",
+  "title": "1950s Cars, Roads & Drive-Ins in Color",
+  "note": "17.11: the duplicate 5mwAThM02wo was deleted; thumbnail year corrected to 1950s"
  }
 ]

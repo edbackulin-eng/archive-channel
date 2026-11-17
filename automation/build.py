@@ -201,12 +201,22 @@ def stage_render(slug):
     # one candidate per keyframe (07.11: the 12 best were 3 kitchens of one film, repeated by the
     # reused stretches, and none showed the house the words name), up to 36, 12 a request,
     # until three show the subject
+    q_ = json.loads((ROOT / "topics" / "queue.json").read_text(encoding="utf-8"))
+    decade = thumbnail.decade_of(meta, next((t for t in q_["topics"] if t["slug"] == slug), None))
     seen_kf, uniq = set(), []
     for s in sorted((s for s in plan["shots"] if s["kind"] == "clip" and s.get("kf") and (s.get("vision") or {}).get("ok")),
                     key=lambda s: -thumbnail.score(thumbnail.Image.open(s["kf"]))[0]):
         if s["kf"] not in seen_kf and (s.get("film"), round(s.get("src_start") or 0)) not in seen_kf:
             seen_kf.update({s["kf"], (s.get("film"), round(s.get("src_start") or 0))})
             uniq.append(s)
+    # owner 17.11: the cover names the decade of the title, so its picture comes from that decade's films
+    # (a 1961 car under '1950s' is wrong); with fewer than three such frames the rest stay in
+    same = [s for s in uniq if thumbnail.in_decade(s.get("year"), decade)]
+    if len(same) >= 3:
+        log.info("thumbnail: %d of %d frames are from the %s", len(same), len(uniq), decade)
+        uniq = same
+    else:
+        log.info("thumbnail: only %d frames from the %s; the others are used too", len(same), decade)
     asked = f"A thumbnail that says '{words}'. The picture must show: {subject}"
     # owner 08.11: SigLIP on the CPU ranks the frames by the subject first and drops the clear
     # misses; Gemini sees only the best of the rest, 24 in one request (was up to 36, 12 a request)
@@ -234,7 +244,7 @@ def stage_render(slug):
         cands = list(uniq[:3])
         log.info("thumbnail: no frame shows '%s'; the %d best checked frames are used", subject, len(cands))
     cands = cands[:3]
-    year = f"{meta.get('decade') or str(min(s.get('year') or 1950 for s in cands) // 10 * 10) + 's'}" if cands else "1950s"
+    year = decade                                  # the title's decade, never the frame's year
     reports = []
     for k, s in enumerate(cands):
         base = thumbnail.hd_frame(s["best"], s["src_start"] + 1.0, b / f"thumb_base_{k}.png")

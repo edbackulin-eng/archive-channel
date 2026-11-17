@@ -273,6 +273,29 @@ def style(im):
 vivid = style
 
 
+def decade_of(meta, topic=None):
+    """The decade the thumbnail names (owner 17.11: a '1950s' video had '1960s' on its cover, because
+    the year came from the frame - a 1961 Chevrolet): meta['decade'], else a decade in the title,
+    else the middle of the topic's range of years."""
+    import re
+    if (meta or {}).get("decade"):
+        return str(meta["decade"])
+    m = re.search(r"\b(1[89]\d0)s\b", (meta or {}).get("title", ""))
+    if m:
+        return m.group(1) + "s"
+    if topic and topic.get("years"):
+        return f"{(int(topic['years'][0]) + int(topic['years'][-1])) // 2 // 10 * 10}s"
+    return "1950s"
+
+
+def in_decade(year, decade):
+    """True when a film year (or None) belongs to the decade named on the cover."""
+    try:
+        return int(year) // 10 * 10 == int(str(decade)[:4])
+    except (TypeError, ValueError):
+        return False
+
+
 def _outlined(d, xy, text, f, fill, stroke):
     d.text(xy, text, font=f, fill=fill, stroke_width=stroke, stroke_fill=(0, 0, 0))
 

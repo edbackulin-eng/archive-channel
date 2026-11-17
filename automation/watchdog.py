@@ -96,6 +96,12 @@ def failed_build(last, mem, fp, actions):
                f"{url}\nTopics: {slug}, {', '.join(others)}. Any change to the code lifts the pause.")
         actions.append(f"builds paused: '{sig}' failed for {slug} and {others}")
         return False
+    if "Record" in sig or "Save the state" in sig or "Mail the owner" in sig:
+        # after the render: the video is built or even uploaded; building it again would spend hours and
+        # Gemini's day for nothing (owner 17.11) - the owner is mailed, the topic is not rebuilt
+        notify(f"A run failed after the render: {slug} / {sig}", f"{url}\nThe topic is not built again; check state/episodes.json.")
+        actions.append(f"{slug}: '{sig}' failed after the render; not built again, the owner is mailed")
+        return False
     n = sum(1 for f in fails if f["slug"] == slug)
     if slug != "?" and n >= TOPIC_FAILS:
         skip_topic(slug, f"its build failed {n} times ('{sig}'), last {url}")
@@ -114,6 +120,12 @@ def qa_rebuild(rows, busy, actions):
         return False
     for r in rows:
         if r.get("state") != "qa-failed":
+            continue
+        from automation import topic_guard
+        if topic_guard.blocked(r["slug"]):            # merged, skipped, or the ground of a topic with a video
+            r["state"] = "skipped"
+            STATE.write_text(json.dumps(rows, indent=1, ensure_ascii=False), encoding="utf-8")
+            actions.append(f"{r['slug']}: QA fault, but {topic_guard.blocked(r['slug'])}; not built again")
             continue
         n = int(r.get("qa_rebuilds", 0))
         if n >= QA_REBUILDS:

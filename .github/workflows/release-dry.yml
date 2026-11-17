@@ -1,0 +1,44 @@
+name: release-dry
+# A dry run of the release path (owner 17.11): reads the channel in full, says what an upload would do,
+# which topics may render and which are refused, and checks that the state could be pushed.
+# Nothing is uploaded, changed or committed.
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: the episode whose upload is simulated
+        default: "1950s-cars-roads"
+permissions:
+  contents: read
+concurrency:
+  group: release-dry
+  cancel-in-progress: false
+jobs:
+  dry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONUTF8: 1
+      YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install -q google-api-python-client google-auth numpy
+      - name: What an upload would do
+        run: python automation/release.py dry "${{ inputs.slug }}"
+      - name: Which topics may render
+        run: |
+          python - <<'EOF'
+          import json, sys
+          sys.path.insert(0, ".")
+          from automation import topic_guard as g
+          q = json.load(open("topics/queue.json", encoding="utf-8"))
+          for t in q["topics"]:
+              print(f"{t['slug']:24} {t['status']:9}", g.blocked(t["slug"]) or "may render")
+          EOF
+      - name: The state can be pushed (dry)
+        run: git push --dry-run origin HEAD:main 2>&1 | tail -2 || true
