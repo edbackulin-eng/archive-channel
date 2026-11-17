@@ -1,0 +1,10 @@
+[
+ {
+  "what": "The espeak-ng package is missing or not initialized properly before narration.",
+  "match": [
+   "espeak"
+  ],
+  "fixed_at": "2026-11-15T02:29:22Z",
+  "fix": "monitor autofix/archive-20261115"
+ }
+]

@@ -82,7 +82,7 @@ jobs:
       # SigLIP on the CPU before Gemini (pipeline/prefilter.py)
       - run: pip install -q torch --index-url https://download.pytorch.org/whl/cpu && pip install -q -r requirements-prefilter.txt
       - run: python automation/build.py "$SLUG" script
-      - run: python automation/build.py "$SLUG" narrate
+      - run: espeak-ng --version && python automation/build.py "$SLUG" narrate
       # the vision answers of earlier runs of this topic (pipeline/vision.py): a day that ran out
       # goes on where it stopped instead of asking the same frames again
       - uses: actions/cache/restore@v4
