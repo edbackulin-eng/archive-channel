@@ -9,7 +9,7 @@ on:
         description: the episode whose upload is simulated
         default: "1950s-cars-roads"
 permissions:
-  contents: read
+  contents: write          # only for `git push --dry-run`; nothing is pushed
 concurrency:
   group: release-dry
   cancel-in-progress: false
