@@ -179,6 +179,9 @@ def main():
     release.ROOT, release.rows, release.save = tmp, (lambda: json.loads(st.read_text())), (lambda r: st.write_text(json.dumps(r)))
     youtube.upload, youtube.set_thumbnail, youtube.schedule = (lambda *a, **k: "v" + a[1]), (lambda *a: None), (lambda *a: None)
     youtube.service, release.notify = (lambda: None), (lambda *a: None)
+    from core import ytguard as _yg
+    _saved_cc = _yg.check_channel
+    _yg.check_channel = lambda *a, **k: {"id": "UC", "snippet": {"title": "smoke"}}   # no token in the smoke run
     os.environ["NO_PERSIST"] = "1"                 # the smoke run must never commit to the repository
     youtube.all_uploads = lambda yt, known=(): []
     try:
@@ -208,6 +211,7 @@ def main():
     finally:
         (release.ROOT, release.rows, release.save, youtube.upload, youtube.set_thumbnail, youtube.schedule,
          youtube.service, youtube.all_uploads, release.notify) = saved
+        _yg.check_channel = _saved_cc
     check("release: a video already on the channel (marker) is not uploaded again; its id is kept",
           not sent and dup.get("youtube_id") == "old1", f"{dup} {sent}")
     check("release: the channel not read in full - no upload, the episode waits, built",
