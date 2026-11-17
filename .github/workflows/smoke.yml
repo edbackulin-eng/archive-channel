@@ -48,6 +48,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch -q origin main dev
+          git reset -q --hard                      # the smoke run leaves topics/queue.json changed
           git checkout -q -B main origin/main
           git merge --no-edit origin/dev
           for i in 1 2 3 4 5; do git push origin main && break; sleep $((i * 8)); git fetch -q origin main && git merge --no-edit origin/main; done
