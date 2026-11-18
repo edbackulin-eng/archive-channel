@@ -141,6 +141,7 @@ jobs:
     timeout-minutes: 300
     strategy:
       fail-fast: false
+      max-parallel: 4   # account limit: 20 jobs at once for all channels (channels-monitor docs/render-schedule.md)
       matrix: {part: [0, 1, 2, 3, 4, 5, 6, 7]}
     env:
       SLUG: ${{ needs.pick.outputs.slug }}
