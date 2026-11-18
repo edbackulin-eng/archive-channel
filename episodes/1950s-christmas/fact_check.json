@@ -1,0 +1,32 @@
+[
+ {
+  "claim": "The aluminum Christmas tree retailed for $25 in 1958.",
+  "source": "https://en.wikipedia.org/wiki/Aluminum_Christmas_tree",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, 51.3 percent of housing units were owner‑occupied.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, the price of a pound of butter was 73 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, the average family income was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, department store sales rose 54 percent from November to December.",
+  "source": "https://en.wikipedia.org/wiki/Economics_of_Christmas",
+  "verdict": "partly",
+  "fix": "In November 2004, department store sales nationwide rose to $31.9 billion in December 2004, an increase of 54 percent."
+ }
+]

@@ -1,0 +1,144 @@
+[price 25 1958 | Aluminum tree]
+> On a snowy January evening in a small Midwestern town, a family gathers around a modest, flickering Christmas tree, which cost [today 25 1958] in today's money, the scent of buttered popcorn mingling with the distant hum of a radio playing a new Rudolph story. How did ordinary families make this holiday a reality in the 1950s? What did a simple tree cost, and how did the economy shape the season? We'll come back to that.
+< The scene unfolds in a living room with a single lamp, a worn sofa, and a wooden table.
+> The Christmas tree, a simple pine with a handful of ornaments, stands in the corner.
+> Outside, snowflakes drift onto the porch.
+< The family, a husband, wife, and two children, laugh softly as the radio crackles.
+
+## Chapter 1 | American Homes | 1950-1955
+
+< The 1950s were a time of postwar optimism.
+> Families were settling into new homes, many of them owned outright.
+< In 1950, 51.3 percent of housing units were owner‑occupied.
+> This meant that a large portion of families could afford to put money into holiday décor.
+< Across the nation, the population had surpassed 150 million people, representing a gain of 10.4 percent since 1940.
+> The median age had increased to 30.2 years, while the under-15 cohort accounted for 26.9 percent of the population.
+< In millions of households, the daily routine hummed with the steady rhythm of industrial labor and office work.
+> In 42.1 percent of households, the head of the family was employed as a craftsman or a machine operator.
+< Husbands and wives lived together in these growing suburbs and established neighborhoods, with the wife employed in 19.8 percent of husband‑wife families.
+> Children under the age of 18 were present in 58.2 percent of all homes, filling the hallways with noise and anticipation as December approached.
+< The average family size had decreased to three people, creating cozy living spaces inside brick bungalows and split‑level tract houses.
+> Kitchens hummed with new electric appliances, while linoleum floors reflected the soft light of ceiling fixtures as dinner was prepared.
+
+[price 4237 1950 | Family income]
+That is [today 4237 1950] in today's money.
+
+< A typical family earned about $4,237 a year.
+> With a modest budget, the holiday became a carefully planned event.
+< The family would save a portion of their income for gifts, decorations, and the festive feast.
+
+[price 3808 1950 | Family expenditure]
+That is [today 3808 1950] in today's money.
+
+< Their yearly spending on groceries, clothing, and housing accounted for the majority of that budget.
+> Food alone took up 29.7 percent of the average family's spending, forming the single largest expenditure category.
+< The average American in 1950 consumed 3,260 calories per day, a slight increase from the 1930s, reflecting a growing appetite for convenience foods.
+> Refrigerators hummed in kitchens across the land, preserving meats, dairy, and fresh vegetables for the holiday dinner table.
+
+## Chapter 2 | Lights and Trees | 1958-1965
+
+< The 1950s saw a shift from candlelit trees to electric lights.
+> The first commercially successful artificial tree was not green; it was silver, made of aluminum.
+< By 1958, these trees were a common sight in American homes.
+> The aluminum tree, with its foil needles and rotating color wheel, became a symbol of the era’s burgeoning consumer culture.
+< Manufactured in places like Manitowoc, Wisconsin, by the Aluminum Specialty Company, flagship models like the Evergleam retailed for $25.
+> These shimmering, silvery branches were swirled and tapered to a handsome realistic fullness.
+< They were fireproof and durable, allowing families to use them year after year without dropping a single needle.
+> Because draping electric lights directly through the metal branches could cause a short circuit, homeowners placed a floor‑based color wheel underneath.
+< The clear plastic wheel rotated, different colored segments cast a dazzling array of hues throughout the metallic boughs.
+> The custom of stringing lights along streets and homes had begun in the early twentieth century, but it was the mid‑century boom that turned it into a holiday staple.
+> By the 1960s, tract housing developments across the United States featured roofs and eaves meticulously outlined in weatherproof strings of incandescent bulbs.
+< Neighborhood streets glowed warmly at dusk as families walked on concrete sidewalks to admire the outdoor displays on neighboring properties.
+> Children pointed eagerly at illuminated wireframe reindeer and glowing plastic Santas mounted securely on manicured front lawns.
+
+## Chapter 3 | The Cost of Christmas | 1950-1960
+
+< In 1950, the price of a pound of butter had doubled from 32 cents to 73 cents.
+> Butter was a staple in holiday cooking, used for baking cookies and making buttered popcorn.
+
+[price 73 1950 | Butter]
+That is [today 73 1950] in today's money.
+
+< A pound of round steak, another holiday favorite, rose from 28 cents to 94 cents.
+
+[price 94 1950 | Round steak]
+That is [today 94 1950] in today's money.
+
+< Pork chops, often served with mashed potatoes, increased from 26 cents to 75 cents per pound.
+
+[price 75 1950 | Pork chops]
+That is [today 75 1950] in today's money.
+
+< By 1960, the price of a pound of butter had stabilized at 75 cents.
+> The cost of steak had climbed to 1.06 dollars, and pork chops to 86 cents.
+
+[price 75 1960 | Butter]
+That is [today 75 1960] in today's money.
+
+[price 106 1960 | Round steak]
+That is [today 106 1960] in today's money.
+
+[price 86 1960 | Pork chops]
+That is [today 86 1960] in today's money.
+
+< The average family income had risen to $6,691 by 1960, reflecting the continued postwar boom.
+
+[price 6691 1960 | Family income]
+That is [today 6691 1960] in today's money.
+
+< Their annual expenditures had grown to $5,390.
+
+[price 5390 1960 | Family expenditure]
+That is [today 5390 1960] in today's money.
+
+< Housing had become the largest single category of expense by 1960, accounting for 29.5 percent of family spending.
+> Food followed closely at 24.3 percent, while clothing took up 10.4 percent.
+< Across American cities, supermarkets expanded rapidly, offering frozen and ready‑to‑go foods that accommodated dual‑earner households.
+< Shoppers pushed heavy wire carts down wide grocery aisles stacked high with canned goods, cellophane‑wrapped meats, and colorful holiday treats.
+
+## Chapter 4 | Family Life and Work | 1950-1965
+
+< In 1950, women made up 28.8 percent of the workforce, a modest increase from earlier decades.
+> The wife in the living room was likely a homemaker, but many women also worked part‑time to support the family.
+< By 1960, female participation rose to 37.7 percent.
+> Men’s participation had peaked at 86.4 percent in 1950 and fell to 83.3 percent by 1960.
+< The average family size hovered around three people.
+> In 1950, 58.2 percent of families had children under 18.
+< By 1960, that figure was 60.6 percent.
+> Unemployment was low, at 4 percent in 1950, and hovered around 5.5 percent in 1960.
+< The economy was robust, allowing families to invest in holiday traditions and charitable giving.
+> Average family charitable contributions grew from $165 in 1950 to $303 by 1960.
+< In bustling urban centers like New York City and Boston, families navigated crowded sidewalks, department store windows, and public transit systems.
+> In New York City, 61.0 percent of residents regularly used public transportation to get to work.
+> Retail and trade jobs accounted for over 23 percent of employment in both cities, placing workers right at the center of the bustling holiday shopping season.
+< Office workers in crisp suits and wool coats hurried through subway turnstiles carrying wrapped parcels tied with red ribbon.
+< Department store floorwalkers directed throngs of shoppers past towering display windows adorned with mechanical elves and velvet‑lined shelves.
+
+## Chapter 5 | The Economics of Christmas | 1948-1965
+
+< The Christmas season was a significant retail driver.
+> By 1950, department stores were already seeing a surge in sales as early as October.
+< The holiday shopping season was a major part of the economy.
+> In November 2004, department store sales nationwide rose to $31.9 billion in December 2004, an increase of 54 percent.
+< Bookstores and jewelry stores saw even larger surges.
+> The rise in consumer spending created jobs.
+> Employment in retail rose from 1.6 million to 1.8 million in the two months leading up to Christmas.
+< Christmas cards, a staple of the season, were sent in staggering numbers—1.9 billion in the United States each year.
+> Live Christmas trees were also in high demand, with millions cut down and transported from tree farms to city lots and neighborhood sidewalks.
+< Savings programs like Christmas clubs helped families put away small amounts each week during the year to ensure funds were available when December arrived.
+< Bank depositors received special passbooks and token stamps to track their weekly deposits toward the grand total needed for holiday purchases.
+< Store clerks stamped receipts and packed fragile glass ornaments into cardboard boxes while cash registers rang continuously in the background.
+
+## Chapter 6 | Legacy and Memory | 1950-1965
+
+< The 1950s left an enduring image of holiday cheer: a modest tree, a radio playing a new story, and a family sharing a meal.
+> The era’s economic prosperity allowed families to celebrate, even as prices rose.
+< The commercialization of Christmas—symbolized by the aluminum tree—was critiqued in the 1965 television special 'A Charlie Brown Christmas,' which highlighted the tension between tradition and consumerism.
+> In that famous broadcast, Lucy van Pelt implored Charlie Brown to get a big, shiny aluminum tree, perhaps painted pink, for the group's holiday play.
+< Charlie Brown instead opted for a small, scrawny natural tree, lamenting the over‑commercialization of the holiday.
+> Today, the memories of that era are preserved in photographs, films, and the stories told by those who lived through it.
+< The questions we raised—how families afforded the holiday, what a tree cost, and how the economy shaped the season—are answered by the numbers and images we’ve seen.
+> Thank you for joining us on this journey through 1950s America’s Christmas.
+< Stay tuned for more stories about everyday life in the twentieth century.
+< Archive film reels continue to turn, projecting grainy images of smiling faces gathered around glowing living room hearths.
+< The timeless spirit of the mid‑century holiday remains captured forever in the flickering light of history.

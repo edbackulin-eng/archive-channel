@@ -1,0 +1,43 @@
+{
+ "slug": "1950s-christmas",
+ "name": "Christmas in 1950s America",
+ "title": "Christmas in 1950s America: The Cost of Holiday Cheer",
+ "thumbnail_words": "$25 TO DECORATE",
+ "thumbnail_subject": "Aluminum Christmas tree",
+ "words": 1563,
+ "minutes_at_150wpm": 10.4,
+ "sources": [
+  {
+   "title": "Observance of Christmas by country",
+   "url": "https://en.wikipedia.org/wiki/Observance_of_Christmas_by_country"
+  },
+  {
+   "title": "Aluminum Christmas tree",
+   "url": "https://en.wikipedia.org/wiki/Aluminum_Christmas_tree"
+  },
+  {
+   "title": "Christmas lights",
+   "url": "https://en.wikipedia.org/wiki/Christmas_lights"
+  },
+  {
+   "title": "Rudolph the Red-Nosed Reindeer",
+   "url": "https://en.wikipedia.org/wiki/Rudolph_the_Red-Nosed_Reindeer"
+  },
+  {
+   "title": "Economics of Christmas",
+   "url": "https://en.wikipedia.org/wiki/Economics_of_Christmas"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 5,
+  "supported": 4
+ }
+}
