@@ -4,37 +4,62 @@
 < A pound of butter cost 73 cents in 1950.
 > How much did that butter cost in 1955? What did a family spend on a week of food? And how much did they earn to buy it? We'll find out. And that's not all.
 ## The Breakfast Table | New York City | 1955
+[film 8]
 < The morning light spills across a small kitchen, the walls painted a cheerful yellow. A woman in a floral dress places a loaf of bread on the counter, a butter stick gleaming beside it. A child in a striped shirt watches her. The kitchen is a modest space where a family gathers for breakfast. The streets below are filled with yellow cabs and pedestrians rushing to the subway stations, while neighborhood bakers slide hot loaves into glass display cases. The city's workers step out onto concrete sidewalks wearing wool overcoats and leather shoes, carrying briefcases or lunch pails.
+[film 8]
 < In New York City at this time, residents navigated a dense urban landscape where millions lived in close proximity across the five boroughs. Grocery shoppers walked down bustling avenues lined with neighborhood green grocers, butchers, and bakeries. Storefronts displayed fresh produce in wooden crates and hanging meats on iron hooks. Inside the apartments, homemakers managed their households with gas stoves, ice boxes or early electric refrigerators, and rotary-dial telephones mounted on the wall. Children hurried down brownstone steps with leather school satchels swinging at their sides, heading toward public schools where classrooms bustled with activity.
+[film 8]
 < Public transportation formed the circulatory system of the metropolis, with rumbling subway cars and green buses carrying crowds to offices, garment factories, and docks along the rivers. Newspaper vendors called out headlines beside subway entrances while morning commuters unfolded broadsheets to read the latest news. Local drug fountains served coffee and toasted bagels to shopgirls and clerks beginning their shifts. The rhythmic clatter of typewriters echoed from office windows above the street level, a soundtrack of commerce that defined the working day.
 [price 3808 1950 | Average family expenditure]
+[film 8]
 < That is [today 3808 1950] in today's money.
+[film 8]
 < That is the total amount a typical family spent in a year, covering food, clothing, housing, and the occasional new appliance. It represented the entire household budget. Food, clothing, and housing took up the majority of that amount.
 ## Assembly Lines | Detroit | 1955
+[film 8]
 < The camera shifts to a wide shot of the Ford River Rouge complex, its vast steel structures rising like a cathedral of industry. Workers in coveralls move along a conveyor, each station a rhythm of motion. The Rouge complex is a sprawling campus where raw iron ore and coal arrive by lake freighters and are transformed into running vehicles. Inside, parts travel on rail tracks to the assembly lines. The plant employed many workers, and a quarter of them were African American, carving out a place in heavy industry. Shift changes bring a flood of workers in soiled denim and work jackets walking toward the parking lots and streetcars.
+[film 8]
 < Inside the massive factory buildings, the air hums with the noise of stamping presses, pneumatic wrenches, and overhead cranes lifting multi-ton frames. Workers stand at fixed workstations along the moving assembly line, repeating specialized motions as bodies and engines pass by on overhead conveyors. The sheer scale of the River Rouge complex allows it to transform raw materials into finished automobiles entirely within its gates. Freight trains loaded with parts rumble along interior railroad tracks while lake freighters dock at the river slips to unload coal and iron ore.
+[film 8]
 < Outside the factory gates, union organizers and workers gather near the plant entrances to discuss grievances and distribute leaflets. The United Auto Workers represents thousands of employees across these massive plants, bargaining for wages, pensions, and working conditions. Nearby neighborhoods feature rows of working-class homes where factory employees tend small vegetable gardens and wash grease from their hands after a long shift. The local diners fill up with men in work shirts eating hearty breakfasts before the morning whistle blows across the industrial flats.
 [price 75 1950 | Pork chops per pound]
+[film 8]
 < That is [today 75 1950] in today's money.
+[film 8]
 < A pound of pork chops cost 75 cents, a portion of a family's weekly budget that went to the table. Workers traded their daily labor for wages that helped support their families.
 [price 4237 1950 | Average family income]
+[film 8]
 < That is [today 4237 1950] in today's money.
+[film 8]
 < The average U.S. family's income was $4,237 in 1950, enough to cover expenses and leave a small margin for savings.
 ## The Rise of Television | Chicago | 1955
+[film 8]
 < A living room in a suburban Chicago house is filled with the glow of a new black‑and‑white television. A family of four sits on a sofa, the picture flickering with a color‑broadcasted musical. The television is a new luxury, a window to the world. The family watches the first televised stage production of a popular musical, the sound of a live orchestra filling the room. Across the nation, living rooms are transforming as families purchase television sets to watch variety shows, westerns, and evening news broadcasts. Outside the window, quiet suburban streets feature neatly mowed lawns and children riding bicycles past rows of newly constructed single‑family homes. Husbands pull their sedans into small driveways after commuting from downtown offices and factories. In the kitchen, gleaming chrome refrigerators and electric ranges make meal preparation faster than ever before. The television set serves as the glowing hearth of the modern home, drawing children and parents together after dinner.
+[film 8]
 < Chicago neighborhoods buzz with the energy of mid-century urban expansion and bustling commerce. Department stores in the Loop display elaborate window arrangements featuring autumn fashions, gleaming kitchen appliances, and shiny bicycles for the upcoming holiday season. Shoppers carrying paper bags filled with groceries board crowded streetcars and buses, heading back to multi-family brick flats and bungalows. Local newsstands display stacks of daily newspapers and colorful magazines while neighborhood children play stickball in the alleys behind the brick houses.
+[film 8]
 < The city's industrial districts hum with activity as freight yards marshal trains loaded with steel, grain, and manufactured goods. Workers in leather jackets and heavy boots walk home from nearby factories past corner taverns glowing with neon signs advertising Schlitz and Pabst. In residential areas, bakeries and butcher shops display signs written in various European languages, reflecting the rich immigrant heritage of the neighborhoods. Evening church bells echo across the rooftops as families sit down for dinner.
 ## Family Life in the Suburbs | Cleveland | 1955
+[film 8]
 < A quiet street lined with modest homes, each with a neatly trimmed lawn. A young couple in their twenties drives a car to their new house, a modest two‑story home. The house is a small dream, a place where the future unfolds. The couple installs a typewriter in the office, a tool that will help them write letters, bills, and school assignments. Neighborhood children play hopscotch on the concrete sidewalks while mothers push baby carriages along the tree‑lined avenues. Local grocery stores feature wide aisles and early supermarket displays where packaged foods and frozen goods line the refrigerated shelves. Fathers gather on front porches on warm evenings to discuss baseball, lawn care, and the latest automobile models rolling out of Detroit. Community life revolves around local churches, school parent‑teacher associations, and neighborhood bowling leagues. The postman delivers mail twice a day, handing letters and department store catalogs directly to homeowners waiting on their front steps.
+[film 8]
 < In suburban communities surrounding industrial centers, postwar housing developments rise from former farmlands with remarkable speed. Construction crews use power saws and hammers to frame out ranch-style houses that feature picture windows and attached carports. Families unpack cardboard boxes in freshly painted living rooms while neighbor women arrive with homemade casseroles to welcome the newcomers. The sound of lawn mowers fills the weekend air as fathers take pride in cultivating emerald-green turf around their newly purchased properties.
+[film 8]
 < Local shopping centers emerge near residential tracts, providing ample parking lots for station wagons and sedans. Inside supermarkets, shoppers push metal wire carts down aisles stocked with canned goods, bottled beverages, and cellophane-wrapped meats. Automated cash registers ring up totals while clerks bag groceries in brown paper sacks. Children crowd around comic book racks while their mothers chat with neighbors near the dairy coolers.
 [price 5390 1960 | Average family expenditure]
+[film 8]
 < That is [today 5390 1960] in today's money.
+[film 8]
 < The average family spent over five thousand dollars a year, reflecting the growing cost of living and the shift toward housing as the largest expense. Housing costs took twenty-nine point five percent of the household budget, surpassing food as the single largest expenditure category for American families.
 ## The Road Ahead | America | 1955
 [price 94 1950 | Round steak per pound]
+[film 8]
 < That is [today 94 1950] in today's money.
+[film 8]
 < A pound of round steak cost 94 cents, a treat that families might reserve for a special occasion.
+[film 8]
 < The final scenes show a bustling highway, cars lined up as commuters head to work. A billboard advertises a new automobile, a symbol of freedom and progress. Automobiles fill the asphalt thoroughfares, and a majority of households owned at least one car for daily travel and weekend outings. Service stations along the highway display glowing signs for gasoline, motor oil, and quick vehicle maintenance. Diners and roadside motels dot the landscape, welcoming travelers taking advantage of the expanding national highway network. Industrial parks and manufacturing plants generate steady hums of machinery, keeping employment high across the post‑war economy. Newspapers rustle in commuters' hands as they ride buses and trains into the bustling hearts of Boston, New York, and Chicago. The day in 1955 America is a mosaic of simple moments and grand ambitions. The price of butter, steak, and pork chops were small but meaningful. The average family’s income and expenditures framed their everyday choices. This is only the beginning.
+[film 8]
 < Across the American landscape, the rhythm of daily life is shaped by the hum of assembly lines, the glow of television screens in suburban living rooms, and the steady movement of automobiles along expanding asphalt highways. Workers punch time clocks at dawn, earning wages that support a growing middle class and afford new comforts like household appliances and family cars. Neighborhood streets echo with the laughter of children and the footsteps of postmen delivering mail to front porches.
+[film 8]
 < In cities like Boston and New York, commuters crowd onto subway platforms and buses, carrying briefcases and lunch pails toward offices and factories that drive the national economy. Markets display fresh produce and cuts of meat that feed millions of households whose budgets reflect the careful balance between earnings and necessities. This mid-century world stands at the threshold of profound changes, built on a foundation of industrial might, community ties, and everyday routines.
