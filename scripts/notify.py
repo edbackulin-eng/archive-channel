@@ -20,6 +20,8 @@ def gh(*args):
 
 
 def main(subject, body=""):
+    print(f"LETTER (mail is off (owner 18.11): the text stays in the Actions log, nobody is written to): {subject}\n{body}")
+    return 0
     issues = json.loads(gh("issue", "list", "--label", "run-log", "--state", "open", "--json", "number") or "[]")
     if issues:
         n = str(issues[0]["number"])

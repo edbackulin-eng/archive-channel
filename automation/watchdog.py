@@ -62,6 +62,8 @@ def failed_step(run_id):
 
 
 def notify(subject, body):
+    print(f"LETTER (mail is off (owner 18.11): the text stays in the Actions log, nobody is written to): {subject}")
+    return
     subprocess.run([sys.executable, str(ROOT / "scripts" / "notify.py"), subject, body])
 
 
