@@ -1,0 +1,39 @@
+{
+ "slug": "1960s-color",
+ "name": "Life in 1960s America in Color",
+ "title": "Life in 1960s America: Prices, Wages, and Everyday Costs",
+ "thumbnail_words": "$1.06 STEAK",
+ "thumbnail_subject": "A 1960s grocery store display with price tags showing meat and household goods",
+ "words": 1770,
+ "minutes_at_150wpm": 11.8,
+ "sources": [
+  {
+   "title": "1960s",
+   "url": "https://en.wikipedia.org/wiki/1960s"
+  },
+  {
+   "title": "History of the United States (1964–1980)",
+   "url": "https://en.wikipedia.org/wiki/History_of_the_United_States_(1964%E2%80%931980)"
+  },
+  {
+   "title": "Great Society",
+   "url": "https://en.wikipedia.org/wiki/Great_Society"
+  },
+  {
+   "title": "Counterculture of the 1960s",
+   "url": "https://en.wikipedia.org/wiki/Counterculture_of_the_1960s"
+  },
+  {
+   "title": "Kodachrome",
+   "url": "https://en.wikipedia.org/wiki/Kodachrome"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 14,
+  "supported": 12
+ }
+}

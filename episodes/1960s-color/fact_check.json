@@ -1,0 +1,86 @@
+[
+ {
+  "claim": "The average family income in 1960 was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family expenditures in 1960 were $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The median age in the United States decreased to 29.5 years in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Over 48 percent of New York City workers held white-collar jobs in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Sixty-one percent of New York City residents regularly used public transportation to get to work in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of round steak cost $1.06 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of butter cost 75 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of pork chops cost 86 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures were $5,390 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The average family head earned about $6,691 a year in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "The average family income in the country was $6,691 in 1960."
+ },
+ {
+  "claim": "A half-gallon of milk cost 52 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "A pound of bacon cost 66 cents in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Over 70 percent of American families owned automobiles in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "partly",
+  "fix": "73 percent of Americans owned automobiles in 1960."
+ },
+ {
+  "claim": "Average family charitable giving was $303 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]
