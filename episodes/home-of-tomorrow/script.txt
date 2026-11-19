@@ -1,0 +1,102 @@
+> In the gleaming lights of Disneyland’s Tomorrowland, a chrome‑capped house stands ready to show the world what the American home of tomorrow might look like.
+< Imagine a family stepping inside a plastic‑shaped dream, watching every wall and window glow with future promise.
+< What did that dream cost? How much did everyday staples like butter, steak, and a family’s weekly budget weigh on a 1950s household?
+< And how did the optimism of the Atomic Age translate into the prices we pay today?
+< We’ll come back to those questions, but first, let’s see what a pound of butter cost in 1950.
+[price 73 1950 | Butter per lb]
+> That is [today 73 1950] in today's money.
+
+## The House of the Future | Disneyland, California | 1957-1967
+> The Monsanto House of the Future opens its doors on a sunny afternoon, the bright plastic panels reflecting the midday sun.
+< Inside, a family of four sits on a molded sofa, their eyes wide as the walls slide to reveal a kitchen that could be built in a day.
+< The archival footage shows visitors walking through the rooms, admiring the futuristic innovations displayed inside.
+< Within the first weeks of opening, visitors toured the exhibit, getting their first glimpse of tomorrow.
+< Over its operational lifetime, the house saw many visitors pass through its futuristic rooms before closing its doors.
+< Demolition crews later discovered how sturdy the materials really were during the dismantling process.
+< Workers finally had to use specialized equipment to crush the structure into smaller parts.
+< Today, the area remains a part of the park's history.
+[pause 0.6]
+< The footage shows a close‑up of a plastic faucet, its sleek curve a promise of modern convenience.
+< Outside, a line of cars waits on the parking lot, their drivers curious about the new technology.
+< The narrator notes that the House of the Future was a showcase of the era’s optimism, a place where the idea of a plastic home felt almost tangible.
+< Visitors walked past polished partitions, marveling at how engineered polymers might replace the wood and brick of traditional neighborhoods.
+< Children pointed eagerly toward the compact sleeping quarters, where built-in furniture utilized every square inch of space.
+< For a nation experiencing a post-war housing boom, this exhibition offered a radical alternative to conventional suburban expansion.
+< Families strolled along the walkways of Tomorrowland, carrying paper programs and sporting the wide-brimmed hats typical of late-fifties leisure.
+
+## Googie Roads | Southern California | 1950s
+> A montage of neon signs flickers over a bustling highway, the sky a deep blue above a line of sleek cars.
+< The camera pans to a motoring family pulling into a Googie‑style motel, the building’s upswept roof and bold neon letters welcoming them.
+< The narrator describes how Googie architecture grew from the Streamline Moderne of the 1930s, a style that mirrored the speed of the automobile and suburban expansion.
+< With car ownership increasing, cities no longer had to be centered on a downtown hub but could spread out into suburbs where business hubs were interspersed with residential areas.
+< Smaller suburban drive-in restaurants served as architectural signboards advertising the business to vehicles on the road using bold style choices, large pylons, and bright neon letters.
+< A young couple steps out of their car, their clothes crisp, their faces lit by the glow of a nearby coffee shop.
+< The footage shows a sign that reads “Googie’s Coffee Shop” in a bold, futuristic font. The name "Googie" was a family nickname of Lillian K. Burton, the wife of the original owner.
+< Architects shaped this roadside vernacular, incorporating boomerangs, diagonals, and atomic bursts.
+[price 94 1950 | Round steak per lb]
+> That is [today 94 1950] in today's money.
+[price 75 1950 | Pork chops per lb]
+> That is [today 75 1950] in today's money.
+< The narrator explains that in the 1950s families would compare everyday food prices against their weekly budget.
+< Motorists cruising down Sunset Boulevard watched these high-energy silhouettes flash by in a blur of plate glass and structural steel.
+< Coffee shop patrons gathered around circular counters beneath suspended light fixtures that looked like diagrammatic atoms.
+< Editor Douglas Haskell of House and Home magazine coined the term Googie after seeing Googie's with architectural photographer Julius Shulman, yet millions of travelers embraced its whimsical charm.
+< Waitresses in starched uniforms balanced heavy trays while neon tubes buzzed against the warm Southern California evening air.
+
+## Home Automation Dreams | America | 1950s-1960s
+> A black‑and‑white clip shows a family in a modest kitchen, the radio humming as a new washing machine whirs to life.
+< The narrator explains that early home automation began with labor‑saving machines, starting with electric and gas-powered appliances like washing machines introduced in 1904, refrigerators in 1913, and water heaters in 1889.
+< A close‑up of a refrigerator door reveals a plastic seal, a nod to the plastic innovations seen in the Monsanto House.
+< The camera cuts to a family using a remote control to turn on a light, a primitive step toward the future of home control.
+[price 106 1960 | Round steak per lb]
+> That is [today 106 1960] in today's money.
+[price 86 1960 | Pork chops per lb]
+> That is [today 86 1960] in today's money.
+[price 75 1960 | Butter per lb]
+> That is [today 75 1960] in today's money.
+[price 66 1960 | Bacon per lb]
+> That is [today 66 1960] in today's money.
+[price 52 1960 | Milk half gallon]
+> That is [today 52 1960] in today's money.
+< The narrator points out that by 1960 families were buying more advanced appliances, yet the cost of everyday foods had risen modestly.
+< Homemakers sorted laundry beside automatic agitators while children watched flickering television broadcasts in the adjoining living room.
+< Advertisements in popular magazines promised complete domestic freedom through motorized convenience and streamlined kitchen layouts.
+< Engineers experimented with early control networks, dreaming of central panels that would monitor every operational system in the house.
+< Utility rooms echoed with the steady hum of electric motors as household productivity reached unprecedented levels across the country.
+
+## The Atomic Optimism | 1950s | United States
+> Footage of a bustling city skyline at dusk, neon lights flickering, the air thick with the promise of progress.
+< The narrator recalls that after the Trinity test in 1945 and the dawn of the Atomic Age, nuclear optimism became a symbol of hope, with people dreaming of nuclear‑powered homes and cars.
+< A newsreel clip shows a scientist speaking about the potential of atomic energy to power everything from homes to space shuttles.
+< The narrator notes that post‑war era families experienced a newfound prosperity.
+< The camera shows a family gathering around a table, a loaf of bread and a pot of butter, the prices of which the narrator will soon detail.
+< Tourists drove out into the Nevada desert to watch above-ground atomic tests light up the night sky during festive midnight gatherings.
+< Casino owners advertised special rooftop viewing areas where visitors sipped atomic cocktails while waiting for the morning detonations.
+< Scientists predicted that nuclear generators would eventually produce electrical power so inexpensive that utility meters would be discarded entirely.
+< Families listened to radio broadcasts detailing peaceful nuclear explosions planned under Project Plowshare to reshape mountains and connect waterways.
+
+## Everyday Spending | 1960 | Families
+> A family sits at a kitchen table, a newspaper spread out, the numbers of the day printed in bold.
+< The narrator explains that in 1960 the average family expenditures reached $5,390.
+< Bureau of Labor Statistics records show the U.S. population had surpassed 179 million by 1960, with the under-15 cohort surging to 31.1 percent of the population.
+< Female workforce participation climbed to 37.7 percent, while male participation drifted down to 83.3 percent.
+< A close‑up shows a grocery list: butter, bacon, milk, and a pound of steak, each item priced higher than a decade earlier.
+< The footage then cuts to a suburban street, a family driving a car that has a small plaque indicating its make and model.
+< The narrator notes that 73% of families owned a car, a symbol of the era’s mobility and the costs associated with it.
+< The narrator concludes that the dream of the House of the Future, the optimism of the Atomic Age, and the rise of home automation all intersected in the everyday prices families paid.
+< Household budgets reflected changing priorities as spending on housing surpassed food expenses for the first time in modern history.
+< Shoppers navigated crowded supermarket aisles filled with packaged goods, frozen dinners, and convenient ready-to-go meal options.
+< Husbands and wives reviewed monthly mortgage statements around dining room tables lit by modern globe pendant lamps.
+< Parents allocated hard-earned wages toward charitable contributions, educational materials, and healthcare insurance plans.
+
+## The Price of Tomorrow | 1960 | Reflection
+> The screen fades to a montage of old footage: a plastic house, neon signs, a family at the kitchen table.
+< The narrator reflects on how the prices of everyday goods—steak, butter, milk—shifted over the decade, yet the sense of possibility remained.
+< Bureau data recorded that food stood at 24.3 percent and clothing at 10.4 percent of expenses.
+< Average family income in New York City reached $7,918, while Boston families averaged $7,992, showcasing a rising standard of living across urban centers.
+< The final image is a child holding a plastic toy, the toy’s bright colors echoing the plastic panels of the Monsanto House.
+< The narrator ends by asking the viewer to consider how the prices we pay today echo the hopes of that era.
+< Archive reels capture the final quiet moments of an exhibition hall before the lights are dimmed for the evening.
+< Viewers are left to ponder whether the mechanical conveniences of the mid-century fulfilled their ambitious utopian promises.
+< The camera pulls back slowly from a suburban window, framing a rapidly changing American landscape poised on the edge of a new decade.
+< Generations of families carried these domestic dreams forward, shaping the modern consumer world we inhabit today.

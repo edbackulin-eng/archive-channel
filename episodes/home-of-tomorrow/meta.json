@@ -1,0 +1,39 @@
+{
+ "slug": "home-of-tomorrow",
+ "name": "The American Home of Tomorrow, as Imagined in 1956",
+ "title": "The American Home of Tomorrow, as Imagined in 1956",
+ "thumbnail_words": "73¢ BUTTER",
+ "thumbnail_subject": "A family cooking in a 1950s kitchen with archive footage style",
+ "words": 1532,
+ "minutes_at_150wpm": 10.2,
+ "sources": [
+  {
+   "title": "Monsanto House of the Future",
+   "url": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future"
+  },
+  {
+   "title": "Googie architecture",
+   "url": "https://en.wikipedia.org/wiki/Googie_architecture"
+  },
+  {
+   "title": "Home automation",
+   "url": "https://en.wikipedia.org/wiki/Home_automation"
+  },
+  {
+   "title": "Atomic Age",
+   "url": "https://en.wikipedia.org/wiki/Atomic_Age"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 57,
+  "supported": 40
+ }
+}

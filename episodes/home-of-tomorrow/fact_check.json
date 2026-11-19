@@ -1,0 +1,344 @@
+[
+ {
+  "claim": "A pound of butter cost 73 cents in 1950",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The Monsanto House of the Future was an attraction at Disneyland's Tomorrowland from 1957 to 1967.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The Monsanto House was sponsored by Monsanto Company, MIT, and WED Enterprises.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The design team included MIT architecture faculty Richard Hamilton and Marvin Goody.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "MIT civil engineering faculty included Albert G. H. Dietz, Frank J. Heger, Jr., and Frederick J. McGarry.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The house featured four symmetric wings cantilevered off a central core and was fabricated with glass-reinforced plastics.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The attraction featured microwave ovens which eventually became commonplace.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The house saw over 435,000 visitors within the first six weeks of opening.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The house ultimately saw over 20 million visitors before closing in 1967.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Demolition crews failed to demolish the house using wrecking balls, torches, chainsaws, and jackhammers.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The half-inch steel bolts used to mount it to its foundation broke before the structure itself did.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The reinforced concrete foundation remains in its original location at Pixie Hollow, painted green and used as a planter.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Googie architecture originated in Southern California and was popular from roughly 1945 to the early 1970s.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The term Googie comes from Googies Coffee Shop in Hollywood designed by John Lautner.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The name Googie dates to 1949 when architect John Lautner designed Googie's Coffee Shop.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Googie's was named after Lillian K. Burton, wife of original owner Mortimer C. Burton.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "partly",
+  "fix": "The name \"Googie\" was a family nickname of Lillian K. Burton, the wife of the original owner."
+ },
+ {
+  "claim": "Editor Douglas Haskell coined the term Googie after seeing Googie's with Julius Shulman.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Alan Hess writes that mobility in Los Angeles during the 1930s was characterized by the influx of the automobile.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Wayne McAllister designed the 1949 Bob's Big Boy restaurant in Burbank.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Helen Liu Fong created interiors for Johnie's Coffee Shop, Norms Restaurant, and Holiday Bowl.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "The Theme Building at LAX was designed by James Langenheim of William Pereira and Charles Luckman.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "unsupported",
+  "fix": ""
+ },
+ {
+  "claim": "Early home automation began with self-contained electric or gas powered home appliances.",
+  "source": "https://en.wikipedia.org/wiki/Home_automation",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The X10 communication protocol for electronic devices was developed in 1975.",
+  "source": "https://en.wikipedia.org/wiki/Home_automation",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 2012, 1.5 million home automation systems were installed in the United States.",
+  "source": "https://en.wikipedia.org/wiki/Home_automation",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "More than 45 million smart home devices were installed in U.S. homes by the end of 2018.",
+  "source": "https://en.wikipedia.org/wiki/Home_automation",
+  "verdict": "partly",
+  "fix": "More than 45 million smart home devices will be installed in U.S. homes by the end of the year 2018."
+ },
+ {
+  "claim": "The Atomic Age began with the detonation of the first nuclear weapon at the Trinity test on July 16, 1945.",
+  "source": "https://en.wikipedia.org/wiki/Atomic_Age",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "William L. Laurence coined the phrase Atomic Age.",
+  "source": "https://en.wikipedia.org/wiki/Atomic_Age",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "David Dietz wrote that you will travel for a year on a pellet of atomic energy the size of a vitamin pill.",
+  "source": "https://en.wikipedia.org/wiki/Atomic_Age",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Glenn T. Seaborg chaired the Atomic Energy Commission.",
+  "source": "https://en.wikipedia.org/wiki/Atomic_Age",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1950, the U.S. population had surpassed 150 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, the average U.S. family income was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, a pound of butter cost 73 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1950, a pound of round steak cost 94 cents and pork chops cost 75 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the U.S. population had surpassed 179 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, the average family income in the country was $6,691.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, housing became the largest category of expense at 29.5 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a pound of round steak cost $1.06, pork chops cost 86 cents, and butter cost 75 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The house was sponsored by Monsanto Company and made possible with MIT and WED Enterprises.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Civil engineering faculty included Albert G. H. Dietz, Frank J. Heger, Jr., and Frederick J. McGarry.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The house saw over 435,000 visitors within the first six weeks and over 20 million overall.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Workers used choker chains to crush it because the half-inch steel bolts broke before the structure did.",
+  "source": "https://en.wikipedia.org/wiki/Monsanto_House_of_the_Future",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Googie's was located at the corner of Sunset Boulevard and Crescent Heights in Los Angeles and was demolished in 1989.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Editor Douglas Haskell of House and Home magazine and architectural photographer Julius Shulman named Googie architecture.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "partly",
+  "fix": "Editor Douglas Haskell of House and Home magazine coined the term Googie after seeing Googie's with architectural photographer Julius Shulman."
+ },
+ {
+  "claim": "Alan Hess wrote Googie: Ultra Modern Road Side Architecture.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Armet and Davis firm was founded in 1947 by Louis Armet and Eldon Davis.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Designer Helen Liu Fong joined Armet and Davis in 1951.",
+  "source": "https://en.wikipedia.org/wiki/Googie_architecture",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1950, the country was in the midst of the post-World War II business cycle with unemployment averaging 4 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "The U.S. population surpassed 150 million by 1950.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in 1950 was $4,237.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures in 1950 were $3,808.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "By 1960, the U.S. population surpassed 179 million.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Female workforce participation climbed to 37.7 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Male workforce participation declined to 83.3 percent in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family income in the country was $6,691 in 1960.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Average family expenditures in 1960 were $5,390.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "Housing became the largest category of expense in 1960-61 at 29.5 percent, with food at 24.3 percent.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ },
+ {
+  "claim": "In 1960, a pound of round steak cost $1.06, pork chops cost 86 cents, butter cost 75 cents, bacon cost 66 cents, and a half-gallon of milk cost 52 cents.",
+  "source": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf",
+  "verdict": "supported",
+  "fix": ""
+ }
+]
