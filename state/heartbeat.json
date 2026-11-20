@@ -1,17 +1,14 @@
 {
  "date": "2026-11-20",
- "checked_at": "2026-11-20T00:10:28Z",
+ "checked_at": "2026-11-20T17:12:13Z",
  "ahead": [
-  [
-   "1950s-suburb",
-   "scheduled",
-   "2026-11-20T17:00:00Z"
-  ],
   [
    "a-day-in-1955",
    "scheduled",
    "2026-11-24T17:00:00Z"
   ]
  ],
- "actions": []
+ "actions": [
+  "only 1 ahead; next episode started"
+ ]
 }
