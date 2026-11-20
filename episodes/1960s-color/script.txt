@@ -1,78 +1,105 @@
 > In a bustling 1960s street, a young couple strolls past a neon‑lit diner, the hum of a jukebox and the scent of fried dough swirling in the air. Have you ever wondered how a family in 1960 could afford a pound of steak, a month of rent, or a new car? In this episode we’ll trace the everyday costs that shaped a generation’s life for you. And that's not all.
 
 ## The Everyday Scene | New York City | 1960
+[film 8]
 > The camera pans down a wide avenue, brick storefronts lining the curb. A woman in a polka‑dot dress pushes a wicker basket. A man in a wool suit hovers over a parking meter, tapping his watch.
 > Families walked these crowded pavements carrying shopping bags filled with groceries from local markets and neighborhood shops. The median age in the United States had decreased to twenty-nine and a half years as the under-fifteen population surged significantly. Over forty-eight percent of workers in New York City held white-collar jobs while others worked in manufacturing and retail. Public transportation was a daily routine with sixty-one percent of residents regularly riding buses, subways, or streetcars to work. Housing units averaged nearly four rooms, and neighborhoods buzzed with the chatter of neighbors greeting one another on stoops.
+[film 3.5]
 > We will explore how much a modest apartment cost to rent each month and whether owning an automobile was within reach for the average worker, and we'll come back to that.
 [price 1.06 1960 | Pound of steak]
 > That is [today 1.06 1960] in today's money.
+[film 3.5]
 > Women's participation in the workforce continued its steady climb reaching thirty-seven percent nationwide as mothers and daughters take on clerical and professional roles. Neighborhoods featured brick tenements, brownstones, and tree-lined avenues where children played stickball until the streetlights flickered on. Retail stores displayed brightly colored advertisements in their windows, promising modern conveniences like electric washers and television sets.
 [price 0.75 1960 | Pound of butter]
 > That is [today 0.75 1960] in today's money.
+[film 3.5]
 > Shoppers browsed through aisles of canned goods and fresh produce while clerks in white aprons weighed items on brass scales. The average household spent nearly a quarter of its budget on food alone despite rising retail prices for meats and dairy. Families often saved their pennies in glass jars or postal savings accounts to prepare for unexpected medical bills or autumn school clothes.
 [pause 0.6]
+[film 8]
 > Housing made up almost 30% of a family's yearly spending, so rent was a major concern.
 > We’ll come back to the cost of a new car and a month's rent later, but first, let’s look at the family’s everyday budget.
 
 ## The Family Budget | Midwest | 1960-1965
+[film 8]
 > The shot cuts to a modest kitchen. A mother ladles stew into a bowl, the steam curling up. A father wipes his hands on a rag, the radio plays a soft swing tune.
 > Inside suburban and rural homes alike, homemakers utilized newly popular frozen foods and supermarket goods to feed families efficiently. The typical family size hovered around three persons with children present in over sixty percent of all households. Heads of families worked primarily as craftsmen, machine operators, or salaried professionals while earning steady wages in a growing economy. Kitchens gleamed with chrome-topped tables and linoleum floors where children did homework under the warm glow of hanging pendant lamps.
 > We'll examine how much families allocated for clothing and entertainment as the decade progressed, and we'll come back to that.
 [price 0.86 1960 | Pound of pork chops]
+[film 3.5]
 > That is [today 0.86 1960] in today's money.
 > Bread and cereal prices stayed relatively low while flour remained a staple for home baking across the country. 73 percent of Americans owned automobiles in 1960, using their cars for weekend trips and daily commutes to factories and offices. Living rooms featured wooden console televisions where families gathered in the evening to watch variety shows, westerns, and early news broadcasts.
 [price 0.52 1960 | Half-gallon of milk]
+[film 3.5]
 > That is [today 0.52 1960] in today's money.
 > Parents set aside money for charitable contributions which averaged over three hundred dollars annually per family. Households invested heavily in insurance plans to cover healthcare costs with twenty-eight percent of medical spending dedicated to protection programs. The daily routine was anchored by reliable factory shifts, school bells, and the comforting hum of neighborhood life across America's towns and cities.
 [price 5,390 1960 | Family expenditures]
+[film 3.5]
 > That is [today 5,390 1960] in today's money.
 < The family’s yearly spending of over five thousand dollars shows how much was allocated to food, clothing, and housing. The average family income in the country was $6,691 in 1960.
 [price 6,691 1960 | Spouse income]
+[film 8]
 > That is [today 6,691 1960] in today's money.
 
 ## The Great Society Impact | National | 1964-1968
+[film 8]
 > A montage of a bustling city square. A billboard reads “Medicare for All.” A line of people waits at a health clinic, their faces hopeful.
 > President Lyndon B. Johnson launched the ambitious Great Society legislative agenda aimed at eliminating poverty and expanding educational opportunities. Classrooms across the nation received federal funding to purchase books and support low-income students through the Elementary and Secondary Education Act. Communities established health centers and job training programs designed to lift disadvantaged youth out of poverty through the Economic Opportunity Act. Millions of elderly Americans gained access to medical insurance through the newly established Medicare program while impoverished families received medical assistance via Medicaid.
+[film 3.5]
 > We will investigate how these federal initiatives altered urban housing and transportation costs for working-class citizens, and we'll come back to that.
 [price 5,390 1960 | Household expenditures]
 > That is [today 5,390 1960] in today's money.
+[film 3.5]
 > Civil rights legislation swept away legal segregation in public accommodations and secured voting rights for minority citizens across the American South. Volunteers joined VISTA to work in impoverished urban and rural communities while Head Start programs prepared young children for school. Gross national product surged as tax cuts stimulated economic growth and pushed unemployment below five percent during the mid-sixties boom. Families enjoyed rising incomes with more than half of all households earning seven thousand dollars or more per year by 1966.
 [price 0.66 1960 | Pound of bacon]
 > That is [today 0.66 1960] in today's money.
+[film 3.5]
 > Urban renewal projects cleared slums and constructed new housing units while mass transit systems received federal grants to improve commuter travel. Yet even as government programs expanded, the escalating conflict in Vietnam began to draw financial resources away from domestic antipoverty efforts. Citizens debated the merits of federal spending while newspapers published daily reports on congressional votes and presidential task force recommendations.
 [pause 0.6]
+[film 8]
 > We’ll see how these programs changed the cost of a family’s life in the next chapter.
 
 ## The Counterculture Wave | California | 1965-1969
+[film 8]
 > The camera follows a group of teenagers in a park. They wear tie‑dye shirts, long hair, and a sense of rebellion. A guitar strums a folk tune.
 > Young people flooded university campuses and city parks to challenge traditional social norms and protest military involvement in Southeast Asia. Counterculture participants embraced alternative lifestyles, psychedelic rock music, and experimental fashions characterized by bell‑bottoms and tie‑dye shirts. Marches and rallies united thousands of demonstrators demanding civil rights, environmental protection, and an immediate end to the draft. FM radio stations replaced AM broadcasts as the primary conduit for underground news and anti‑establishment music.
 > We'll explore how this generational revolt influenced consumer spending habits and everyday apparel prices, and we'll come back to that.
 [price 1.06 1960 | Pound of steak] (repeated for comparison)
+[film 3.5]
 > That is [today 1.06 1960] in today's money.
 < Even as the counterculture embraced new ideas, the price of a steak remained a constant in the budget of a typical family.
+[film 8]
 > Traditional dress codes declined as casual clothing, blue denim jeans, and comfortable t-shirts became the enduring uniform of the younger generation. Communes and intentional communities sprang up in rural areas where participants sought to live off the land free from commercial pressures. Meanwhile, civil rights activists and feminist organizers continued their legal and political campaigns to secure equal rights in workplaces and courtrooms. The tension between older conservative citizens and youthful protesters created a profound generational divide across the nation.
 [price 0.86 1960 | Pound of pork chops] (repeated for comparison)
 > That is [today 0.86 1960] in today's money.
 < The cost of pork chops stayed the same, showing that basic food prices were stable despite social change.
+[film 8]
 > Television brought the graphic realities of war and civil unrest directly into family living rooms every evening. News coverage of antiwar demonstrations and police confrontations energized both student radicals and supporters of law and order. Despite the high visibility of the counterculture movement, most Americans continued working at traditional jobs, raising families, and paying household bills within the established economic system. Inflation began to creep upward toward the end of the decade, eroding savings and adding financial pressure to household budgets.
 [price 6,691 1960 | Head of household income] (repeated)
+[film 3.5]
 > That is [today 6,691 1960] in today's money.
 < The head of the household still earned the same amount, but the new programs meant more public spending and higher taxes.
 [pause 0.6]
+[film 8]
 > In the final chapter, we’ll look at the 1969 recession and how it affected everyday costs.
 
 ## The Price of Progress | Nationwide | 1969
+[film 8]
 > The film shows a news broadcast announcing a recession. The anchor reports rising unemployment and falling factory output.
 < A factory line slows down. Workers look concerned, a sign reads “Closed for the Day.”
+[film 8]
 > The decade concluded with an economic slowdown that brought rising unemployment and shrinking profit margins for manufacturing businesses. Families watched their purchasing power diminish as inflation outpaced wage gains across industrial sectors. Factory floors that had hummed with activity earlier in the decade now faced reduced shifts and temporary layoffs. Consumers trimmed their budgets by cutting back on entertainment, restaurant dining, and non‑essential household goods.
 > We'll examine how families adjusted their spending on housing and food during this final economic downturn, and we'll come back to that.
 [price 5,390 1960 | Family expenditures] (repeated)
+[film 3.5]
 > That is [today 5,390 1960] in today's money.
 < Families had to cut back on non‑essential items to keep their budget balanced.
+[film 8]
 > Despite economic headwinds, home ownership rates had climbed significantly since the start of the decade with nearly half of urban families holding deeds to their properties. Grocery stores continued to stock supermarket shelves with frozen meals and prepared foods designed to assist dual‑earner households. Americans cast their ballots in the 1968 presidential election choosing Richard Nixon who promised peace with honor in Vietnam and restoration of law and order at home. Astronauts finally achieved President Kennedy's goal by landing a crewed spacecraft on the Moon in July 1969 marking a historic climax to the space race.
 [price 6,691 1960 | Head of household income] (repeated)
 > That is [today 6,691 1960] in today's money.
 < The head of the household’s income remained the same nominally, but purchasing power fell as prices rose.
+[film 8]
 > The sixties left behind a transformed society characterized by expanded civil rights, new social movements, and enduring changes in popular culture and fashion. Families adapted to changing economic realities by reallocating their spending among housing, food, and personal care. Archives preserved these moments on color film capturing the precise hues of vintage automobiles, roadside diners, and city streets. The everyday choices of working Americans layed the groundwork for the modern economy that would carry the nation into the next decade.
 [pause 0.6]
+[film 8]
 > This concludes our tour of the 1960s, a decade where the cost of living shaped every choice and every dream.
