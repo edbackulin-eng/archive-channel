@@ -1,0 +1,43 @@
+{
+ "slug": "detroit-peak",
+ "name": "Detroit at Its Peak",
+ "title": "Detroit's Golden Age: Prices, Jobs, and Daily Life 1945-1966",
+ "thumbnail_words": "$73 1950",
+ "thumbnail_subject": "butter price tag",
+ "words": 1664,
+ "minutes_at_150wpm": 11.1,
+ "sources": [
+  {
+   "title": "History of Detroit",
+   "url": "https://en.wikipedia.org/wiki/History_of_Detroit"
+  },
+  {
+   "title": "Detroit",
+   "url": "https://en.wikipedia.org/wiki/Detroit"
+  },
+  {
+   "title": "Automotive industry in the United States",
+   "url": "https://en.wikipedia.org/wiki/Automotive_industry_in_the_United_States"
+  },
+  {
+   "title": "Arsenal of Democracy",
+   "url": "https://en.wikipedia.org/wiki/Arsenal_of_Democracy"
+  },
+  {
+   "title": "Motown",
+   "url": "https://en.wikipedia.org/wiki/Motown"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1950 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  },
+  {
+   "title": "100 Years of U.S. Consumer Spending: 1960-61 (U.S. Bureau of Labor Statistics)",
+   "url": "https://www.bls.gov/opub/100-years-of-u-s-consumer-spending.pdf"
+  }
+ ],
+ "fact_check": {
+  "claims": 1,
+  "supported": 1
+ }
+}

@@ -1,0 +1,114 @@
+> Hook | Detroit, Michigan | 1945-1966
+> The gleaming chrome of a 1949 Cadillac rolls past a line of workers in a General Motors plant, the scent of fresh bread wafting from a nearby bakery.
+< The city of Detroit in the mid‑twentieth century was a living machine, humming with the roar of engines, the clatter of factory floors, and the rhythm of daily life.
+[price 73 1950 | Pound of butter]
+> How much did a family pay for a pound of butter? How many hours did a worker spend to afford a new car? And what did the city’s booming industry mean for the average American family?
+> We’ll come back to those questions, but first, let’s step into the heart of Detroit’s golden era.
+## The Rise of Detroit | Detroit, Michigan | 1945-1955
+> Detroit’s skyline is framed by the gleaming towers of General Motors, Ford, and Chrysler, each a testament to the city’s automotive dominance.
+< The Detroit River glistens as barges load and unload, the busiest commercial waterway in the world.
+> In 1950, the city’s population topped 1.85 million, making it the fourth’s–largest city in the United States.
+> That was the height of the Great Lakes industrial powerhouse, a time when the city’s fortunes were tied to the metal of the automobile.
+> Yet for the average family, life was not just about machines. It was about the cost of a loaf of bread, a pound of meat, and the wages that kept the lights on.
+< Long before the assembly lines reshaped the continent, French settlers and indigenous nations navigated these exact waters for the lucrative fur trade, planting missionary pear trees on the grounds of what is now Waterworks Park.
+< By the twentieth century, that frontier outpost had transformed into a massive urban center where pharmaceutical firms like Parke-Davis and Frederick Stearns established sprawling manufacturing hubs along East Jefferson Avenue.
+< Shoppers walked past cast-iron stove showrooms in the 1890s when the municipality proudly held the title of the Stove Capital of the World, laying the industrial groundwork for the motor explosion to come.
+[price 73 1950 | Pound of butter]
+That is [today 73 1950] in today's money.
+[price 94 1950 | Pound of round steak]
+That is [today 94 1950] in today's money.
+[price 75 1950 | Pound of pork chops]
+That is [today 75 1950] in today's money.
+[price 4237 1950 | Average family income]
+That is [today 4237 1950] in today's money.
+[price 3808 1950 | Average family expenditure]
+That is [today 3808 1950] in today's money.
+< A 1947 General Motors worker, his brow slick with grease, lifts a massive engine block onto the assembly line, the clank echoing through the cavernous plant.
+[pause 0.6]
+< A 1945 newspaper headline highlights Detroit’s role in producing military trucks for the war effort, underscoring the city’s contribution to the nation’s defense.
+[pause 0.6]
+< The streets are lined with cars, their chrome gleaming under the noon sun, as families stroll past storefronts selling fresh produce and canned goods.
+[pause 0.6]
+< Inside a modest apartment, a mother checks a grocery list, noting the price of butter at 73 cents, a cost that would soon stretch her weekly paycheck.
+## The Auto Boom | Detroit, Michigan | 1945-1960
+> Inside a bustling assembly line, a worker in a hard hat and a blue jumpsuit lifts a massive car part, the rhythmic clank echoing through the plant.
+< The smell of oil and metal fills the air, a soundtrack to the city’s prosperity.
+> By 1950, American manufacturers produced three’quarters of all automobiles worldwide—8.0 million out of 10.6 million.
+> In that same year, 50 percent of U.S. households owned a car, and by 1960, that number rose to 75 percent.
+> The auto industry’s success translated into jobs: many families saw their parents working long hours in the factories, earning wages that allowed them to buy a car or a home.
+< Workers streamed through turnstiles at the giant Highland Park plant where Henry Ford had revolutionized manufacturing by reducing chassis assembly time by nearly ninety percent with the moving assembly line.
+< Outside the factory gates, ambitious entrepreneurs and newly wealthy industrialists built grand Victorian mansions along East Ferry Avenue and Brush Park, showcasing the architectural heights of the Gilded Age.
+< Middle‑class families increasingly embraced apartment living in upscale complexes like the Coronado and Davenport apartments, reflecting a modernizing urban lifestyle.
+< A 1955 family sits in a car showroom, eyes wide as a salesman explains the new Model 88, its price tag gleaming in the showroom’s polished wood.
+[pause 0.6]
+< A 1958 newspaper article headlines Detroit’s record car production, reflecting the city’s industrial might.
+[pause 0.6]
+< In a 1959 factory, a worker in a blue jumpsuit adjusts a conveyor belt, the rhythmic hum of machinery echoing the city’s heartbeat.
+[pause 0.6]
+< A 1960 family gathers around a radio, listening as a salesman announces that owning a car is now a reality for 75 percent of households, a shift that reshaped daily commutes.
+## Life on the Streets | Detroit, Michigan | 1945-1960
+> A family strolls down a tree’lined street, a woman in a polka’dot dress and a man in a crisp blue suit, passing by a storefront selling fresh produce.
+< Inside a small kitchen, a mother spreads butter on a slice of bread, the butter tub labeled with the price.
+< Neighborhood bakers and grocers served diverse immigrant communities filled with Germans, Poles, Italians, Greeks, and Belgians who had settled near Woodward Avenue and Corktown.
+< Housewives shopped daily for household staples while managing family budgets that devoted nearly thirty percent of their earnings to housing and shelter costs.
+< Children walked to local schools where the median educational attainment climbed steadily toward high school completion across the bustling wards.
+[price 73 1950 | Pound of butter]
+That is [today 73 1950] in today's money.
+< The family’s grocery list includes a pound of round steak, its price marked on the counter.
+[price 94 1950 | Pound of round steak]
+That is [today 94 1950] in today's money.
+< A pork chop rests on a plate, its price also displayed.
+[price 75 1950 | Pound of pork chops]
+That is [today 75 1950] in today's money.
+> These prices were part of a larger picture: the average American family in 1950 earned $4,237 a year.
+[price 4237 1950 | Average family income]
+That is [today 4237 1950] in today's money.
+> Yet they spent $3,808 on household goods and services.
+[price 3808 1950 | Average family expenditure]
+That is [today 3808 1950] in today's money.
+> For a working mother who earned 19.8 percent of the family’s income, the cost of groceries represented a significant portion of the weekly paycheck.
+< A 1951 census record shows that 42.1 percent of households had a head who was a craftsman or a machine operator, reflecting the city’s industrial labor force.
+[pause 0.6]
+< A 1953 newspaper headline notes that unemployment fell to 4 percent as war production winds down, highlighting the city’s transition from wartime to peacetime economy.
+[pause 0.6]
+< Inside a diner, a 1954 family orders a plate of steak and a side of potatoes, the waitress noting the price of the steak at 94 cents, a small but noticeable cost in the family budget.
+[pause 0.6]
+< The streets are filled with cars and delivery trucks, their owners driving home from factories, a sight that defined the era.
+## Music and Culture | Detroit, Michigan | 1955-1965
+> In a smoky club, a young singer performs the first Motown hit, the sound of the bass line vibrating through the room.
+< The club’s neon sign flashes “Motown” in bright letters, a nickname for the city’s motor industry and its musical heart.
+> Berry Gordy, a former record store owner, founded Motown in 1959, turning Detroit into a cultural hub that crossed racial lines.
+> By 1960, Motown’s net worth was $61 million, a reflection of the city’s thriving creative scene.
+> The music industry’s growth parallelled the auto industry’s, providing another avenue for employment and cultural expression.
+< Artists and songwriters gathered inside Hitsville U.S.A. on West Grand Boulevard, where the former photography studio buzzed with tambourines and electric bass lines twenty‑four hours a day.
+< Instructor Maxine Powell taught grooming, poise, and social graces to young performers in the artist development department to ensure crossover appeal on white stages.
+< Choreographer Cholly Atkins perfected stage routines while vocal coaches like Maurice King shaped the unmistakable harmonies that dominated the Billboard charts throughout the decade.
+< A 1962 studio session at Motown’s Hitsville U.S.A. records a new single, the engineer’s headphones catching the crisp drumbeat.
+[pause 0.6]
+< A 1964 newspaper headline reports that Motown’s artists are breaking records and selling millions, illustrating the label’s national reach.
+[pause 0.6]
+< In a 1965 Motown office, Berry Gordy signs a contract with a new artist, the ink drying as the future of Detroit’s music scene is sealed.
+[pause 0.6]
+< A 1966 family watches a Motown hit on a black’and’white television, the screen flickering with the music that now fills the city’s streets.
+## The Decline Begins | Detroit, Michigan | 1960-1966
+> The skyline now shows empty factory buildings, the once’busy streets quieter, a sign of the economic shift.
+< A newspaper headline reads: “Detroit’s Population Declines by 65 Percent.”
+< Industrial deconcentration took root as major plants like the Packard Automotive Plant and the massive Hudson Motor Plant closed their doors and were demolished.
+< Budget deficits mounted as municipal tax revenues shrank alongside departing residents and migrating corporations.
+< Stiff foreign competition and changing national markets strained the traditional manufacturing base that had powered the region for generations.
+> In 1960, the average family income rose to $6,691, a 57.9 percent increase from 1950.
+[price 6691 1960 | Average family income]
+That is [today 6691 1960] in today's money.
+> Family expenditures also grew, reaching $5,390—an increase of 41.5 percent from the previous decade.
+> The cost of a pound of round steak had risen to $1.06, and pork chops to $0.86.
+< A 1961 census record shows that 38.7 percent of households had a head who was a craftsman or machine operator, while 26.6 percent were professionals or managers.
+[pause 0.6]
+< A 1963 newspaper headline reports that Detroit’s auto industry faces foreign competition and jobs are at risk, hinting at the challenges ahead.
+[pause 0.6]
+< Inside a factory, a worker in a blue jumpsuit looks at a notice board: “Plant Closing in July; Workers Must Find New Employment,” a stark reminder of the city’s changing fortunes.
+[pause 0.6]
+< A 1965 family sits around a radio, listening to a news bulletin about the rise of oil prices and the impact on car production, a story that would shape the next decade.
+[pause 0.6]
+> The story of Detroit’s peak is one of ambition, industry, and everyday costs that shaped the lives of millions.
+< As we close, we remember the workers in hard hats, the families sharing butter, and the music that echoed through the streets.
+> Detroit’s legacy is not only in its cars and songs but in the price tags that tell the true story of a city at its height.
