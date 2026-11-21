@@ -1,6 +1,6 @@
 {
- "date": "2026-11-20",
- "checked_at": "2026-11-20T20:27:29Z",
+ "date": "2026-11-21",
+ "checked_at": "2026-11-21T00:13:08Z",
  "ahead": [
   [
    "a-day-in-1955",
@@ -9,11 +9,9 @@
   ],
   [
    "1960s-color",
-   "built",
-   null
+   "scheduled",
+   "2026-11-27T17:00:00Z"
   ]
  ],
- "actions": [
-  "buffered episodes sent to upload"
- ]
+ "actions": []
 }
